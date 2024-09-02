@@ -22,7 +22,7 @@ interface OtherNavbarProps {
   onDeleteAll: () => void;
   setSignupOpen: (isOpen: boolean) => void;
   setLoginOpen: (isOpen: boolean) => void;
-  handleLougoutClick: (e: React.MouseEvent<HTMLElement>) => void;
+  handleLogoutClick: (e: React.MouseEvent<HTMLElement>) => void;
   anchorEl: HTMLElement | null;
   handleCloseLogout: () => void;
   handleLogoutRequest: () => void;
@@ -37,7 +37,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
     onDeleteAll,
     setSignupOpen,
     setLoginOpen,
-    handleLougoutClick,
+    handleLogoutClick,
     anchorEl,
     handleCloseLogout,
     handleLogoutRequest,
@@ -112,7 +112,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                     : "/icons/default-user.svg"
                 }
                 aria-haspopup={"true"}
-                onClick={handleLougoutClick}
+                onClick={handleLogoutClick}
                 alt="user-avatar"
               />
             )}

@@ -8,7 +8,7 @@ import {
   MenuItem,
   ListItemIcon,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import Basket from "./Basket";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
@@ -23,7 +23,7 @@ interface HomeNavbarProps {
   onDeleteAll: () => void;
   setSignupOpen: (isOpen: boolean) => void;
   setLoginOpen: (isOpen: boolean) => void;
-  handleLougoutClick: (e: React.MouseEvent<HTMLElement>) => void;
+  handleLogoutClick: (e: React.MouseEvent<HTMLElement>) => void;
   anchorEl: HTMLElement | null;
   handleCloseLogout: () => void;
   handleLogoutRequest: () => void;
@@ -38,12 +38,20 @@ export default function HomeNavbar(props: HomeNavbarProps) {
     onDeleteAll,
     setSignupOpen,
     setLoginOpen,
-    handleLougoutClick,
+    handleLogoutClick,
     anchorEl,
     handleCloseLogout,
     handleLogoutRequest,
   } = props;
   const { authMember } = useGlobals();
+
+  const history = useHistory();
+  const handleMemberPageNav = () => {
+    history.push("/member-page");
+  };
+  // const handleProductPage = () => {
+  //   history.push("/products");
+  // };
 
   // ** HANDLERS **/
 
@@ -60,17 +68,17 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               />
             </NavLink>
           </Box>
+          <Box className={"hover-line"}>
+            <NavLink to="/" activeClassName={"underline"}>
+              Home
+            </NavLink>
+          </Box>
+          <Box className={"hover-line"}>
+            <NavLink to="/products" activeClassName={"underline"}>
+              Products
+            </NavLink>
+          </Box>
           <Stack className="links">
-            <Box className={"hover-line"}>
-              <NavLink to="/" activeClassName={"underline"}>
-                Home
-              </NavLink>
-            </Box>
-            <Box className={"hover-line"}>
-              <NavLink to="/products" activeClassName={"underline"}>
-                Products
-              </NavLink>
-            </Box>
             {authMember ? (
               <Box className={"hover-line"}>
                 <NavLink to="/orders" activeClassName={"underline"}>
@@ -116,7 +124,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                     : "/icons/default-user.svg"
                 }
                 aria-haspopup={"true"}
-                onClick={handleLougoutClick}
+                onClick={handleLogoutClick}
                 alt="user-avatar"
               />
             )}
@@ -156,6 +164,12 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
+              <MenuItem onClick={handleMemberPageNav}>
+                <ListItemIcon>
+                  <Logout fontSize="small" style={{ color: "blue" }} />
+                </ListItemIcon>
+                My Page
+              </MenuItem>
               <MenuItem onClick={handleLogoutRequest}>
                 <ListItemIcon>
                   <Logout fontSize="small" style={{ color: "blue" }} />

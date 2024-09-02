@@ -10,7 +10,7 @@ export default function Adverstisement() {
         playsInline
         data-video-media=""
       >
-        <source type="video/mp4" src="video/burak-ads.mp4" />
+        <source type="video/mp4" src="video/gatorade-ad.mp4" />
       </video>
     </div>
   );
