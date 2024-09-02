@@ -55,7 +55,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             <NavLink to="/">
               <img
                 className="brand-logo"
-                src="/icons/burak.svg"
+                src="/icons/gatorade.svg"
                 alt="brand-logo"
               />
             </NavLink>
