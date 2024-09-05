@@ -57,10 +57,12 @@
 }
 
 .products-page .products .avatar-big-box .search-button {
+  background-color: rgb(255, 162, 0);
+  color: #fff;
   width: 106px;
   height: 32px;
   border-radius: 18.5px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .products-page .products .dishes-filter-box .order {
@@ -165,7 +167,7 @@
   height: 46px;
   border-radius: 10px;
   border: 1px solid #e3c08d;
-  background: rgba(187, 47, 200, 0.78);
+  background: rgba(17, 208, 81, 0.78);
   margin-bottom: 12px;
 }
 
@@ -196,11 +198,11 @@
 }
 
 .products-page .products .product-desc .product-title {
-  color: #343434;
+  color: #161109;
   font-family: Poppins;
   font-size: 20px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   line-height: normal;
   margin-bottom: 5px;
 }
@@ -209,7 +211,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #e3c08d;
+  color: #161109;
   font-family: Poppins;
   font-size: 24px;
   font-style: normal;
@@ -229,7 +231,7 @@
   font-weight: 400;
   font-size: 30px;
   line-height: 34px;
-  color: #e3c08d;
+  color: #161109;
 }
 
 .products-page .products .pagination-section {
@@ -449,7 +451,7 @@
   font-weight: 600;
   font-size: 25px;
   line-height: 22px;
-  color: #000000;
+  color: #161109;
 }
 
 .products-page .chosen-product .button-box {
@@ -457,18 +459,18 @@
   height: auto;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .products-page .chosen-product .button-box button {
-  width: 230px;
+  width: 150px;
   height: 44px;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 22px;
-  color: #f8f8ff;
+  color: #000;
 }
 
 .products-page .chosen-product .title {
@@ -478,4 +480,16 @@
   font-size: 36px;
   line-height: 43px;
   margin-top: 40px;
+}
+
+.products-page .chosen-product .check {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  height: 70px;
+  font-size: 25px;
+  margin-bottom: 85px;
+  background-color: rgb(118, 220, 118);
+  color: white;
 }

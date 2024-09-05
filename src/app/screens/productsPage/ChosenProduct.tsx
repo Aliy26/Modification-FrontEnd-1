@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Container, Stack, Box } from "@mui/material";
+import React, { useEffect, useState, useCallback } from "react";
+import { Container, Stack, Box, Snackbar, Alert } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Divider from "../../components/divider";
@@ -23,7 +23,6 @@ import MemberService from "../../services/MemberService";
 import { serverApi } from "../../../lib/config";
 import { CartItem } from "../../../lib/types/search";
 
-/** Redux Slice & Selector */
 const actionDispatch = (dispatch: Dispatch) => ({
   setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
   setChosenProduct: (data: Product) => dispatch(setChosenProduct(data)),
@@ -52,19 +51,30 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const { restaurant } = useSelector(restaurantRetriever);
 
-  useEffect(() => {
-    const product = new ProductService();
-    product
-      .getProduct(productId)
-      .then((data) => setChosenProduct(data))
-      .catch((err) => console.log(err));
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-    const member = new MemberService();
-    member
-      .getRestaurnat()
-      .then((data) => setRestaurant(data))
-      .catch((err) => console.log(err));
+  // useCallback to avoid unnecessary re-renders and re-executions
+  const fetchProductData = useCallback(async () => {
+    try {
+      const productService = new ProductService();
+      const productData = await productService.getProduct(productId);
+      setChosenProduct(productData);
+
+      const memberService = new MemberService();
+      const restaurantData = await memberService.getRestaurnat();
+      setRestaurant(restaurantData);
+    } catch (err) {
+      console.error("Error fetching product or restaurant data", err);
+    }
+  }, [productId, setChosenProduct, setRestaurant]);
+
+  useEffect(() => {
+    fetchProductData();
   }, []);
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
   if (!chosenProduct) return null;
   return (
@@ -125,6 +135,22 @@ export default function ChosenProduct(props: ChosenProductProps) {
               <Button
                 className="add-to-basket"
                 variant="contained"
+                onClick={() => {
+                  onAdd({
+                    _id: chosenProduct._id,
+                    quantity: 1,
+                    name: chosenProduct.productName,
+                    price: chosenProduct.productPrice,
+                    image: chosenProduct.productImages[0],
+                  });
+                  setSnackbarOpen(true);
+                }}
+              >
+                Add To Basket
+              </Button>
+              <Button
+                className="add-to-basket"
+                variant="contained"
                 onClick={(e) => {
                   onAdd({
                     _id: chosenProduct._id,
@@ -133,15 +159,33 @@ export default function ChosenProduct(props: ChosenProductProps) {
                     price: chosenProduct.productPrice,
                     image: chosenProduct.productImages[0],
                   });
+                  setSnackbarOpen(true);
                   e.stopPropagation();
                 }}
               >
-                Add To Basket
+                Buy Now
               </Button>
             </div>
           </Box>
         </Stack>
       </Container>
+      {/* Snackbar for feedback */}
+      <Snackbar
+        className="checkk"
+        open={snackbarOpen}
+        autoHideDuration={2500}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ width: "100%" }}
+          className="check"
+        >
+          Product added to basket!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

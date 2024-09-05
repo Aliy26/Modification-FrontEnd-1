@@ -39,8 +39,8 @@
 }
 
 .home-navbar .navbar-container .menu .links .login-button {
-  background: #3776cc;
-  color: #f8f8ff;
+  background: #117780;
+  color: rgb(226, 160, 160);
 }
 
 .home-navbar .navbar-container .menu .user-avatar {
@@ -140,14 +140,14 @@
   width: 210px;
   height: 60px;
   border-radius: 4px;
-  background: #1976d2;
+  background: #117780;
+  color: rgb(226, 160, 160);
   text-align: center;
   font-family: Poppings;
   font-size: 17px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  color: #f8f8ff;
 }
 
 .home-navbar .navbar-container .logo-frame {
@@ -200,8 +200,8 @@
 }
 
 .other-navbar .navbar-container .menu .links .login-button {
-  background: #3776cc;
-  color: #f8f8ff;
+  background: #117780;
+  color: rgb(226, 160, 160);
 }
 
 .other-navbar .navbar-container .menu .user-avatar {
