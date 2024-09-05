@@ -8,6 +8,10 @@
   color: rgb(14, 47, 47);
 }
 
+.footer-icon {
+  cursor: pointer;
+}
+
 .sns-context {
   margin-top: 17px;
   width: 137px;

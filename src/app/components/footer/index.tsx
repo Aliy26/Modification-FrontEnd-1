@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Container, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const Footers = styled.div`
   width: 100%;
@@ -10,17 +11,27 @@ const Footers = styled.div`
   background: #c5c8c9;
   background-size: cover;
 `;
-
 export default function Footer() {
   const authMember = null;
+  const history = useHistory();
+  const handleHomePageNav = () => {
+    history.push("/products");
+    window.scrollTo(0, 0);
+  };
 
   return (
     <Footers>
       <Container>
         <Stack flexDirection={"row"} sx={{ mt: "54px" }}>
           <Stack flexDirection={"column"} style={{ width: "340px" }}>
-            <Box>
-              <img width={"100px"} src={"/icons/gatorade.svg"} alt="logo" />
+            <Box className="footer-icon">
+              <img
+                width={"100px"}
+                src={"/icons/gatorade.svg"}
+                alt="logo"
+                onClick={handleHomePageNav}
+                className="check"
+              />
             </Box>
             <Box className={"foot-desc-txt"}>
               the drink intended for people who play a lot of sport. It replaces

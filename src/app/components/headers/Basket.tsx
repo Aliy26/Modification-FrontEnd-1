@@ -70,8 +70,16 @@ export default function Basket(props: BasketProps) {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <Badge badgeContent={cartItems.length} color="primary">
-          <img src={"/icons/shopping-cart.svg"} alt="shopping-icon" />
+        <Badge
+          badgeContent={cartItems.length}
+          color="primary"
+          className="left-side"
+        >
+          <img
+            src={"/icons/new-cart.svg"}
+            alt="shopping-icon"
+            className="shopping-cart"
+          />
         </Badge>
       </IconButton>
       <Menu

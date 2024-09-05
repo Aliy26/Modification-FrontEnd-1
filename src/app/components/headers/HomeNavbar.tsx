@@ -49,6 +49,9 @@ export default function HomeNavbar(props: HomeNavbarProps) {
   const handleMemberPageNav = () => {
     history.push("/member-page");
   };
+  const handleProductsPageNav = () => {
+    history.push("/products");
+  };
   // const handleProductPage = () => {
   //   history.push("/products");
   // };
@@ -96,15 +99,15 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             <Box className={"hover-line"}>
               <NavLink to="/help">Help</NavLink>
             </Box>
-            <Basket
-              cartItems={cartItems}
-              onAdd={onAdd}
-              onRemove={onRemove}
-              onDelete={onDelete}
-              onDeleteAll={onDeleteAll}
-            />
             {!authMember ? (
-              <Box>
+              <Box className="left-side-menu">
+                <Basket
+                  cartItems={cartItems}
+                  onAdd={onAdd}
+                  onRemove={onRemove}
+                  onDelete={onDelete}
+                  onDeleteAll={onDeleteAll}
+                />
                 <Button
                   variant="contained"
                   className="login-button"
@@ -128,7 +131,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 alt="user-avatar"
               />
             )}
-            /*
+
             <Menu
               anchorEl={anchorEl}
               id="account-menu"
@@ -177,29 +180,33 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 Logout
               </MenuItem>
             </Menu>
-            */
           </Stack>
         </Stack>
+
         <Stack className="header-frame">
           <Stack className="detail">
-            <Box className="haed-main-txt">World's Most Delicius Cousine</Box>
-            <Box className="wel-txt">The Choice, not just a choice</Box>
-            <Box className="service-txt">24 hours service</Box>
-            <Box className="signup">
+            <Box className="head-main-txt">
+              Rep Your Squad,
+              <Box>15% off site-wide*</Box>
+              <Box>Code: NFL150FF</Box>
+              <Box>
+                <Button className="shop-now" onClick={handleProductsPageNav}>
+                  Shon Now
+                </Button>
+              </Box>
+            </Box>
+            <Box className="sign-up">
               {!authMember ? (
                 <Button
                   variant={"contained"}
-                  className="signup-button"
+                  className="signup-btn"
                   onClick={() => setSignupOpen(true)}
                 >
-                  SIGN UP
+                  Sign Up
                 </Button>
               ) : null}
             </Box>
           </Stack>
-          <Box className="logo-frame">
-            <div className="logo-img"></div>
-          </Box>
         </Stack>
       </Container>
     </div>

@@ -7,10 +7,6 @@
   cursor: pointer;
 }
 
-/* .home-navbar .banner-video {
-  
-} */
-
 .home-navbar .navbar-container {
   margin-top: 35px;
   height: 642px;
@@ -22,7 +18,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #000000;
+  background-color: #2f9ba5;
 }
 
 .home-navbar .navbar-container .menu .brand-logo {
@@ -37,10 +33,24 @@
   justify-content: space-between;
   align-items: center;
 }
+.home-navbar .navbar-container .menu .left-side {
+  margin-top: 10px;
+  height: 30px;
+}
 
 .home-navbar .navbar-container .menu .links .login-button {
+  width: 90px;
+  height: 40px;
+  border-radius: 70px;
   background: #117780;
   color: rgb(226, 160, 160);
+}
+
+.home-navbar .navbar-container .menu .links .left-side-menu {
+  width: 200px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .home-navbar .navbar-container .menu .user-avatar {
@@ -55,20 +65,22 @@
 }
 
 .home-navbar .hover-line a {
-  color: #f8f8ff;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
   z-index: 100;
 }
 
 .home-navbar .underline {
   display: block;
   content: "";
-  border-bottom: solid 2px #d7b686;
+  border-bottom: solid 3px #b34b1a;
 }
 
 .home-navbar .hover-line:after {
   display: block;
   content: "";
-  border-bottom: solid 2px #d7b686;
+  border-bottom: solid 3px #d7b686;
   transform: scaleX(0);
   transition: transform 250ms ease-in-out;
 }
@@ -82,29 +94,31 @@
 }
 
 .home-navbar .navbar-container .header-frame {
-  margin-top: 142px;
+  margin-top: 112px;
   height: 462px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.home-navbar .navbar-container .header-frame .detail {
+  width: 100%;
+  margin-top: 300px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.home-navbar .navbar-container .header-frame .detail {
-  width: 510px;
-  display: flex;
-  flex-direction: column;
-}
-
-.home-navbar .navbar-container .header-frame .detail .haed-main-txt {
+.home-navbar .navbar-container .header-frame .detail .head-main-txt {
   width: 450px;
   height: 150px;
   font-family: "Roboto Serif";
-  font-size: 50px;
+  font-size: 40px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  letter-spacing: -0.75px;
+  letter-spacing: -1.5px;
   color: #f8f8ff;
+  margin-top: 10px;
 }
 
 .home-navbar .navbar-container .header-frame .detail .wel-txt {
@@ -132,16 +146,32 @@
   color: #d5d5d5;
 }
 
-.home-navbar .navbar-container .detail .signup {
-  margin-top: 73px;
+.home-navbar .navbar-container .sign-up {
+  margin-top: 15px;
 }
 
-.home-navbar .navbar-container .detail .signup .signup-button {
-  width: 210px;
-  height: 60px;
-  border-radius: 4px;
+.home-navbar .navbar-container .sign-up .signup-btn {
+  width: 140px;
+  height: 50px;
+  margin-top: 150px;
+  border-radius: 70px;
   background: #117780;
   color: rgb(226, 160, 160);
+  text-align: center;
+  font-family: Poppings;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.home-navbar .navbar-container .shop-now {
+  width: 140px;
+  border-radius: 70px;
+  height: 50px;
+  background: #117780;
+  color: rgb(226, 160, 160);
+  margin-top: 15px;
   text-align: center;
   font-family: Poppings;
   font-size: 17px;
@@ -154,15 +184,6 @@
   margin-top: 43px;
   width: 690px;
   height: 419px;
-}
-
-.home-navbar .navbar-container .logo-frame .logo-img {
-  width: 100%;
-  height: 100%;
-  background: url(/public/img/logo.webp);
-  background-size: contain;
-  background-repeat: no-repeat;
-  filter: invert(20%);
 }
 
 .other-navbar {
@@ -183,7 +204,14 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #000000;
+  background-color: #2f9ba5;
+}
+
+.other-navbar .navbar-container .menu .left-side-menu {
+  width: 200px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .other-navbar .navbar-container .menu .brand-logo {
@@ -200,6 +228,9 @@
 }
 
 .other-navbar .navbar-container .menu .links .login-button {
+  width: 90px;
+  height: 40px;
+  border-radius: 70px;
   background: #117780;
   color: rgb(226, 160, 160);
 }
@@ -215,20 +246,22 @@
 }
 
 .other-navbar .hover-line a {
-  color: #f8f8ff;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
   z-index: 100;
 }
 
 .other-navbar .underline {
   display: block;
   content: "";
-  border-bottom: solid 2px #d7b686;
+  border-bottom: solid 3px #b34b1a;
 }
 
 .other-navbar .hover-line:after {
   display: block;
   content: "";
-  border-bottom: solid 2px #d7b686;
+  border-bottom: solid 3px #d7b686;
   transform: scaleX(0);
   transition: transform 250ms ease-in-out;
 }
@@ -239,6 +272,11 @@
 
 .other-navbar div.hover-line:after {
   transform-origin: 0% 50%;
+}
+
+.other-navbar .navbar-container .menu .left-side {
+  margin-top: 10px;
+  height: 30px;
 }
 
 /* BASKET */

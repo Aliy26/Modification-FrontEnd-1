@@ -13,6 +13,7 @@ import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
 import { Logout } from "@mui/icons-material";
+import { useHistory } from "react-router-dom";
 
 interface OtherNavbarProps {
   cartItems: CartItem[];
@@ -42,7 +43,12 @@ export default function OtherNavbar(props: OtherNavbarProps) {
     handleCloseLogout,
     handleLogoutRequest,
   } = props;
+
+  const history = useHistory();
   const { authMember } = useGlobals();
+  const handleMyPageNav = () => {
+    history.push("/member-page");
+  };
   return (
     <div className="other-navbar">
       <Container className="navbar-container">
@@ -56,22 +62,15 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               />
             </NavLink>
           </Box>
+          <Box className={"hover-line"}>
+            <NavLink to="/">Home</NavLink>
+          </Box>
+          <Box className={"hover-line"}>
+            <NavLink to="/products" activeClassName={"underline"}>
+              Products
+            </NavLink>
+          </Box>
           <Stack className="links">
-            <Box className={"hover-line"}>
-              <NavLink to="/">Home</NavLink>
-            </Box>
-            <Box className={"hover-line"}>
-              <NavLink to="/products" activeClassName={"underline"}>
-                Products
-              </NavLink>
-            </Box>
-            {authMember ? (
-              <Box className={"hover-line"}>
-                <NavLink to="/member-page" activeClassName={"underline"}>
-                  My Page
-                </NavLink>
-              </Box>
-            ) : null}
             {authMember ? (
               <Box className={"hover-line"}>
                 <NavLink to="/orders" activeClassName={"underline"}>
@@ -79,20 +78,26 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                 </NavLink>
               </Box>
             ) : null}
+            {authMember ? (
+              <Box className={"hover-line"}>
+                <NavLink to="/member-page" activeClassName={"underline"}>
+                  My Page
+                </NavLink>
+              </Box>
+            ) : null}
             <Box className={"hover-line"}>
               <NavLink to="/help">Help</NavLink>
             </Box>
 
-            <Basket
-              cartItems={cartItems}
-              onAdd={onAdd}
-              onRemove={onRemove}
-              onDelete={onDelete}
-              onDeleteAll={onDeleteAll}
-            />
-
             {!authMember ? (
-              <Box>
+              <Box className="left-side-menu">
+                <Basket
+                  cartItems={cartItems}
+                  onAdd={onAdd}
+                  onRemove={onRemove}
+                  onDelete={onDelete}
+                  onDeleteAll={onDeleteAll}
+                />
                 <Button
                   variant="contained"
                   className="login-button"
@@ -152,6 +157,12 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
+              <MenuItem onClick={handleMyPageNav}>
+                <ListItemIcon>
+                  <Logout fontSize="small" style={{ color: "blue" }} />
+                </ListItemIcon>
+                My Page
+              </MenuItem>
               <MenuItem onClick={handleLogoutRequest}>
                 <ListItemIcon>
                   <Logout fontSize="small" style={{ color: "blue" }} />
