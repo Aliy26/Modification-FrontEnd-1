@@ -88,16 +88,21 @@ export default function OtherNavbar(props: OtherNavbarProps) {
             <Box className={"hover-line"}>
               <NavLink to="/help">Help</NavLink>
             </Box>
+            <Box className={"hover-line"}>
+              <NavLink to="/help">About Us</NavLink>
+            </Box>
+            <Box>
+              <Basket
+                cartItems={cartItems}
+                onAdd={onAdd}
+                onRemove={onRemove}
+                onDelete={onDelete}
+                onDeleteAll={onDeleteAll}
+              />
+            </Box>
 
             {!authMember ? (
               <Box className="left-side-menu">
-                <Basket
-                  cartItems={cartItems}
-                  onAdd={onAdd}
-                  onRemove={onRemove}
-                  onDelete={onDelete}
-                  onDeleteAll={onDeleteAll}
-                />
                 <Button
                   variant="contained"
                   className="login-button"
