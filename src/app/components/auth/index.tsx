@@ -39,12 +39,21 @@ const ModalImg = styled.img`
 interface AuthenticationModalProps {
   signupOpen: boolean;
   loginOpen: boolean;
+  deleteOpen: boolean;
   handleSignupClose: () => void;
   handleLoginClose: () => void;
+  handleDeleteClose: () => void;
 }
 
 export default function AuthenticationModal(props: AuthenticationModalProps) {
-  const { signupOpen, loginOpen, handleSignupClose, handleLoginClose } = props;
+  const {
+    signupOpen,
+    loginOpen,
+    deleteOpen,
+    handleSignupClose,
+    handleLoginClose,
+    handleDeleteClose,
+  } = props;
   const classes = useStyles();
   const member = new MemberService();
   const [memberNick, setMemberNick] = useState<string>("");
@@ -71,6 +80,8 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       handleSignupRequest().then();
     } else if (e.key === "Enter" && loginOpen) {
       handleLoginRequest().then();
+    } else if (e.key === "Enter" && deleteOpen) {
+      handleDeleteRequest().then();
     }
   };
 
@@ -116,6 +127,26 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     } catch (err) {
       console.log(err);
       handleLoginClose();
+      sweetErrorHandling(err).then();
+    }
+  };
+
+  const handleDeleteRequest = async () => {
+    try {
+      const isFulfill = memberNick !== "" && memberPassword !== "";
+      if (!isFulfill) throw new Error(Messages.error3);
+
+      const deleteInput: LoginInput = {
+        memberNick: memberNick,
+        memberPassword: memberPassword,
+      };
+      const result = await member.deleteAccount(deleteInput);
+
+      setAuthMember(null);
+      handleDeleteClose();
+    } catch (err) {
+      console.log(err);
+      handleDeleteClose();
       sweetErrorHandling(err).then();
     }
   };
@@ -228,6 +259,62 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
               >
                 <LoginIcon sx={{ mr: 1 }} />
                 Login
+              </Fab>
+            </Stack>
+          </Stack>
+        </Fade>
+      </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={deleteOpen}
+        onClose={handleDeleteClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={deleteOpen}>
+          <Stack
+            className={classes.paper}
+            direction={"row"}
+            sx={{ width: "700px" }}
+          >
+            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <Stack
+              sx={{
+                marginLeft: "65px",
+                marginTop: "25px",
+                alignItems: "center",
+              }}
+            >
+              <h2>Delete Account</h2>
+              <TextField
+                id="outlined-basic"
+                label="username"
+                variant="outlined"
+                sx={{ my: "10px" }}
+                onChange={handleUsername}
+              />
+              <TextField
+                id={"outlined-basic"}
+                label={"password"}
+                variant={"outlined"}
+                type={"password"}
+                onChange={handlePassword}
+                onKeyDown={handlePasswordKeyDown}
+              />
+              <Fab
+                sx={{ marginTop: "27px", width: "120px" }}
+                variant={"extended"}
+                color={"primary"}
+                onClick={handleDeleteRequest}
+              >
+                <LoginIcon sx={{ mr: 1 }} />
+                Confirm
               </Fab>
             </Stack>
           </Stack>

@@ -8,7 +8,7 @@ import {
   MenuItem,
   ListItemIcon,
 } from "@mui/material";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 import Basket from "./Basket";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
@@ -30,6 +30,8 @@ interface HomeNavbarProps {
 }
 
 export default function HomeNavbar(props: HomeNavbarProps) {
+  const location = useLocation();
+  console.log(">>>>>>>", location.pathname);
   const {
     cartItems,
     onAdd,
@@ -57,7 +59,6 @@ export default function HomeNavbar(props: HomeNavbarProps) {
   // };
 
   // ** HANDLERS **/
-
   return (
     <div className="home-navbar">
       <Container className="navbar-container">
@@ -89,13 +90,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 </NavLink>
               </Box>
             ) : null}
-            {authMember ? (
-              <Box className={"hover-line"}>
-                <NavLink to="/member-page" activeClassName={"underline"}>
-                  My Page
-                </NavLink>
-              </Box>
-            ) : null}
+
             <Box className={"hover-line"}>
               <NavLink to="/help">Help</NavLink>
             </Box>
@@ -172,12 +167,14 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem onClick={handleMemberPageNav}>
-                <ListItemIcon>
-                  <Logout fontSize="small" style={{ color: "blue" }} />
-                </ListItemIcon>
-                My Page
-              </MenuItem>
+              {location.pathname !== "/member-page" && (
+                <MenuItem onClick={handleMemberPageNav}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" style={{ color: "blue" }} />
+                  </ListItemIcon>
+                  My Page
+                </MenuItem>
+              )}
               <MenuItem onClick={handleLogoutRequest}>
                 <ListItemIcon>
                   <Logout fontSize="small" style={{ color: "blue" }} />

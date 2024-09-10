@@ -21,16 +21,19 @@ import "../css/footer.css";
 
 function App() {
   const location = useLocation();
+  console.log(location.pathname);
   const { setAuthMember } = useGlobals();
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = useBasket();
   const [signupOpen, setSighupOpen] = useState<boolean>(false);
   const [loginOpen, setLoginOpen] = useState<boolean>(false);
+  const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   //** HANDLERS **/
 
   const handleSignupClose = () => setSighupOpen(false);
   const handleLoginClose = () => setLoginOpen(false);
+  const handleDeleteClose = () => setDeleteOpen(false);
 
   const handleLogoutClick = (e: T) => {
     setAnchorEl(e.currentTarget);
@@ -89,7 +92,11 @@ function App() {
           <OrdersPage />
         </Route>
         <Route path="/member-page">
-          <UserPage />
+          <UserPage
+            anchorEl={anchorEl}
+            handleDeleteClose={handleDeleteClose}
+            setDeleteOpen={setDeleteOpen}
+          />
         </Route>
         <Route path="/help">
           <HelpPage />
@@ -103,8 +110,10 @@ function App() {
       <AuthenticationModal
         signupOpen={signupOpen}
         loginOpen={loginOpen}
+        deleteOpen={deleteOpen}
         handleLoginClose={handleLoginClose}
         handleSignupClose={handleSignupClose}
+        handleDeleteClose={handleDeleteClose}
       />
     </>
   );

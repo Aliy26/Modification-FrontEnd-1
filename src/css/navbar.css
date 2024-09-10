@@ -188,9 +188,10 @@
 
 .other-navbar {
   width: 100%;
-  height: 400px;
+  height: 500px;
   display: flex;
-  background: url("/public/img/gatorade-banner.png");
+  background: url("/public/img/banner-full-products.png");
+  background-position: center -330px;
   background-size: cover;
 }
 

@@ -1,4 +1,11 @@
-import { Box, Container, Stack } from "@mui/material";
+import {
+  Box,
+  Container,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Stack,
+} from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
@@ -10,9 +17,17 @@ import { serverApi } from "../../../lib/config";
 import { MemberType } from "../../../lib/enums/member.enum";
 import "../../../css/userPage.css";
 
-export default function UserPage() {
+interface UserPageProps {
+  anchorEl: HTMLElement | null;
+  handleDeleteClose: () => void;
+  setDeleteOpen: (isOpen: boolean) => void;
+}
+
+export default function UserPage(props: UserPageProps) {
+  const { anchorEl, handleDeleteClose, setDeleteOpen } = props;
   const history = useHistory();
   const { authMember } = useGlobals();
+
   if (!authMember) history.push("/");
   return (
     <div className={"user-page"}>
@@ -22,7 +37,11 @@ export default function UserPage() {
             <Box display={"flex"} flexDirection={"column"}>
               <Box className={"menu-name"}>Modify Member Details</Box>
               <Box className={"menu-content"}>
-                <Settings />
+                <Settings
+                  anchorEl={anchorEl}
+                  handleDeleteClose={handleDeleteClose}
+                  setDeleteOpen={setDeleteOpen}
+                />
               </Box>
             </Box>
           </Stack>
@@ -34,6 +53,17 @@ export default function UserPage() {
                 flexDirection={"column"}
                 alignItems={"center"}
               >
+                <div className="setting-icon">
+                  <img
+                    src="/icons/setting.svg"
+                    alt="setting-icon"
+                    className="setting"
+                    onClick={() => {
+                      setDeleteOpen(true);
+                    }}
+                  />
+                </div>
+
                 <div className={"order-user-img"}>
                   <img
                     src={

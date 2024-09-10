@@ -12,7 +12,14 @@ import {
 } from "../../../lib/sweetAlert";
 import { Messages, serverApi } from "../../../lib/config";
 
-export function Settings() {
+interface SettingsProps {
+  anchorEl: HTMLElement | null;
+  handleDeleteClose: () => void;
+  setDeleteOpen: (isOpen: boolean) => void;
+}
+
+export function Settings(props: SettingsProps) {
+  const { anchorEl, handleDeleteClose, setDeleteOpen } = props;
   const { authMember, setAuthMember } = useGlobals();
   const [memberImage, setMemberImage] = useState<string>(
     authMember?.memberImage
