@@ -72,13 +72,12 @@ class MemberService {
     }
   }
 
-  public async deleteAccount(input: LoginInput): Promise<Member> {
+  public async deleteAccount(input: LoginInput): Promise<void> {
     try {
       const url = `${this.path}/member/delete`;
       const result = await axios.post(url, input, { withCredentials: true });
       const member: Member = result.data;
       localStorage.setItem("memberData", JSON.stringify(member));
-      return member;
     } catch (err) {
       console.log("Error, deleteAccount", err);
       throw err;

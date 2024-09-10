@@ -155,6 +155,10 @@
   justify-content: space-between;
 }
 
+.user-page .order-info-box .user-media-box img {
+  width: 20px;
+}
+
 .user-page .order-info-box .user-desc {
   margin-top: 30px;
   width: 90%;

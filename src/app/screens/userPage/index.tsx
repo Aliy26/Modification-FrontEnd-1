@@ -1,14 +1,4 @@
-import {
-  Box,
-  Container,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Stack,
-} from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TelegramIcon from "@mui/icons-material/Telegram";
+import { Box, Container, Stack } from "@mui/material";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { Settings } from "./Settings";
 import { useHistory } from "react-router-dom";
@@ -98,9 +88,9 @@ export default function UserPage(props: UserPageProps) {
                 </span>
               </Box>
               <Box className={"user-media-box"}>
-                <FacebookIcon />
-                <InstagramIcon />
-                <TelegramIcon />
+                <img src="icons/telegram.svg" alt="telegram" className="tg" />
+                <img src="icons/facebook.svg" alt="facebook" />
+                <img src="icons/instagram.svg" alt="instagram" />
                 <YouTubeIcon />
               </Box>
               <p className={"user-desc"}>

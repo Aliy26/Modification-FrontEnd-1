@@ -6,7 +6,6 @@ import CardOverflow from "@mui/joy/CardOverflow";
 import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import Divider from "../../components/divider";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrieveNewDishes } from "./selector";
@@ -60,7 +59,7 @@ export default function NewDishes() {
                             <Typography className={"title"}>
                               {product.productName}
                             </Typography>
-                            <Divider width="2" height="24" bg="#d9d9d9" />
+
                             <Typography className={"price"}>
                               ${product.productPrice}
                             </Typography>

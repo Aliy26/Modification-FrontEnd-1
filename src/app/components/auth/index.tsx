@@ -140,10 +140,17 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         memberNick: memberNick,
         memberPassword: memberPassword,
       };
-      const result = await member.deleteAccount(deleteInput);
 
-      setAuthMember(null);
-      handleDeleteClose();
+      const confirmation = window.confirm(
+        "Do you want to delete your account?"
+      );
+      if (confirmation) {
+        await member.deleteAccount(deleteInput);
+        setAuthMember(null);
+        handleDeleteClose();
+      } else {
+        handleDeleteClose();
+      }
     } catch (err) {
       console.log(err);
       handleDeleteClose();

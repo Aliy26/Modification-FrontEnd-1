@@ -46,7 +46,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
 
   const history = useHistory();
   const location = useLocation();
-  console.log("otherNavvvvvv", location);
+
   const { authMember } = useGlobals();
   const handleMyPageNav = () => {
     history.push("/member-page");
