@@ -51,30 +51,19 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const { restaurant } = useSelector(restaurantRetriever);
 
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-
-  // useCallback to avoid unnecessary re-renders and re-executions
-  const fetchProductData = useCallback(async () => {
-    try {
-      const productService = new ProductService();
-      const productData = await productService.getProduct(productId);
-      setChosenProduct(productData);
-
-      const memberService = new MemberService();
-      const restaurantData = await memberService.getRestaurnat();
-      setRestaurant(restaurantData);
-    } catch (err) {
-      console.error("Error fetching product or restaurant data", err);
-    }
-  }, [productId, setChosenProduct, setRestaurant]);
-
   useEffect(() => {
-    fetchProductData();
-  }, []);
+    const product = new ProductService();
+    product
+      .getProduct(productId)
+      .then((data) => setChosenProduct(data))
+      .catch((err) => console.log(err));
 
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
+    const member = new MemberService();
+    member
+      .getRestaurnat()
+      .then((data) => setRestaurant(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   if (!chosenProduct) return null;
   return (
@@ -143,7 +132,6 @@ export default function ChosenProduct(props: ChosenProductProps) {
                     price: chosenProduct.productPrice,
                     image: chosenProduct.productImages[0],
                   });
-                  setSnackbarOpen(true);
                 }}
               >
                 Add To Basket
@@ -159,8 +147,6 @@ export default function ChosenProduct(props: ChosenProductProps) {
                     price: chosenProduct.productPrice,
                     image: chosenProduct.productImages[0],
                   });
-                  setSnackbarOpen(true);
-                  e.stopPropagation();
                 }}
               >
                 Buy Now
@@ -169,20 +155,13 @@ export default function ChosenProduct(props: ChosenProductProps) {
           </Box>
         </Stack>
       </Container>
-      {/* Snackbar for feedback */}
+
       <Snackbar
         className="checkk"
-        open={snackbarOpen}
         autoHideDuration={2500}
-        onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert
-          onClose={handleSnackbarClose}
-          severity="success"
-          sx={{ width: "100%" }}
-          className="check"
-        >
+        <Alert severity="success" sx={{ width: "100%" }} className="check">
           Product added to basket!
         </Alert>
       </Snackbar>

@@ -257,14 +257,13 @@
 }
 
 .order-page .order-container .member-box .order-user-img .user {
-  width: 53px;
-  height: 37px;
   color: #a1a1a1;
   font-family: Commissioner;
-  font-size: 27px;
+  font-size: 23px;
   font-style: normal;
   font-weight: 500;
   line-height: 36px;
+  margin-top: 10px;
   margin-top: -30px;
 }
 

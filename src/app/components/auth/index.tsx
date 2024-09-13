@@ -10,7 +10,10 @@ import { T } from "../../../lib/types/common";
 import { Messages } from "../../../lib/config";
 import { LoginInput, MemberInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import {
+  sweetErrorHandling,
+  sweetTopSuccessAlert,
+} from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +60,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const classes = useStyles();
   const member = new MemberService();
   const [memberNick, setMemberNick] = useState<string>("");
+  const [memberEmail, setMemberEmail] = useState<string>("");
   const [memberPhone, setMemberPhone] = useState<string>("");
   const [memberPassword, setMemberPassword] = useState<string>("");
   const { setAuthMember } = useGlobals();
@@ -65,6 +69,10 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
 
   const handleUsername = (e: T) => {
     setMemberNick(e.target.value);
+  };
+
+  const handleEmail = (e: T) => {
+    setMemberEmail(e.target.value);
   };
 
   const handlePhone = (e: T) => {
@@ -88,15 +96,20 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const handleSignupRequest = async () => {
     try {
       const isFulfill =
-        memberNick !== "" && memberPhone !== "" && memberPassword !== "";
+        memberNick !== "" &&
+        memberEmail !== "" &&
+        memberPhone !== "" &&
+        memberPassword !== "";
       if (!isFulfill) throw new Error(Messages.error3);
+      if (!memberEmail.includes("@")) throw new Error(Messages.error6);
 
       const signupInput: MemberInput = {
         memberNick: memberNick,
+        memberEmail: memberEmail,
         memberPhone: memberPhone,
         memberPassword: memberPassword,
       };
-
+      console.log(signupInput);
       const result = await member.signup(signupInput);
       // Saving Authenticated user
 
@@ -146,8 +159,9 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       );
       if (confirmation) {
         await member.deleteAccount(deleteInput);
-        setAuthMember(null);
         handleDeleteClose();
+        setAuthMember(null);
+        await sweetTopSuccessAlert("The account has been deleted!", 3000);
       } else {
         handleDeleteClose();
       }
@@ -182,20 +196,28 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             <Stack sx={{ marginLeft: "69px", alignItems: "center" }}>
               <h2>Signup Form</h2>
               <TextField
-                sx={{ marginTop: "7px" }}
+                sx={{ my: "8px" }}
                 id="outlined-basic"
                 label="username"
                 variant="outlined"
                 onChange={handleUsername}
               />
               <TextField
-                sx={{ my: "17px" }}
+                sx={{ my: "8px" }}
+                id="outlined-basic"
+                label="email"
+                variant="outlined"
+                onChange={handleEmail}
+              />
+              <TextField
+                sx={{ my: "8px" }}
                 id="outlined-basic"
                 label="phone number"
                 variant="outlined"
                 onChange={handlePhone}
               />
               <TextField
+                sx={{ my: "8px" }}
                 id="outlined-basic"
                 label="password"
                 variant="outlined"
