@@ -33,17 +33,17 @@
   flex-direction: column;
 }
 
-.my-page-left .menu-name {
+.my-page-left .my-page {
   width: 100%;
   height: 70px;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid #f8f8ff;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 45px;
-  color: #f8f8ff;
+  font-family: "Lucida Grande";
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+  font-size: 40px;
+  color: rgb(20, 165, 165);
 }
 
 .my-page-left .menu-content {
@@ -113,6 +113,7 @@
   width: 150px;
   height: 150px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  cursor: pointer;
   border-radius: 37px;
 }
 
@@ -156,7 +157,12 @@
 }
 
 .user-page .order-info-box .user-media-box img {
+  cursor: pointer;
   width: 20px;
+}
+
+.user-page .order-info-box .user-media-box .youTube {
+  cursor: pointer;
 }
 
 .user-page .order-info-box .user-desc {
@@ -315,15 +321,24 @@
   color: #4f547b;
 }
 
-.user-page .settings .up-del-box {
-  position: relative;
-  width: 37px;
-  height: 37px;
-  display: flex;
-  background: #cbcbcb;
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
+.user-page .settings .cloud {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.user-page .settings .cloud:hover {
+  background-color: greenyellow;
+}
+
+.user-page .settings .bin {
+  height: 30px;
+  width: 25px;
+  cursor: pointer;
+}
+
+.user-page .settings .bin:hover {
+  background-color: greenyellow;
 }
 
 .user-page .settings .up-del-box input {

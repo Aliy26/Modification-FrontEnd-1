@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Button from "@mui/material/Button";
 import { useGlobals } from "../../hooks/useGlobals";
-import { MemberUpdateInput } from "../../../lib/types/member";
+import { Member, MemberUpdateInput } from "../../../lib/types/member";
 import { useState } from "react";
 import { T } from "../../../lib/types/common";
 import MemberService from "../../services/MemberService";
@@ -11,6 +11,7 @@ import {
   sweetTopSmallSuccessAlert,
 } from "../../../lib/sweetAlert";
 import { Messages, serverApi } from "../../../lib/config";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface SettingsProps {
   anchorEl: HTMLElement | null;
@@ -80,6 +81,16 @@ export function Settings(props: SettingsProps) {
     }
   };
 
+  const handleImageDelete = async () => {
+    const confirm = window.confirm("Do you want to delete the image?");
+    if (confirm) {
+      const member = new MemberService();
+      const result: Member = await member.deleteImage();
+      setMemberImage("/icons/default-user.svg");
+      setAuthMember(result);
+    }
+  };
+
   const handleImageViewer = (e: T) => {
     if (e.target && e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -106,9 +117,16 @@ export function Settings(props: SettingsProps) {
           <span>Upload image</span>
           <p>JPG, JPEG, PNG formats only!</p>
           <div className={"up-del-box"}>
-            <Button component="label" onChange={handleImageViewer}>
-              <CloudDownloadIcon />
+            <Button
+              component="label"
+              className="label"
+              onChange={handleImageViewer}
+            >
+              <CloudDownloadIcon className="cloud" />
               <input type="file" hidden />
+            </Button>
+            <Button onClick={handleImageDelete}>
+              <DeleteIcon className="bin" />
             </Button>
           </div>
         </div>

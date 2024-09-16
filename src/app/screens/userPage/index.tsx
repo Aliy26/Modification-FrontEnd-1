@@ -15,6 +15,7 @@ interface UserPageProps {
 
 export default function UserPage(props: UserPageProps) {
   const { anchorEl, handleDeleteClose, setDeleteOpen } = props;
+
   const history = useHistory();
   const { authMember } = useGlobals();
 
@@ -25,7 +26,7 @@ export default function UserPage(props: UserPageProps) {
         <Stack className={"my-page-frame"}>
           <Stack className={"my-page-left"}>
             <Box display={"flex"} flexDirection={"column"}>
-              <Box className={"menu-name"}>Modify Member Details</Box>
+              <Box className={"my-page"}>My Page</Box>
               <Box className={"menu-content"}>
                 <Settings
                   anchorEl={anchorEl}
@@ -91,7 +92,7 @@ export default function UserPage(props: UserPageProps) {
                 <img src="icons/telegram.svg" alt="telegram" className="tg" />
                 <img src="icons/facebook.svg" alt="facebook" />
                 <img src="icons/instagram.svg" alt="instagram" />
-                <YouTubeIcon />
+                <YouTubeIcon className="youTube" />
               </Box>
               <p className={"user-desc"}>
                 {authMember?.memberDesc

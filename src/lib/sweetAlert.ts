@@ -25,6 +25,19 @@ export const sweetTopSuccessAlert = async (
   });
 };
 
+export const sweetTopSuccessAlert1 = async (
+  msg: string,
+  duration: number = 2000
+) => {
+  await Swal.fire({
+    position: "center",
+    icon: "success",
+    title: msg,
+    showConfirmButton: false,
+    timer: duration,
+  });
+};
+
 export const sweetTopSmallSuccessAlert = async (
   msg: string,
   duration: number = 2000
@@ -58,4 +71,41 @@ export const sweetFailureProvider = (
       window.location.replace(forward_url);
     }
   });
+};
+
+export const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: "btn btn-success",
+    cancelButton: "btn btn-danger",
+  },
+  buttonsStyling: false,
+});
+
+// Function to trigger the confirmation modal
+export const showDeleteConfirmation = () => {
+  swalWithBootstrapButtons
+    .fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        swalWithBootstrapButtons.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire({
+          title: "Cancelled",
+          text: "Your imaginary file is safe :)",
+          icon: "error",
+        });
+      }
+    });
 };

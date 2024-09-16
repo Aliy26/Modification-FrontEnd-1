@@ -13,6 +13,7 @@
 }
 
 .sns-context {
+  cursor: pointer;
   margin-top: 17px;
   width: 137px;
   display: flex;

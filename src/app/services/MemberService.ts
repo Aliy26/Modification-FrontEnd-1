@@ -82,6 +82,21 @@ class MemberService {
     }
   }
 
+  public async deleteImage(): Promise<Member> {
+    try {
+      const url = this.path + "/member/delete/image";
+      const member = await axios.get(url, {
+        withCredentials: true,
+      });
+      console.log(">>>>>>>>>>>>>>>>", member);
+      localStorage.setItem("memberData", JSON.stringify(member.data));
+      return member.data;
+    } catch (err) {
+      console.log("Error, deleteImage", err);
+      throw err;
+    }
+  }
+
   public async logout(): Promise<void> {
     try {
       const url = this.path + "/member/logout";

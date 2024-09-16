@@ -218,6 +218,7 @@
 }
 
 .order-page .order-container .order-user-img .order-user-avatar {
+  cursor: pointer;
   margin-top: 30px;
   width: 117px;
   height: 112px;
@@ -245,7 +246,9 @@
 }
 
 .order-page .order-container .member-box .order-user-img .user-name {
-  width: 76px;
+  display: flex;
+  justify-content: center;
+  width: 60px;
   height: 37px;
   color: #08090d;
   font-family: Commissioner;
@@ -256,14 +259,23 @@
   margin-top: 10px;
 }
 
+.member-infoo {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .order-page .order-container .member-box .order-user-img .user {
+  display: flex;
+  justify-content: center;
   color: #a1a1a1;
   font-family: Commissioner;
   font-size: 23px;
   font-style: normal;
   font-weight: 500;
   line-height: 36px;
-  margin-top: 10px;
   margin-top: -30px;
 }
 

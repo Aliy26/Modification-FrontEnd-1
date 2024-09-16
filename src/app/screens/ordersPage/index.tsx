@@ -57,6 +57,9 @@ export default function OrdersPage() {
   }, [orderInquiry, orderBuilder]);
 
   //** HANDLERS **/
+  const handleMyPageNav = () => {
+    history.push("/member-page");
+  };
 
   const handleChange = (e: SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -102,6 +105,7 @@ export default function OrdersPage() {
                   }
                   className={"order-user-avatar"}
                   alt="order-user-avatar"
+                  onClick={handleMyPageNav}
                 />
                 <div className={"order-user-icon-box"}>
                   <img
@@ -113,10 +117,13 @@ export default function OrdersPage() {
                     alt="order-item-avatar"
                   />
                 </div>
-                <p className={"user-name"}>
-                  {authMember?.memberNick ? authMember.memberNick : "No name"}
-                </p>
-                <p className={"user"}>{authMember?.memberType}</p>
+                <div className="member-infoo">
+                  <p className={"user-name"}>
+                    {authMember?.memberNick ? authMember.memberNick : "No name"}
+                  </p>
+                  <p className={"user"}>{authMember?.memberType}</p>
+                </div>
+
                 <div className="border-line"></div>
                 <div className="location">
                   <img src={"/icons/location.svg"} alt="location-icon" />

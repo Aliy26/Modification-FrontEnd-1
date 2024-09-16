@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CartItem } from "../../lib/types/search";
 import {
   sweetTopSmallSuccessAlert,
-  sweetTopSuccessAlert,
+  sweetTopSuccessAlert1,
 } from "../../lib/sweetAlert";
 
 const useBasket = () => {
@@ -22,11 +22,12 @@ const useBasket = () => {
       );
       setCartItems(cartUpdate);
       localStorage.setItem("cartData", JSON.stringify(cartUpdate));
+      await sweetTopSmallSuccessAlert("Product added!", 500);
     } else {
       const cartUpdate = [...cartItems, { ...input }];
       setCartItems(cartUpdate);
       localStorage.setItem("cartData", JSON.stringify(cartUpdate));
-      await sweetTopSuccessAlert("Product added!", 3000);
+      await sweetTopSuccessAlert1("Product added!", 2000);
     }
   };
 
