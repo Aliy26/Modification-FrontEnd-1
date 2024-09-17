@@ -1,4 +1,15 @@
-import { Box, Container, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  ClickAwayListener,
+  Container,
+  Grow,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper,
+  Stack,
+} from "@mui/material";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { Settings } from "./Settings";
 import { useHistory } from "react-router-dom";
@@ -6,15 +17,53 @@ import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
 import { MemberType } from "../../../lib/enums/member.enum";
 import "../../../css/userPage.css";
+import { useEffect, useRef, useState } from "react";
 
 interface UserPageProps {
-  anchorEl: HTMLElement | null;
-  handleDeleteClose: () => void;
   setDeleteOpen: (isOpen: boolean) => void;
+
+  setChangePasswordOpen: (isOpen: boolean) => void;
 }
 
 export default function UserPage(props: UserPageProps) {
-  const { anchorEl, handleDeleteClose, setDeleteOpen } = props;
+  const { setDeleteOpen, setChangePasswordOpen } = props;
+
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLButtonElement>(null);
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event: Event | React.SyntheticEvent) => {
+    if (
+      anchorRef.current &&
+      anchorRef.current.contains(event.target as HTMLElement)
+    ) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
+    } else if (event.key === "Escape") {
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = useRef(open);
+  useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current!.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
 
   const history = useHistory();
   const { authMember } = useGlobals();
@@ -28,11 +77,7 @@ export default function UserPage(props: UserPageProps) {
             <Box display={"flex"} flexDirection={"column"}>
               <Box className={"my-page"}>My Page</Box>
               <Box className={"menu-content"}>
-                <Settings
-                  anchorEl={anchorEl}
-                  handleDeleteClose={handleDeleteClose}
-                  setDeleteOpen={setDeleteOpen}
-                />
+                <Settings />
               </Box>
             </Box>
           </Stack>
@@ -45,14 +90,83 @@ export default function UserPage(props: UserPageProps) {
                 alignItems={"center"}
               >
                 <div className="setting-icon">
-                  <img
+                  {/* <img
                     src="/icons/setting.svg"
                     alt="setting-icon"
                     className="setting"
                     onClick={() => {
                       setDeleteOpen(true);
                     }}
-                  />
+                  /> */}
+                  <Stack direction="row" spacing={2}>
+                    <div>
+                      <Button
+                        ref={anchorRef}
+                        id="composition-button"
+                        aria-controls={open ? "composition-menu" : undefined}
+                        aria-expanded={open ? "true" : undefined}
+                        aria-haspopup="true"
+                        onClick={handleToggle}
+                      >
+                        <img
+                          src="icons/setting.svg"
+                          alt=""
+                          className="setting"
+                        />
+                      </Button>
+                      <Popper
+                        open={open}
+                        anchorEl={anchorRef.current}
+                        role={undefined}
+                        placement="bottom-start"
+                        transition
+                        disablePortal
+                      >
+                        {({ TransitionProps, placement }) => (
+                          <Grow
+                            {...TransitionProps}
+                            style={{
+                              transformOrigin:
+                                placement === "bottom-start"
+                                  ? "left top"
+                                  : "left bottom",
+                            }}
+                          >
+                            <Paper className="paper">
+                              <ClickAwayListener onClickAway={handleClose}>
+                                <MenuList
+                                  autoFocusItem={open}
+                                  id="composition-menu"
+                                  aria-labelledby="composition-button"
+                                  onKeyDown={handleListKeyDown}
+                                  className="menu-list"
+                                >
+                                  <MenuItem
+                                    onClick={() => setChangePasswordOpen(true)}
+                                    className="password"
+                                  >
+                                    Change Password
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={handleClose}
+                                    className="email"
+                                  >
+                                    Change Email
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={() => setDeleteOpen(true)}
+                                    className="deleteAccount"
+                                  >
+                                    Delete Account
+                                  </MenuItem>
+                                </MenuList>
+                              </ClickAwayListener>
+                            </Paper>
+                          </Grow>
+                        )}
+                      </Popper>
+                    </div>
+                  </Stack>
                 </div>
 
                 <div className={"order-user-img"}>

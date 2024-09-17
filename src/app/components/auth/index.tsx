@@ -8,7 +8,11 @@ import styled from "styled-components";
 import LoginIcon from "@mui/icons-material/Login";
 import { T } from "../../../lib/types/common";
 import { Messages } from "../../../lib/config";
-import { LoginInput, MemberInput } from "../../../lib/types/member";
+import {
+  LoginInput,
+  MemberInput,
+  UpdatePassword,
+} from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import {
   sweetErrorHandling,
@@ -43,9 +47,11 @@ interface AuthenticationModalProps {
   signupOpen: boolean;
   loginOpen: boolean;
   deleteOpen: boolean;
+  changePasswordOpen: boolean;
   handleSignupClose: () => void;
   handleLoginClose: () => void;
   handleDeleteClose: () => void;
+  handleChangePasswordClose: () => void;
 }
 
 export default function AuthenticationModal(props: AuthenticationModalProps) {
@@ -53,9 +59,11 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     signupOpen,
     loginOpen,
     deleteOpen,
+    changePasswordOpen,
     handleSignupClose,
     handleLoginClose,
     handleDeleteClose,
+    handleChangePasswordClose,
   } = props;
   const classes = useStyles();
   const member = new MemberService();
@@ -63,6 +71,9 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const [memberEmail, setMemberEmail] = useState<string>("");
   const [memberPhone, setMemberPhone] = useState<string>("");
   const [memberPassword, setMemberPassword] = useState<string>("");
+
+  const [newPassword, setNewPassword] = useState<string>("");
+
   const { setAuthMember } = useGlobals();
 
   /** HANDLERS **/
@@ -83,6 +94,10 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     setMemberPassword(e.target.value);
   };
 
+  const handleNewPassword = (e: T) => {
+    setNewPassword(e.target.value);
+  };
+
   const handlePasswordKeyDown = (e: T) => {
     if (e.key === "Enter" && signupOpen) {
       handleSignupRequest().then();
@@ -90,6 +105,8 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       handleLoginRequest().then();
     } else if (e.key === "Enter" && deleteOpen) {
       handleDeleteRequest().then();
+    } else if (e.key === "Enter" && changePasswordOpen) {
+      handlePasswordChangeRequest().then();
     }
   };
 
@@ -100,7 +117,14 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         memberEmail !== "" &&
         memberPhone !== "" &&
         memberPassword !== "";
-      if (!isFulfill) throw new Error(Messages.error3);
+
+      if (!isFulfill) {
+        setMemberNick("");
+        setMemberPhone("");
+        setMemberPassword("");
+        setMemberEmail("");
+        throw new Error(Messages.error3);
+      }
       if (!memberEmail.includes("@")) throw new Error(Messages.error6);
 
       const signupInput: MemberInput = {
@@ -109,7 +133,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         memberPhone: memberPhone,
         memberPassword: memberPassword,
       };
-      console.log(signupInput);
+
       const result = await member.signup(signupInput);
       // Saving Authenticated user
 
@@ -125,7 +149,11 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const handleLoginRequest = async () => {
     try {
       const isFulfill = memberNick !== "" && memberPassword !== "";
-      if (!isFulfill) throw new Error(Messages.error3);
+      if (!isFulfill) {
+        setMemberNick("");
+        setMemberPhone("");
+        throw new Error(Messages.error3);
+      }
 
       const loginInput: LoginInput = {
         memberNick: memberNick,
@@ -147,7 +175,11 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const handleDeleteRequest = async () => {
     try {
       const isFulfill = memberNick !== "" && memberPassword !== "";
-      if (!isFulfill) throw new Error(Messages.error3);
+      if (!isFulfill) {
+        setMemberNick("");
+        setMemberPhone("");
+        throw new Error(Messages.error3);
+      }
 
       const deleteInput: LoginInput = {
         memberNick: memberNick,
@@ -168,6 +200,41 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     } catch (err) {
       console.log(err);
       handleDeleteClose();
+      sweetErrorHandling(err).then();
+    }
+  };
+
+  const handlePasswordChangeRequest = async () => {
+    try {
+      const isFullfil =
+        memberNick !== "" && memberPassword !== "" && newPassword !== "";
+      if (!isFullfil) {
+        setMemberNick("");
+        setMemberPassword("");
+        setNewPassword("");
+        throw new Error(Messages.error3);
+      }
+
+      const newPasswordInput: UpdatePassword = {
+        memberNick: memberNick,
+        memberPassword: memberPassword,
+        newPassword: newPassword,
+      };
+
+      const confirmation = window.confirm(
+        "Do you want to change your password?"
+      );
+      if (confirmation) {
+        const result = await member.updatePassowrd(newPasswordInput);
+        handleChangePasswordClose();
+        setAuthMember(result);
+        await sweetTopSuccessAlert("The password has been changed!", 3000);
+      } else {
+        handleChangePasswordClose();
+      }
+    } catch (err) {
+      console.log(err);
+      handleChangePasswordClose();
       sweetErrorHandling(err).then();
     }
   };
@@ -288,6 +355,70 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
               >
                 <LoginIcon sx={{ mr: 1 }} />
                 Login
+              </Fab>
+            </Stack>
+          </Stack>
+        </Fade>
+      </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={changePasswordOpen}
+        onClose={handleChangePasswordClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={changePasswordOpen}>
+          <Stack
+            className={classes.paper}
+            direction={"row"}
+            sx={{ width: "700px" }}
+          >
+            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <Stack
+              sx={{
+                marginLeft: "65px",
+                marginTop: "25px",
+                alignItems: "center",
+              }}
+            >
+              <h2>Change Password</h2>
+              <TextField
+                id="outlined-basic"
+                label="username"
+                variant="outlined"
+                sx={{ my: "10px" }}
+                onChange={handleUsername}
+              />
+              <TextField
+                id={"outlined-basic"}
+                label={"password"}
+                variant={"outlined"}
+                type={"password"}
+                onChange={handlePassword}
+                onKeyDown={handlePasswordKeyDown}
+              />
+              <TextField
+                sx={{ mt: "10px" }}
+                id={"outlined-basic"}
+                label={"new password"}
+                variant={"outlined"}
+                type={"password"}
+                onChange={handleNewPassword}
+              />
+              <Fab
+                sx={{ marginTop: "27px", width: "120px" }}
+                variant={"extended"}
+                color={"primary"}
+                onClick={handlePasswordChangeRequest}
+              >
+                <LoginIcon sx={{ mr: 1 }} />
+                Change
               </Fab>
             </Stack>
           </Stack>

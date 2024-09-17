@@ -94,12 +94,30 @@
 }
 
 .user-page .order-info-box .setting {
-  position: absolute;
-  top: 6%;
-  right: 8%;
+  margin-left: 200px;
   cursor: pointer;
   width: 25px;
   height: 25px;
+}
+
+.user-page .paper {
+  margin-left: 200px;
+}
+
+.user-page .paper .password {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-page .paper .email {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-page .paper .deleteAccount {
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .user-page .order-info-box .order-user-img {

@@ -33,6 +33,12 @@ export interface LoginInput {
   memberPassword: string;
 }
 
+export interface UpdatePassword {
+  memberNick: string;
+  memberPassword: string;
+  newPassword: string;
+}
+
 export interface MemberUpdateInput {
   memberNick?: string;
   memberPhone?: string;

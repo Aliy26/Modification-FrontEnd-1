@@ -13,14 +13,7 @@ import {
 import { Messages, serverApi } from "../../../lib/config";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-interface SettingsProps {
-  anchorEl: HTMLElement | null;
-  handleDeleteClose: () => void;
-  setDeleteOpen: (isOpen: boolean) => void;
-}
-
-export function Settings(props: SettingsProps) {
-  const { anchorEl, handleDeleteClose, setDeleteOpen } = props;
+export function Settings() {
   const { authMember, setAuthMember } = useGlobals();
   const [memberImage, setMemberImage] = useState<string>(
     authMember?.memberImage
@@ -86,6 +79,7 @@ export function Settings(props: SettingsProps) {
     if (confirm) {
       const member = new MemberService();
       const result: Member = await member.deleteImage();
+      await sweetTopSmallSuccessAlert("Successfully deleted", 1200);
       setMemberImage("/icons/default-user.svg");
       setAuthMember(result);
     }
