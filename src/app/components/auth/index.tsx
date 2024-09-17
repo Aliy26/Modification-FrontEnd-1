@@ -11,12 +11,14 @@ import { Messages } from "../../../lib/config";
 import {
   LoginInput,
   MemberInput,
+  UpdateEmail,
   UpdatePassword,
 } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import {
   sweetErrorHandling,
   sweetTopSuccessAlert,
+  sweetTopSuccessAlert1,
 } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 
@@ -48,10 +50,12 @@ interface AuthenticationModalProps {
   loginOpen: boolean;
   deleteOpen: boolean;
   changePasswordOpen: boolean;
+  changeEmailOpen: boolean;
   handleSignupClose: () => void;
   handleLoginClose: () => void;
   handleDeleteClose: () => void;
   handleChangePasswordClose: () => void;
+  handleChangeEmailClose: () => void;
 }
 
 export default function AuthenticationModal(props: AuthenticationModalProps) {
@@ -60,9 +64,11 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     loginOpen,
     deleteOpen,
     changePasswordOpen,
+    changeEmailOpen,
     handleSignupClose,
     handleLoginClose,
     handleDeleteClose,
+    handleChangeEmailClose,
     handleChangePasswordClose,
   } = props;
   const classes = useStyles();
@@ -71,7 +77,6 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const [memberEmail, setMemberEmail] = useState<string>("");
   const [memberPhone, setMemberPhone] = useState<string>("");
   const [memberPassword, setMemberPassword] = useState<string>("");
-
   const [newPassword, setNewPassword] = useState<string>("");
 
   const { setAuthMember } = useGlobals();
@@ -151,7 +156,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       const isFulfill = memberNick !== "" && memberPassword !== "";
       if (!isFulfill) {
         setMemberNick("");
-        setMemberPhone("");
+        setMemberPassword("");
         throw new Error(Messages.error3);
       }
 
@@ -172,34 +177,35 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     }
   };
 
-  const handleDeleteRequest = async () => {
+  const handleEmialChangeRequest = async () => {
     try {
-      const isFulfill = memberNick !== "" && memberPassword !== "";
-      if (!isFulfill) {
+      const isFullfil = memberNick !== "" && memberEmail !== "";
+      if (!isFullfil) {
         setMemberNick("");
-        setMemberPhone("");
+        setMemberEmail("");
         throw new Error(Messages.error3);
       }
+      if (!memberEmail.includes("@")) throw new Error(Messages.error6);
 
-      const deleteInput: LoginInput = {
+      const newEmailInput: UpdateEmail = {
         memberNick: memberNick,
-        memberPassword: memberPassword,
+        memberEmail: memberEmail,
       };
 
       const confirmation = window.confirm(
-        "Do you want to delete your account?"
+        "Do you want to change your password?"
       );
       if (confirmation) {
-        await member.deleteAccount(deleteInput);
-        handleDeleteClose();
-        setAuthMember(null);
-        await sweetTopSuccessAlert("The account has been deleted!", 3000);
+        const result = await member.updateEmail(newEmailInput);
+        handleChangeEmailClose();
+        setAuthMember(result);
+        await sweetTopSuccessAlert1("The email has been changed!", 3000);
       } else {
-        handleDeleteClose();
+        handleChangeEmailClose();
       }
     } catch (err) {
       console.log(err);
-      handleDeleteClose();
+      handleChangeEmailClose();
       sweetErrorHandling(err).then();
     }
   };
@@ -228,13 +234,45 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         const result = await member.updatePassowrd(newPasswordInput);
         handleChangePasswordClose();
         setAuthMember(result);
-        await sweetTopSuccessAlert("The password has been changed!", 3000);
+        await sweetTopSuccessAlert1("The password has been changed!", 1500);
       } else {
         handleChangePasswordClose();
       }
     } catch (err) {
       console.log(err);
       handleChangePasswordClose();
+      sweetErrorHandling(err).then();
+    }
+  };
+
+  const handleDeleteRequest = async () => {
+    try {
+      const isFulfill = memberNick !== "" && memberPassword !== "";
+      if (!isFulfill) {
+        setMemberNick("");
+        setMemberPassword("");
+        throw new Error(Messages.error3);
+      }
+
+      const deleteInput: LoginInput = {
+        memberNick: memberNick,
+        memberPassword: memberPassword,
+      };
+
+      const confirmation = window.confirm(
+        "Do you want to delete your account?"
+      );
+      if (confirmation) {
+        await member.deleteAccount(deleteInput);
+        handleDeleteClose();
+        setAuthMember(null);
+        await sweetTopSuccessAlert("The account has been deleted!", 3000);
+      } else {
+        handleDeleteClose();
+      }
+    } catch (err) {
+      console.log(err);
+      handleDeleteClose();
       sweetErrorHandling(err).then();
     }
   };
@@ -379,7 +417,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             direction={"row"}
             sx={{ width: "700px" }}
           >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <ModalImg src={"/img/change-password.webp"} alt="camera" />
             <Stack
               sx={{
                 marginLeft: "65px",
@@ -401,7 +439,6 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 variant={"outlined"}
                 type={"password"}
                 onChange={handlePassword}
-                onKeyDown={handlePasswordKeyDown}
               />
               <TextField
                 sx={{ mt: "10px" }}
@@ -410,12 +447,69 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 variant={"outlined"}
                 type={"password"}
                 onChange={handleNewPassword}
+                onKeyDown={handlePasswordKeyDown}
               />
               <Fab
                 sx={{ marginTop: "27px", width: "120px" }}
                 variant={"extended"}
                 color={"primary"}
                 onClick={handlePasswordChangeRequest}
+              >
+                <LoginIcon sx={{ mr: 1 }} />
+                Change
+              </Fab>
+            </Stack>
+          </Stack>
+        </Fade>
+      </Modal>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={changeEmailOpen}
+        onClose={handleChangeEmailClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={changeEmailOpen}>
+          <Stack
+            className={classes.paper}
+            direction={"row"}
+            sx={{ width: "700px" }}
+          >
+            <ModalImg src={"/img/change-email.webp"} alt="camera" />
+            <Stack
+              sx={{
+                marginLeft: "65px",
+                marginTop: "25px",
+                alignItems: "center",
+              }}
+            >
+              <h2>Change Email</h2>
+              <TextField
+                id="outlined-basic"
+                label="username"
+                variant="outlined"
+                sx={{ my: "10px" }}
+                onChange={handleUsername}
+              />
+              <TextField
+                id={"outlined-basic"}
+                label={"email"}
+                variant={"outlined"}
+                type={"email"}
+                onChange={handleEmail}
+                onKeyDown={handlePasswordKeyDown}
+              />
+              <Fab
+                sx={{ marginTop: "27px", width: "120px" }}
+                variant={"extended"}
+                color={"primary"}
+                onClick={handleEmialChangeRequest}
               >
                 <LoginIcon sx={{ mr: 1 }} />
                 Change
@@ -443,7 +537,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             direction={"row"}
             sx={{ width: "700px" }}
           >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <ModalImg src={"/img/delete-account.webp"} alt="camera" />
             <Stack
               sx={{
                 marginLeft: "65px",

@@ -5,6 +5,7 @@ import {
   Member,
   MemberInput,
   MemberUpdateInput,
+  UpdateEmail,
   UpdatePassword,
 } from "../../lib/types/member";
 
@@ -89,7 +90,7 @@ class MemberService {
       const member = await axios.get(url, {
         withCredentials: true,
       });
-      console.log(">>>>>>>>>>>>>>>>", member);
+
       localStorage.setItem("memberData", JSON.stringify(member.data));
       return member.data;
     } catch (err) {
@@ -116,6 +117,17 @@ class MemberService {
       return result.data;
     } catch (err) {
       console.log("Error, updatePassword");
+      throw err;
+    }
+  }
+
+  public async updateEmail(input: UpdateEmail): Promise<Member> {
+    try {
+      const url = this.path + "/member/update/email";
+      const result = await axios.post(url, input, { withCredentials: true });
+      return result.data;
+    } catch (err) {
+      console.log("Error, updateEmail");
       throw err;
     }
   }

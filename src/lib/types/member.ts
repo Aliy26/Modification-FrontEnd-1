@@ -39,6 +39,11 @@ export interface UpdatePassword {
   newPassword: string;
 }
 
+export interface UpdateEmail {
+  memberNick: string;
+  memberEmail: string;
+}
+
 export interface MemberUpdateInput {
   memberNick?: string;
   memberPhone?: string;

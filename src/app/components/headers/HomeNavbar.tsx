@@ -190,7 +190,11 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 <Box>15% off site-wide*</Box>
                 <Box>Code: NFL150FF</Box>
                 <Box>
-                  <Button className="shop-now" onClick={handleProductsPageNav}>
+                  <Button
+                    className="shop-now"
+                    onClick={handleProductsPageNav}
+                    variant="contained"
+                  >
                     Shon Now
                   </Button>
                 </Box>

@@ -28,6 +28,7 @@ function App() {
   const [loginOpen, setLoginOpen] = useState<boolean>(false);
   const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
   const [changePasswordOpen, setChangePasswordOpen] = useState<boolean>(false);
+  const [changeEmailOpen, setChangeEmailOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   //** HANDLERS **/
@@ -36,6 +37,7 @@ function App() {
   const handleLoginClose = () => setLoginOpen(false);
   const handleDeleteClose = () => setDeleteOpen(false);
   const handleChangePasswordClose = () => setChangePasswordOpen(false);
+  const handleChangeEmailClose = () => setChangeEmailOpen(false);
 
   const handleLogoutClick = (e: T) => {
     setAnchorEl(e.currentTarget);
@@ -96,6 +98,7 @@ function App() {
         <Route path="/member-page">
           <UserPage
             setDeleteOpen={setDeleteOpen}
+            setChangeEmailOpen={setChangeEmailOpen}
             setChangePasswordOpen={setChangePasswordOpen}
           />
         </Route>
@@ -112,11 +115,13 @@ function App() {
         signupOpen={signupOpen}
         loginOpen={loginOpen}
         deleteOpen={deleteOpen}
+        changePasswordOpen={changePasswordOpen}
+        changeEmailOpen={changeEmailOpen}
         handleLoginClose={handleLoginClose}
         handleSignupClose={handleSignupClose}
         handleDeleteClose={handleDeleteClose}
-        changePasswordOpen={changePasswordOpen}
         handleChangePasswordClose={handleChangePasswordClose}
+        handleChangeEmailClose={handleChangeEmailClose}
       />
     </>
   );

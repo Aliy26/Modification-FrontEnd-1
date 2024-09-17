@@ -19,6 +19,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: #2f9ba5;
+  /* background-color: rgba(7, 8, 8, 0.5); */
 }
 
 .top-navbar .menu .brand-logo {

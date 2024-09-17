@@ -21,12 +21,12 @@ import { useEffect, useRef, useState } from "react";
 
 interface UserPageProps {
   setDeleteOpen: (isOpen: boolean) => void;
-
+  setChangeEmailOpen: (isOpen: boolean) => void;
   setChangePasswordOpen: (isOpen: boolean) => void;
 }
 
 export default function UserPage(props: UserPageProps) {
-  const { setDeleteOpen, setChangePasswordOpen } = props;
+  const { setDeleteOpen, setChangeEmailOpen, setChangePasswordOpen } = props;
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
@@ -90,14 +90,6 @@ export default function UserPage(props: UserPageProps) {
                 alignItems={"center"}
               >
                 <div className="setting-icon">
-                  {/* <img
-                    src="/icons/setting.svg"
-                    alt="setting-icon"
-                    className="setting"
-                    onClick={() => {
-                      setDeleteOpen(true);
-                    }}
-                  /> */}
                   <Stack direction="row" spacing={2}>
                     <div>
                       <Button
@@ -148,7 +140,7 @@ export default function UserPage(props: UserPageProps) {
                                     Change Password
                                   </MenuItem>
                                   <MenuItem
-                                    onClick={handleClose}
+                                    onClick={() => setChangeEmailOpen(true)}
                                     className="email"
                                   >
                                     Change Email
