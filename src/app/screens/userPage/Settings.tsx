@@ -119,9 +119,11 @@ export function Settings() {
               <CloudDownloadIcon className="cloud" />
               <input type="file" hidden />
             </Button>
-            <Button onClick={handleImageDelete}>
-              <DeleteIcon className="bin" />
-            </Button>
+            {typeof authMember?.memberImage === "string" ? (
+              <Button onClick={handleImageDelete}>
+                <DeleteIcon className="bin" />
+              </Button>
+            ) : null}
           </div>
         </div>
       </Box>
