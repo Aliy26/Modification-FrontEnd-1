@@ -17,6 +17,7 @@ import { Logout } from "@mui/icons-material";
 
 interface HomeNavbarProps {
   cartItems: CartItem[];
+  updateCartPrices: () => void;
   onAdd: (item: CartItem) => void;
   onRemove: (item: CartItem) => void;
   onDelete: (item: CartItem) => void;
@@ -33,6 +34,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
   const location = useLocation();
   const {
     cartItems,
+    updateCartPrices,
     onAdd,
     onRemove,
     onDelete,
@@ -97,6 +99,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
           <Box>
             <Basket
               cartItems={cartItems}
+              updateCartPrices={updateCartPrices}
               onAdd={onAdd}
               onRemove={onRemove}
               onDelete={onDelete}

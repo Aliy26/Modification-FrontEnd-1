@@ -1,14 +1,38 @@
+import axios from "axios";
+import { serverApi } from "../../lib/config";
 import { useState } from "react";
 import { CartItem } from "../../lib/types/search";
 import {
   sweetTopSmallSuccessAlert,
   sweetTopSuccessAlert1,
 } from "../../lib/sweetAlert";
+import { Product } from "../../lib/types/product";
 
 const useBasket = () => {
   const cartJson: string | null = localStorage.getItem("cartData");
   const currentCart = cartJson ? JSON.parse(cartJson) : [];
   const [cartItems, setCartItems] = useState<CartItem[]>(currentCart);
+  const path = serverApi;
+
+  const updateCartPrices = async () => {
+    try {
+      const updatedItems = await Promise.all(
+        cartItems.map(async (item: CartItem) => {
+          const response = await axios.get(`${path}/product/${item._id}`);
+          const latestProduct: Product = response.data;
+
+          if (latestProduct.productPrice !== item.price) {
+            return { ...item, price: latestProduct.productPrice };
+          }
+          return item;
+        })
+      );
+      setCartItems(updatedItems);
+      localStorage.setItem("cartData", JSON.stringify(updatedItems));
+    } catch (err) {
+      console.log("Error, updating cart prices:", err);
+    }
+  };
 
   const onAdd = async (input: CartItem) => {
     const exist: any = cartItems.find(
@@ -70,6 +94,7 @@ const useBasket = () => {
 
   return {
     cartItems,
+    updateCartPrices,
     onAdd,
     onRemove,
     onDelete,

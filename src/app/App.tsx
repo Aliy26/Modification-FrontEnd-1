@@ -23,7 +23,15 @@ function App() {
   const location = useLocation();
   console.log(location.pathname);
   const { setAuthMember } = useGlobals();
-  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = useBasket();
+  const {
+    cartItems,
+    updateCartPrices,
+    onAdd,
+    onRemove,
+    onDelete,
+    onDeleteAll,
+  } = useBasket();
+
   const [signupOpen, setSighupOpen] = useState<boolean>(false);
   const [loginOpen, setLoginOpen] = useState<boolean>(false);
   const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
@@ -62,6 +70,7 @@ function App() {
       {location.pathname === "/" ? (
         <HomeNavbar
           cartItems={cartItems}
+          updateCartPrices={updateCartPrices}
           onAdd={onAdd}
           onRemove={onRemove}
           onDelete={onDelete}
@@ -77,6 +86,7 @@ function App() {
         <OtherNavbar
           cartItems={cartItems}
           onAdd={onAdd}
+          updateCartPrices={updateCartPrices}
           onRemove={onRemove}
           onDelete={onDelete}
           onDeleteAll={onDeleteAll}

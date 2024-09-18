@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 
 interface OtherNavbarProps {
   cartItems: CartItem[];
+  updateCartPrices: () => void;
   onAdd: (item: CartItem) => void;
   onRemove: (item: CartItem) => void;
   onDelete: (item: CartItem) => void;
@@ -32,6 +33,7 @@ interface OtherNavbarProps {
 export default function OtherNavbar(props: OtherNavbarProps) {
   const {
     cartItems,
+    updateCartPrices,
     onAdd,
     onRemove,
     onDelete,
@@ -92,6 +94,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
           <Box>
             <Basket
               cartItems={cartItems}
+              updateCartPrices={updateCartPrices}
               onAdd={onAdd}
               onRemove={onRemove}
               onDelete={onDelete}

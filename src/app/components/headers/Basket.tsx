@@ -15,6 +15,7 @@ import OrderService from "../../services/OrderService";
 
 interface BasketProps {
   cartItems: CartItem[];
+  updateCartPrices: () => void;
   onAdd: (item: CartItem) => void;
   onRemove: (item: CartItem) => void;
   onDelete: (item: CartItem) => void;
@@ -22,7 +23,14 @@ interface BasketProps {
 }
 
 export default function Basket(props: BasketProps) {
-  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
+  const {
+    cartItems,
+    onAdd,
+    onRemove,
+    onDelete,
+    onDeleteAll,
+    updateCartPrices,
+  } = props;
   const { authMember, setOrderBuilder } = useGlobals();
   const history = useHistory();
   const itemsPrice = cartItems.reduce(
@@ -36,9 +44,12 @@ export default function Basket(props: BasketProps) {
   const open = Boolean(anchorEl);
 
   /** HANDLERS **/
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(e.currentTarget);
+
+    await updateCartPrices();
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };

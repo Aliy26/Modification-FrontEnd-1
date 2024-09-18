@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Messages, serverApi } from "../../lib/config";
+import { serverApi } from "../../lib/config";
 import {
   LoginInput,
   Member,
