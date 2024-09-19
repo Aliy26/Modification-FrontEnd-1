@@ -112,6 +112,8 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       handleDeleteRequest().then();
     } else if (e.key === "Enter" && changePasswordOpen) {
       handlePasswordChangeRequest().then();
+    } else if (e.key === "Enter" && changeEmailOpen) {
+      handleEmailChangeRequest();
     }
   };
 
@@ -177,7 +179,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     }
   };
 
-  const handleEmialChangeRequest = async () => {
+  const handleEmailChangeRequest = async () => {
     try {
       const isFullfil = memberNick !== "" && memberEmail !== "";
       if (!isFullfil) {
@@ -509,7 +511,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 sx={{ marginTop: "27px", width: "120px" }}
                 variant={"extended"}
                 color={"primary"}
-                onClick={handleEmialChangeRequest}
+                onClick={handleEmailChangeRequest}
               >
                 <LoginIcon sx={{ mr: 1 }} />
                 Change

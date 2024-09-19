@@ -28,11 +28,13 @@ interface UserPageProps {
 export default function UserPage(props: UserPageProps) {
   const { setDeleteOpen, setChangeEmailOpen, setChangePasswordOpen } = props;
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  // const [rotate, setRoate] = useState<boolean>(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
+    // setRoate((prevRotate) => !prevRotate);
   };
 
   const handleClose = (event: Event | React.SyntheticEvent) => {
@@ -99,10 +101,11 @@ export default function UserPage(props: UserPageProps) {
                         aria-expanded={open ? "true" : undefined}
                         aria-haspopup="true"
                         onClick={handleToggle}
+                        // className={rotate ? "rotate-icon" : ""}
                       >
                         <img
                           src="icons/setting.svg"
-                          alt=""
+                          alt="settings icon"
                           className="setting"
                         />
                       </Button>

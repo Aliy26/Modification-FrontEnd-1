@@ -259,6 +259,19 @@
   color: #f8f8ff;
 }
 
+/* .user-page .setting {
+  transition: transform 0.3s ease;
+  display: block;
+  margin: auto;
+  transform-origin: center;
+  width: 40px;
+  height: 40px;
+}
+
+.user-page .rotate-icon {
+  transform: rotate(5deg);
+} */
+
 .user-page .settings .spec-input {
   position: relative;
   margin-top: 10px;
