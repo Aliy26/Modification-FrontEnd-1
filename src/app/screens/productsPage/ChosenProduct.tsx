@@ -17,7 +17,7 @@ import { createSelector } from "reselect";
 import { retrieveChosenProduct, retrieveRestaurant } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { Member } from "../../../lib/types/member";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import ProductService from "../../services/ProductService";
 import MemberService from "../../services/MemberService";
 import { serverApi } from "../../../lib/config";
@@ -51,11 +51,16 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const { restaurant } = useSelector(restaurantRetriever);
   const history = useHistory();
+  const location = useLocation<any>();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        history.push("/products");
+        if (location.state?.fromHome) {
+          history.push("/");
+        } else {
+          history.push("/products");
+        }
       }
     };
 
@@ -79,6 +84,12 @@ export default function ChosenProduct(props: ChosenProductProps) {
       .then((data) => setRestaurant(data))
       .catch((err) => console.log(err));
   }, []);
+
+  const ChosenProduct = () => {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+  };
 
   if (!chosenProduct) return null;
   return (

@@ -27,7 +27,7 @@ export default function PopularDishes() {
   const { popularDishes } = useSelector(popularDishesRetriever);
 
   const chosenDishHandler = (id: string) => {
-    history.push(`/products/${id}`);
+    history.push(`/products/${id}`, { fromHome: true });
   };
   return (
     <div className="popular-dishes-frame">

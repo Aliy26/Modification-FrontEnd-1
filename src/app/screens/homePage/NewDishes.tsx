@@ -23,7 +23,7 @@ export default function NewDishes() {
   const { newDishes } = useSelector(newDishesRetriever);
   const history = useHistory();
   const chosenDishHandler = (id: string) => {
-    history.push(`/products/${id}`);
+    history.push(`/products/${id}`, { fromHome: true });
   };
   return (
     <div className="new-products-frame">
