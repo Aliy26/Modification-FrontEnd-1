@@ -8,35 +8,38 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { retrieveNewDishes } from "./selector";
+import { retrieveNewProducts } from "./selector";
 import { serverApi } from "../../../lib/config";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { useHistory } from "react-router-dom";
 
 /** REDUX SLICE & SELECTOR */
 
-const newDishesRetriever = createSelector(retrieveNewDishes, (newDishes) => ({
-  newDishes,
-}));
+const NewProductsRetriever = createSelector(
+  retrieveNewProducts,
+  (NewProducts) => ({
+    NewProducts,
+  })
+);
 
-export default function NewDishes() {
-  const { newDishes } = useSelector(newDishesRetriever);
+export default function NewProducts() {
+  const { NewProducts } = useSelector(NewProductsRetriever);
   const history = useHistory();
-  const chosenDishHandler = (id: string) => {
+  const chosenProductHandler = (id: string) => {
     history.push(`/products/${id}`, { fromHome: true });
   };
   return (
     <div className="new-products-frame">
       <Container>
         <Stack className="main">
-          <Box className="category-title">Fresh Menu</Box>
+          <Box className="category-title">New Additions</Box>
           <Stack className="cards-frame">
             <CssVarsProvider>
-              {newDishes.length !== 0 ? (
-                newDishes.map((product) => {
+              {NewProducts.length !== 0 ? (
+                NewProducts.map((product) => {
                   const imagePath = `${serverApi}/${product.productImages[0]}`;
                   const sizeVolume =
-                    product.productCollection === ProductCollection.DRINK
+                    product.productCollection === ProductCollection.BOTTLE
                       ? product.productVolume + " L"
                       : product.productSize + " size";
                   return (
@@ -44,7 +47,7 @@ export default function NewDishes() {
                       key={product._id}
                       variant="outlined"
                       className={"card"}
-                      onClick={() => chosenDishHandler(product._id)}
+                      onClick={() => chosenProductHandler(product._id)}
                     >
                       <CardOverflow>
                         <div className="product-sale">{sizeVolume}</div>

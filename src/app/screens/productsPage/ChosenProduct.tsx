@@ -85,12 +85,6 @@ export default function ChosenProduct(props: ChosenProductProps) {
       .catch((err) => console.log(err));
   }, []);
 
-  const ChosenProduct = () => {
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
-  };
-
   if (!chosenProduct) return null;
   return (
     <div className={"chosen-product"}>

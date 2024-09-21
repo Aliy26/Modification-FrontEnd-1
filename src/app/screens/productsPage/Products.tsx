@@ -40,7 +40,7 @@ export default function Products(props: ProductsProps) {
     page: 1,
     limit: 8,
     order: "createdAt",
-    productCollection: ProductCollection.DISH,
+    productCollection: ProductCollection.POWDER,
     search: "",
   });
   const [searchText, setSearchText] = useState<string>("");
@@ -162,52 +162,58 @@ export default function Products(props: ProductsProps) {
               <Button
                 variant={"contained"}
                 color={
-                  productSearch.productCollection === ProductCollection.DISH
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() => searchCollectionHandler(ProductCollection.DISH)}
-              >
-                Dish
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.SALAD
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() => searchCollectionHandler(ProductCollection.SALAD)}
-              >
-                Salad
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.DRINK
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() => searchCollectionHandler(ProductCollection.DRINK)}
-              >
-                Drink
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.DESSERT
+                  productSearch.productCollection === ProductCollection.POWDER
                     ? "primary"
                     : "secondary"
                 }
                 className="order"
                 onClick={() =>
-                  searchCollectionHandler(ProductCollection.DESSERT)
+                  searchCollectionHandler(ProductCollection.POWDER)
                 }
               >
-                Dessert
+                Powder
+              </Button>
+              <Button
+                variant={"contained"}
+                color={
+                  productSearch.productCollection === ProductCollection.TABLET
+                    ? "primary"
+                    : "secondary"
+                }
+                className="order"
+                onClick={() =>
+                  searchCollectionHandler(ProductCollection.TABLET)
+                }
+              >
+                Tablet
+              </Button>
+              <Button
+                variant={"contained"}
+                color={
+                  productSearch.productCollection === ProductCollection.PROTEIN
+                    ? "primary"
+                    : "secondary"
+                }
+                className="order"
+                onClick={() =>
+                  searchCollectionHandler(ProductCollection.PROTEIN)
+                }
+              >
+                Protein
+              </Button>
+              <Button
+                variant={"contained"}
+                color={
+                  productSearch.productCollection === ProductCollection.BOTTLE
+                    ? "primary"
+                    : "secondary"
+                }
+                className="order"
+                onClick={() =>
+                  searchCollectionHandler(ProductCollection.BOTTLE)
+                }
+              >
+                Bottle
               </Button>
               <Button
                 variant={"contained"}
@@ -228,7 +234,7 @@ export default function Products(props: ProductsProps) {
                 products.map((product: Product) => {
                   const imagePath = `${serverApi}/${product.productImages[0]}`;
                   const sizeVolume =
-                    product.productCollection === ProductCollection.DRINK
+                    product.productCollection === ProductCollection.BOTTLE
                       ? product.productVolume + " L"
                       : product.productSize + " size";
                   return (

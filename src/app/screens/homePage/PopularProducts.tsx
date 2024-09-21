@@ -11,38 +11,38 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { retrievePopularDishes } from "./selector";
+import { retrievePopularProducts } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
 
 /** REDUX SLICE & SELECTOR */
-const popularDishesRetriever = createSelector(
-  retrievePopularDishes,
-  (popularDishes) => ({ popularDishes })
+const PopularProductsRetriever = createSelector(
+  retrievePopularProducts,
+  (PopularProducts) => ({ PopularProducts })
 );
 
-export default function PopularDishes() {
+export default function PopularProducts() {
   const history = useHistory();
-  const { popularDishes } = useSelector(popularDishesRetriever);
+  const { PopularProducts } = useSelector(PopularProductsRetriever);
 
-  const chosenDishHandler = (id: string) => {
+  const chosenProductHandler = (id: string) => {
     history.push(`/products/${id}`, { fromHome: true });
   };
   return (
     <div className="popular-dishes-frame">
       <Container>
         <Stack className="popular-section">
-          <Box className="category-title">Popular Dishes</Box>
+          <Box className="category-title">Popular Products</Box>
           <Stack className="cards-frame">
-            {popularDishes.length !== 0 ? (
-              popularDishes.map((product: Product) => {
+            {PopularProducts.length !== 0 ? (
+              PopularProducts.map((product: Product) => {
                 const imagePath = `${serverApi}/${product.productImages[0]}`;
                 return (
                   <CssVarsProvider key={product._id}>
                     <Card
                       className="card"
-                      onClick={() => chosenDishHandler(product._id)}
+                      onClick={() => chosenProductHandler(product._id)}
                     >
                       <CardCover>
                         <img src={imagePath} alt="product-image" />
