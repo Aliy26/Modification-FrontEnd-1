@@ -32,7 +32,7 @@ interface ProductsProps {
   onAdd: (item: CartItem) => void;
 }
 
-export default function Products(props: ProductsProps) {
+export default function Tablets(props: ProductsProps) {
   const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
@@ -40,7 +40,7 @@ export default function Products(props: ProductsProps) {
     page: 1,
     limit: 8,
     order: "createdAt",
-    productCollection: ProductCollection.POWDER,
+    productCollection: ProductCollection.TABLET,
     search: "",
   });
   const [searchText, setSearchText] = useState<string>("");
@@ -98,7 +98,7 @@ export default function Products(props: ProductsProps) {
         <Stack flexDirection={"column"} alignItems={"center"}>
           <Stack className="avatar-big-box">
             <Stack className={"section-title"}>
-              <Box className={"title"}>GATORADE SHOP</Box>
+              <Box className={"title"}>TABLETS</Box>
               <Box className={"red"}>
                 <input
                   type={"search"}
@@ -126,39 +126,42 @@ export default function Products(props: ProductsProps) {
             <Stack className={"dishes-filter-box"}>
               <Button
                 variant={"contained"}
-                color={
-                  productSearch.order === "createdAt" ? "primary" : "secondary"
-                }
+                color={"secondary"}
                 className={"order"}
-                onClick={() => searchOrderHandler("createdAt")}
+                onClick={() => shopNavHandler("powders")}
               >
-                New
+                Powders
               </Button>
-              <Button onClick={() => shopNavHandler("tablets")}>Tablets</Button>
-              <Button onClick={() => shopNavHandler("bottles")}>Bottles</Button>
               <Button
-                variant={"contained"}
-                color={
-                  productSearch.order === "productPrice"
-                    ? "primary"
-                    : "secondary"
-                }
-                className={"order"}
-                onClick={() => searchOrderHandler("productPrice")}
+                variant="contained"
+                className="order"
+                onClick={() => shopNavHandler("tablets")}
               >
-                Price
+                Tablets
               </Button>
               <Button
                 variant={"contained"}
-                color={
-                  productSearch.order === "productViews"
-                    ? "primary"
-                    : "secondary"
-                }
+                color={"secondary"}
                 className={"order"}
-                onClick={() => searchOrderHandler("productViews")}
+                onClick={() => shopNavHandler("protein")}
               >
-                Views
+                Protein
+              </Button>
+              <Button
+                variant={"contained"}
+                color={"secondary"}
+                className={"order"}
+                onClick={() => shopNavHandler("bottles")}
+              >
+                Bottles
+              </Button>
+              <Button
+                variant={"contained"}
+                color={"secondary"}
+                className={"order"}
+                onClick={() => shopNavHandler("equipments")}
+              >
+                Equipments
               </Button>
             </Stack>
           </Stack>
