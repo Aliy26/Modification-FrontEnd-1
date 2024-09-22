@@ -114,6 +114,7 @@ class MemberService {
     try {
       const url = this.path + "/member/update/password";
       const result = await axios.post(url, input, { withCredentials: true });
+      localStorage.setItem("memberData", JSON.stringify(result.data));
       return result.data;
     } catch (err) {
       console.log("Error, updatePassword");
@@ -125,6 +126,7 @@ class MemberService {
     try {
       const url = this.path + "/member/update/email";
       const result = await axios.post(url, input, { withCredentials: true });
+      localStorage.setItem("memberData", JSON.stringify(result.data));
       return result.data;
     } catch (err) {
       console.log("Error, updateEmail");

@@ -194,13 +194,11 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         memberEmail: memberEmail,
       };
 
-      const confirmation = window.confirm(
-        "Do you want to change your password?"
-      );
+      const confirmation = window.confirm("Do you want to change your email?");
       if (confirmation) {
         const result = await member.updateEmail(newEmailInput);
-        handleChangeEmailClose();
         setAuthMember(result);
+        handleChangeEmailClose();
         await sweetTopSuccessAlert1("The email has been changed!", 3000);
       } else {
         handleChangeEmailClose();
