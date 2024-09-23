@@ -25,7 +25,11 @@ import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
-import { OrderItemInput } from "../../../lib/types/order";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { ProductCollection } from "../../../lib/enums/product.enum";
 
 const actionDispatch = (dispatch: Dispatch) => ({
   setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
@@ -56,20 +60,34 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const { restaurant } = useSelector(restaurantRetriever);
   const [count, setCount] = useState<number>(1);
+  const [itemName, setItemName] = useState<string>("");
   const history = useHistory<any>();
   const location = useLocation<any>();
+  const [sticks, setSticks] = React.useState("");
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSticks(event.target.value);
+  };
 
   const proceedOrderHandler = async (input: CartItem[]) => {
     try {
+      const confirm = window.confirm(
+        `Do you want to purchase ${count} ${itemName}s?`
+      );
+
       if (!authMember) {
         history.push("/");
         throw new Error(Messages.error2);
       }
-      const order = new OrderService();
-      const result = await order.createOrder(input);
-      if (result) {
-        setOrderBuilder(new Date());
-        history.push("/orders");
+      if (confirm) {
+        const order = new OrderService();
+        const result = await order.createOrder(input);
+        if (result) {
+          setOrderBuilder(new Date());
+          history.push("/orders");
+        } else {
+          return false;
+        }
       }
     } catch (err) {
       console.log("Error, chosenProduct order", err);
@@ -99,7 +117,10 @@ export default function ChosenProduct(props: ChosenProductProps) {
     const product = new ProductService();
     product
       .getProduct(productId)
-      .then((data) => setChosenProduct(data))
+      .then((data) => {
+        setChosenProduct(data);
+        setItemName(data.productName);
+      })
       .catch((err) => console.log(err));
 
     const member = new MemberService();
@@ -107,6 +128,8 @@ export default function ChosenProduct(props: ChosenProductProps) {
       .getRestaurnat()
       .then((data) => setRestaurant(data))
       .catch((err) => console.log(err));
+
+    window.scrollTo(440, 440);
   }, []);
 
   if (!chosenProduct) return null;
@@ -143,7 +166,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
             </strong>
             <span className={"resto-name"}>{restaurant?.memberNick}</span>
             <span className={"resto-name"}>
-              Contact us at: {restaurant?.memberPhone}
+              Contact: {restaurant?.memberPhone}
             </span>
             <Box className={"rating-box"}>
               <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
@@ -159,6 +182,32 @@ export default function ChosenProduct(props: ChosenProductProps) {
                 ? chosenProduct.productDesc
                 : "No Description"}
             </p>
+            {chosenProduct.productCollection == "POWDER" ||
+            chosenProduct.productCollection == "TABLET" ? (
+              <>
+                <span>Quantity</span>
+                <FormControl className="form-control">
+                  <InputLabel className="small-label">40 sticks</InputLabel>
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    value={sticks}
+                    label="sticks"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value="40">
+                      <em>40 sticks</em>
+                    </MenuItem>
+                    <MenuItem value={10}>60 sticks</MenuItem>
+                    <MenuItem value={30}>80 sticks</MenuItem>
+                    <MenuItem value={20}>120 sticks</MenuItem>
+                  </Select>
+                </FormControl>
+              </>
+            ) : (
+              ""
+            )}
+
             <Box className="increment-or-basket">
               <Box className="plus-minus">
                 <img
@@ -198,8 +247,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
             </Box>
             <Divider height="1" width="100%" bg="#000000" />
             <div className={"product-price"}>
-              <span>Price:</span>
-              <span>${chosenProduct?.productPrice * count}</span>
+              <span>Price: {chosenProduct.productPrice * count}</span>
             </div>
             <div className={"button-box"}>
               <Button

@@ -52,6 +52,8 @@ export default function Products(props: ProductsProps) {
       .getProducts(productSearch)
       .then((data) => setProducts(data))
       .catch((err) => console.log(err));
+
+    window.scrollTo(0, 0);
   }, [productSearch]);
 
   useEffect(() => {

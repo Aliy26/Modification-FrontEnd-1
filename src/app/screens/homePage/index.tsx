@@ -65,6 +65,8 @@ export default function HomePage() {
       .getTopUsers()
       .then((data) => setTopUsers(data))
       .catch((err) => console.log(err));
+
+    window.scrollTo(0, 0);
   }, []);
 
   return (

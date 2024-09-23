@@ -181,7 +181,13 @@ export default function OtherNavbar(props: OtherNavbarProps) {
         </Stack>
       </Stack>
       <div className="other-navbar">
-        <Container className="navbar-container"></Container>
+        <Container className="navbar-container">
+          {location.pathname === "/products" ? (
+            <Box className="head-main-txt">Gear up like the pros</Box>
+          ) : (
+            ""
+          )}
+        </Container>
       </div>
     </div>
   );
