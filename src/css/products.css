@@ -382,16 +382,32 @@
 }
 
 .products-page .chosen-product .info-box .plus-minus {
-  width: 300px;
+  width: 22%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: red;
 }
 
-.products-page .chosen-product .info-box img {
-  width: 25px;
+.products-page .chosen-product .info-box .plus-minus img:active {
+  background-color: rgba(0, 0, 0, 0.5);
+  transform: scale(1.2);
+  border-radius: 50%;
+}
+
+.products-page .chosen-product .info-box .plus-minus .minus {
+  width: 33px;
+  height: 33px;
+  cursor: pointer;
+}
+
+.products-page .chosen-product .info-box .plus-minus .increment {
   height: 25px;
+  cursor: pointer;
+}
+
+.products-page .chosen-product .info-box .plus-minus p {
+  font-size: 20px;
+  margin-right: 5px;
 }
 
 .products-page .chosen-product .info-box .resto-name {

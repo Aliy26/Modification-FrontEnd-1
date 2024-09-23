@@ -25,6 +25,7 @@ import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { OrderItemInput } from "../../../lib/types/order";
 
 const actionDispatch = (dispatch: Dispatch) => ({
   setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
@@ -54,12 +55,16 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const { restaurant } = useSelector(restaurantRetriever);
+  const [count, setCount] = useState<number>(1);
   const history = useHistory<any>();
   const location = useLocation<any>();
 
-  const proceedOrderHandler = async (input: any) => {
+  const proceedOrderHandler = async (input: CartItem[]) => {
     try {
-      if (!authMember) throw new Error(Messages.error2);
+      if (!authMember) {
+        history.push("/");
+        throw new Error(Messages.error2);
+      }
       const order = new OrderService();
       const result = await order.createOrder(input);
       if (result) {
@@ -155,14 +160,29 @@ export default function ChosenProduct(props: ChosenProductProps) {
                 : "No Description"}
             </p>
             <Box className="plus-minus">
-              <img src="/icons/increment.svg" alt="increment" />
-              <p>1</p>
-              <img src="/icons/minus.svg" alt="minus" />
+              <img
+                src="/icons/minus.svg"
+                alt="minus"
+                className="minus"
+                onClick={() => {
+                  if (count === 1) return false;
+                  setCount(count - 1);
+                }}
+              />
+              <p>{count}</p>
+              <img
+                src="/icons/increment.svg"
+                alt="increment"
+                className="increment"
+                onClick={() => {
+                  setCount(count + 1);
+                }}
+              />
             </Box>
             <Divider height="1" width="100%" bg="#000000" />
             <div className={"product-price"}>
               <span>Price:</span>
-              <span>${chosenProduct?.productPrice}</span>
+              <span>${chosenProduct?.productPrice * count}</span>
             </div>
             <div className={"button-box"}>
               <Button
@@ -187,7 +207,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
                   proceedOrderHandler([
                     {
                       _id: chosenProduct._id,
-                      quantity: 1,
+                      quantity: count,
                       name: chosenProduct.productName,
                       price: chosenProduct.productPrice,
                       image: chosenProduct.productImages[0],
