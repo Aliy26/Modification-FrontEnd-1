@@ -381,6 +381,19 @@
   color: #000000;
 }
 
+.products-page .chosen-product .info-box .plus-minus {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: red;
+}
+
+.products-page .chosen-product .info-box img {
+  width: 25px;
+  height: 25px;
+}
+
 .products-page .chosen-product .info-box .resto-name {
   margin-top: 16px;
   font-family: "Poppins";

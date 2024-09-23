@@ -20,8 +20,11 @@ import { Member } from "../../../lib/types/member";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import ProductService from "../../services/ProductService";
 import MemberService from "../../services/MemberService";
-import { serverApi } from "../../../lib/config";
+import { Messages, serverApi } from "../../../lib/config";
 import { CartItem } from "../../../lib/types/search";
+import { useGlobals } from "../../hooks/useGlobals";
+import OrderService from "../../services/OrderService";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
 
 const actionDispatch = (dispatch: Dispatch) => ({
   setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
@@ -46,12 +49,28 @@ interface ChosenProductProps {
 
 export default function ChosenProduct(props: ChosenProductProps) {
   const { onAdd } = props;
+  const { authMember, setOrderBuilder } = useGlobals();
   const { productId } = useParams<{ productId: string }>();
   const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const { restaurant } = useSelector(restaurantRetriever);
-  const history = useHistory();
+  const history = useHistory<any>();
   const location = useLocation<any>();
+
+  const proceedOrderHandler = async (input: any) => {
+    try {
+      if (!authMember) throw new Error(Messages.error2);
+      const order = new OrderService();
+      const result = await order.createOrder(input);
+      if (result) {
+        setOrderBuilder(new Date());
+        history.push("/orders");
+      }
+    } catch (err) {
+      console.log("Error, chosenProduct order", err);
+      sweetErrorHandling(err).then();
+    }
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -135,6 +154,11 @@ export default function ChosenProduct(props: ChosenProductProps) {
                 ? chosenProduct.productDesc
                 : "No Description"}
             </p>
+            <Box className="plus-minus">
+              <img src="/icons/increment.svg" alt="increment" />
+              <p>1</p>
+              <img src="/icons/minus.svg" alt="minus" />
+            </Box>
             <Divider height="1" width="100%" bg="#000000" />
             <div className={"product-price"}>
               <span>Price:</span>
@@ -159,14 +183,16 @@ export default function ChosenProduct(props: ChosenProductProps) {
               <Button
                 className="add-to-basket"
                 variant="contained"
-                onClick={(e) => {
-                  onAdd({
-                    _id: chosenProduct._id,
-                    quantity: 1,
-                    name: chosenProduct.productName,
-                    price: chosenProduct.productPrice,
-                    image: chosenProduct.productImages[0],
-                  });
+                onClick={() => {
+                  proceedOrderHandler([
+                    {
+                      _id: chosenProduct._id,
+                      quantity: 1,
+                      name: chosenProduct.productName,
+                      price: chosenProduct.productPrice,
+                      image: chosenProduct.productImages[0],
+                    },
+                  ]);
                 }}
               >
                 Buy Now
