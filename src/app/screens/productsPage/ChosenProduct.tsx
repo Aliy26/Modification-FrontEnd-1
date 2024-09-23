@@ -159,25 +159,42 @@ export default function ChosenProduct(props: ChosenProductProps) {
                 ? chosenProduct.productDesc
                 : "No Description"}
             </p>
-            <Box className="plus-minus">
-              <img
-                src="/icons/minus.svg"
-                alt="minus"
-                className="minus"
-                onClick={() => {
-                  if (count === 1) return false;
-                  setCount(count - 1);
-                }}
-              />
-              <p>{count}</p>
-              <img
-                src="/icons/increment.svg"
-                alt="increment"
-                className="increment"
-                onClick={() => {
-                  setCount(count + 1);
-                }}
-              />
+            <Box className="increment-or-basket">
+              <Box className="plus-minus">
+                <img
+                  src="/icons/minus.svg"
+                  alt="minus"
+                  className="minus"
+                  onClick={() => {
+                    if (count === 1) return false;
+                    setCount(count - 1);
+                  }}
+                />
+                <p>{count}</p>
+                <img
+                  src="/icons/increment.svg"
+                  alt="increment"
+                  className="increment"
+                  onClick={() => {
+                    setCount(count + 1);
+                  }}
+                />
+              </Box>
+              <Box className="cart">
+                <img
+                  src="/icons/new-cart.svg"
+                  className="add-to-basket"
+                  onClick={() => {
+                    onAdd({
+                      _id: chosenProduct._id,
+                      quantity: 1,
+                      name: chosenProduct.productName,
+                      price: chosenProduct.productPrice,
+                      image: chosenProduct.productImages[0],
+                    });
+                  }}
+                />
+              </Box>
             </Box>
             <Divider height="1" width="100%" bg="#000000" />
             <div className={"product-price"}>
@@ -186,22 +203,6 @@ export default function ChosenProduct(props: ChosenProductProps) {
             </div>
             <div className={"button-box"}>
               <Button
-                className="add-to-basket"
-                variant="contained"
-                onClick={() => {
-                  onAdd({
-                    _id: chosenProduct._id,
-                    quantity: 1,
-                    name: chosenProduct.productName,
-                    price: chosenProduct.productPrice,
-                    image: chosenProduct.productImages[0],
-                  });
-                }}
-              >
-                Add To Basket
-              </Button>
-              <Button
-                className="add-to-basket"
                 variant="contained"
                 onClick={() => {
                   proceedOrderHandler([
