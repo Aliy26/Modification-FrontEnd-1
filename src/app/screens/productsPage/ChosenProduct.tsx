@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Container, Stack, Box, Snackbar, Alert } from "@mui/material";
+import {
+  Container,
+  Stack,
+  Box,
+  Snackbar,
+  Alert,
+  TextField,
+} from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Divider from "../../components/divider";
@@ -63,7 +70,8 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const [itemName, setItemName] = useState<string>("");
   const history = useHistory<any>();
   const location = useLocation<any>();
-  const [sticks, setSticks] = React.useState("");
+  const [sticks, setSticks] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
 
   const handleChange = (event: SelectChangeEvent) => {
     setSticks(event.target.value);
@@ -120,6 +128,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
       .then((data) => {
         setChosenProduct(data);
         setItemName(data.productName);
+        setPrice(data.productPrice);
       })
       .catch((err) => console.log(err));
 
@@ -186,68 +195,137 @@ export default function ChosenProduct(props: ChosenProductProps) {
             chosenProduct.productCollection == "TABLET" ? (
               <>
                 <span>Quantity</span>
-                <FormControl className="form-control">
-                  <InputLabel className="small-label">40 sticks</InputLabel>
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    value={sticks}
-                    label="sticks"
-                    onChange={handleChange}
-                  >
-                    <MenuItem value="40">
-                      <em>40 sticks</em>
-                    </MenuItem>
-                    <MenuItem value={10}>60 sticks</MenuItem>
-                    <MenuItem value={30}>80 sticks</MenuItem>
-                    <MenuItem value={20}>120 sticks</MenuItem>
-                  </Select>
-                </FormControl>
+                <div className="form-container">
+                  <FormControl className="form-control">
+                    <InputLabel className="small-label">
+                      {chosenProduct.productPrice} sticks
+                    </InputLabel>
+                    <Select
+                      labelId="demo-select-small-label"
+                      id="demo-select-small"
+                      value={sticks}
+                      label="sticks"
+                      onChange={handleChange}
+                    >
+                      <MenuItem
+                        value={10}
+                        onClick={() => {
+                          setPrice(chosenProduct.productPrice);
+                        }}
+                      >
+                        40 sticks
+                      </MenuItem>
+                      <MenuItem
+                        value={15}
+                        onClick={() => {
+                          if (price >= chosenProduct.productPrice * 1.4)
+                            return false;
+                          setPrice(Math.floor(price * 1.4));
+                        }}
+                      >
+                        60 sticks
+                      </MenuItem>
+                      <MenuItem
+                        value={30}
+                        onClick={() => {
+                          if (price >= chosenProduct.productPrice * 1.8)
+                            return false;
+                          setPrice(
+                            Math.floor(chosenProduct.productPrice * 1.8)
+                          );
+                        }}
+                      >
+                        80 sticks
+                      </MenuItem>
+                      <MenuItem
+                        value={40}
+                        onClick={() => {
+                          if (price >= chosenProduct.productPrice * 2.5)
+                            return false;
+                          setPrice(
+                            Math.floor(chosenProduct.productPrice * 2.5)
+                          );
+                        }}
+                      >
+                        120 sticks
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                  <Box className="cart">
+                    <img
+                      src="/icons/new-cart.svg"
+                      className="add-to-basket"
+                      onClick={() => {
+                        console.log(">>>", price);
+                        onAdd({
+                          _id: chosenProduct._id,
+                          quantity: 1,
+                          name: chosenProduct.productName,
+                          price: price,
+                          image: chosenProduct.productImages[0],
+                          letGo: true,
+                        });
+                        console.log("<<<<", price);
+                      }}
+                    />
+                  </Box>
+                </div>
               </>
             ) : (
-              ""
+              <Box className="increment-or-basket">
+                <Box className="plus-minus">
+                  <img
+                    src="/icons/minus.svg"
+                    alt="minus"
+                    className="minus"
+                    onClick={() => {
+                      if (count === 1) return false;
+                      setCount(count - 1);
+                    }}
+                  />
+                  <TextField
+                    className="basic-input"
+                    label="Outlined"
+                    variant="outlined"
+                    value={count}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === "" || /^[0-9\b]+$/.test(value)) {
+                        setCount(Math.max(Number(value), 1));
+                      }
+                    }}
+                  />
+                  <img
+                    src="/icons/increment.svg"
+                    alt="increment"
+                    className="increment"
+                    onClick={() => {
+                      setCount(count + 1);
+                    }}
+                  />
+                </Box>
+                <Box className="cart">
+                  <img
+                    src="/icons/new-cart.svg"
+                    className="add-to-basket"
+                    onClick={() => {
+                      onAdd({
+                        _id: chosenProduct._id,
+                        quantity: count,
+                        name: chosenProduct.productName,
+                        price: price * count,
+                        image: chosenProduct.productImages[0],
+                      });
+                      setCount(1);
+                    }}
+                  />
+                </Box>
+              </Box>
             )}
 
-            <Box className="increment-or-basket">
-              <Box className="plus-minus">
-                <img
-                  src="/icons/minus.svg"
-                  alt="minus"
-                  className="minus"
-                  onClick={() => {
-                    if (count === 1) return false;
-                    setCount(count - 1);
-                  }}
-                />
-                <p>{count}</p>
-                <img
-                  src="/icons/increment.svg"
-                  alt="increment"
-                  className="increment"
-                  onClick={() => {
-                    setCount(count + 1);
-                  }}
-                />
-              </Box>
-              <Box className="cart">
-                <img
-                  src="/icons/new-cart.svg"
-                  className="add-to-basket"
-                  onClick={() => {
-                    onAdd({
-                      _id: chosenProduct._id,
-                      quantity: 1,
-                      name: chosenProduct.productName,
-                      price: chosenProduct.productPrice,
-                      image: chosenProduct.productImages[0],
-                    });
-                  }}
-                />
-              </Box>
-            </Box>
             <Divider height="1" width="100%" bg="#000000" />
             <div className={"product-price"}>
-              <span>Price: {chosenProduct.productPrice * count}</span>
+              <span>Price: {price * count}</span>
             </div>
             <div className={"button-box"}>
               <Button
@@ -258,7 +336,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
                       _id: chosenProduct._id,
                       quantity: count,
                       name: chosenProduct.productName,
-                      price: chosenProduct.productPrice,
+                      price: price,
                       image: chosenProduct.productImages[0],
                     },
                   ]);
