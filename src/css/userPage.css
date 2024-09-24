@@ -24,10 +24,12 @@
   display: flex;
   flex-direction: row;
   padding: 50px 0 50px 0;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .my-page-frame .my-page-left {
-  width: 70%;
+  width: 60%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -71,7 +73,7 @@
 }
 
 .my-page-frame .my-page-right {
-  margin-top: 220px;
+  margin-top: 120px;
   margin-left: 30px;
   width: 30%;
   height: auto;
@@ -83,13 +85,11 @@
   position: relative;
   padding: 20px;
   width: 100%;
-  height: auto;
+  height: 560px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgb(237, 237, 109);
-  box-shadow: 15px 14px 4px rgba(0, 0, 0, 0.25),
-    inset -1px 0px 16px 13px rgb(24 23 112 / 20%);
+  background: rgb(220, 220, 185);
   border-radius: 16px;
 }
 
@@ -230,7 +230,7 @@
 }
 
 .user-page .settings .input-frame {
-  width: 100%;
+  width: 80%;
   height: auto;
   display: flex;
   flex-direction: row;
@@ -373,6 +373,6 @@
 
 .user-page .settings .save-box {
   display: flex;
-  justify-content: flex-end;
+  justify-content: start;
   margin-top: 25px;
 }

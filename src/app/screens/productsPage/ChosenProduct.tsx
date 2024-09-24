@@ -122,6 +122,20 @@ export default function ChosenProduct(props: ChosenProductProps) {
   }, []);
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        history.push("/products");
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
     const product = new ProductService();
     product
       .getProduct(productId)

@@ -205,6 +205,9 @@ export default function UserPage(props: UserPageProps) {
                   ? authMember.memberDesc
                   : "No description"}
               </p>
+              <p className={"user-email"}>
+                {authMember?.memberEmail ? authMember.memberEmail : "No Email"}
+              </p>
             </Box>
           </Stack>
         </Stack>

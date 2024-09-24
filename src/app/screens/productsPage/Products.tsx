@@ -19,6 +19,7 @@ import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
+import { T } from "../../../lib/types/common";
 
 /** Redux Slice & Selector */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -64,12 +65,6 @@ export default function Products(props: ProductsProps) {
   }, [searchText]);
   //* HANDLERS* //
 
-  const searchCollectionHandler = (collection: ProductCollection) => {
-    productSearch.page = 1;
-    productSearch.productCollection = collection;
-    setProductSearch({ ...productSearch });
-  };
-
   const searchOrderHandler = (order: string) => {
     productSearch.page = 1;
     productSearch.order = order;
@@ -98,144 +93,112 @@ export default function Products(props: ProductsProps) {
     <div className="products">
       <Container>
         <Stack flexDirection={"column"} alignItems={"center"}>
-          <Stack className="avatar-big-box">
-            <Stack className={"section-title"}>
-              <Box className={"title"}>GATORADE SHOP</Box>
-              <Box className={"red"}>
-                <input
-                  type={"search"}
-                  className="input"
-                  name={"singleResearch"}
-                  placeholder="Type here"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") searchProductHandler();
-                  }}
-                />
+          <Stack className={"section-title"}>
+            <Box className={"red"}>
+              <input
+                type={"search"}
+                className="input"
+                name={"singleResearch"}
+                placeholder="Type here"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") searchProductHandler();
+                }}
+              />
+              <Button
+                variant="contained"
+                className="search-button"
+                onClick={searchProductHandler}
+              >
+                Search <SearchIcon sx={{ ml: "10px" }} className="icon" />
+              </Button>
+            </Box>
+          </Stack>
+
+          <Stack className={"avatar-big-box"}>
+            <img src="/icons/gatorade.svg" alt="brand-logo" />
+            <Stack className={"dishes-filter-box"}>
+              <Box>
                 <Button
-                  variant="contained"
-                  className="search-button"
-                  onClick={searchProductHandler}
+                  className="btn"
+                  color="secondary"
+                  onClick={() => shopNavHandler("powders")}
                 >
-                  Search <SearchIcon sx={{ ml: "10px" }} className="icon" />
+                  Powders
+                </Button>
+                <Button
+                  className="btn"
+                  color="secondary"
+                  onClick={() => shopNavHandler("tablets")}
+                >
+                  Tablets
+                </Button>
+                <Button
+                  className="btn"
+                  color="secondary"
+                  onClick={() => shopNavHandler("protein")}
+                >
+                  Protein
+                </Button>
+                <Button
+                  className="btn"
+                  color="secondary"
+                  onClick={() => shopNavHandler("bottles")}
+                >
+                  Bottles
+                </Button>
+                <Button
+                  className="btn"
+                  color="secondary"
+                  onClick={() => shopNavHandler("equipments")}
+                >
+                  Equipment
+                </Button>
+              </Box>
+              <Box>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.order === "createdAt"
+                      ? "primary"
+                      : "secondary"
+                  }
+                  className={"order"}
+                  onClick={() => searchOrderHandler("createdAt")}
+                >
+                  New
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.order === "productPrice"
+                      ? "primary"
+                      : "secondary"
+                  }
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productPrice")}
+                >
+                  Price
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.order === "productViews"
+                      ? "primary"
+                      : "secondary"
+                  }
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productViews")}
+                >
+                  Views
                 </Button>
               </Box>
             </Stack>
           </Stack>
 
-          <Stack className={"dishes-filter-section"}>
-            <Stack className={"dishes-filter-box"}>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.order === "createdAt" ? "primary" : "secondary"
-                }
-                className={"order"}
-                onClick={() => searchOrderHandler("createdAt")}
-              >
-                New
-              </Button>
-              <Button onClick={() => shopNavHandler("tablets")}>Tablets</Button>
-              <Button onClick={() => shopNavHandler("bottles")}>Bottles</Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.order === "productPrice"
-                    ? "primary"
-                    : "secondary"
-                }
-                className={"order"}
-                onClick={() => searchOrderHandler("productPrice")}
-              >
-                Price
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.order === "productViews"
-                    ? "primary"
-                    : "secondary"
-                }
-                className={"order"}
-                onClick={() => searchOrderHandler("productViews")}
-              >
-                Views
-              </Button>
-            </Stack>
-          </Stack>
-
           <Stack className={"list-category-section"}>
-            <Stack className={"product-category"}>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.POWDER
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() =>
-                  searchCollectionHandler(ProductCollection.POWDER)
-                }
-              >
-                Powder
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.TABLET
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() =>
-                  searchCollectionHandler(ProductCollection.TABLET)
-                }
-              >
-                Tablet
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.PROTEIN
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() =>
-                  searchCollectionHandler(ProductCollection.PROTEIN)
-                }
-              >
-                Protein
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.BOTTLE
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() =>
-                  searchCollectionHandler(ProductCollection.BOTTLE)
-                }
-              >
-                Bottle
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.OTHER
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() => searchCollectionHandler(ProductCollection.OTHER)}
-              >
-                Other
-              </Button>
-            </Stack>
+            <Stack className={"product-category"}></Stack>
 
             <Stack className={"product-wrapper"}>
               {products.length !== 0 ? (
@@ -334,33 +297,7 @@ export default function Products(props: ProductsProps) {
         </Stack>
       </Container>
       <div className="brands-logo">
-        <Container className="family-brands">
-          <Stack className="brand-list">
-            <Box className={"category-title"}>Our Family Brands</Box>
-            <Box className={"review-box"}>
-              <img
-                className="rest-logo"
-                src={"/img/gurme.webp"}
-                alt="rest-logo"
-              />
-              <img
-                className="rest-logo"
-                src={"/img/seafood.webp"}
-                alt="rest-logo"
-              />
-              <img
-                className="rest-logo"
-                src={"/img/sweets.webp"}
-                alt="rest-logo"
-              />
-              <img
-                className="rest-logo"
-                src={"/img/doner.webp"}
-                alt="rest-logo"
-              />
-            </Box>
-          </Stack>
-        </Container>
+        <Container className="family-brands"></Container>
       </div>
       <div className="address">
         <Container>
