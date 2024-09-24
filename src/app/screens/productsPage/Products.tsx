@@ -119,81 +119,42 @@ export default function Products(props: ProductsProps) {
           <Stack className={"avatar-big-box"}>
             <img src="/icons/gatorade.svg" alt="brand-logo" />
             <Stack className={"dishes-filter-box"}>
-              <Box>
-                <Button
-                  className="btn"
-                  color="secondary"
-                  onClick={() => shopNavHandler("powders")}
-                >
-                  Powders
-                </Button>
-                <Button
-                  className="btn"
-                  color="secondary"
-                  onClick={() => shopNavHandler("tablets")}
-                >
-                  Tablets
-                </Button>
-                <Button
-                  className="btn"
-                  color="secondary"
-                  onClick={() => shopNavHandler("protein")}
-                >
-                  Protein
-                </Button>
-                <Button
-                  className="btn"
-                  color="secondary"
-                  onClick={() => shopNavHandler("bottles")}
-                >
-                  Bottles
-                </Button>
-                <Button
-                  className="btn"
-                  color="secondary"
-                  onClick={() => shopNavHandler("equipments")}
-                >
-                  Equipment
-                </Button>
-              </Box>
-              <Box>
-                <Button
-                  variant={"contained"}
-                  color={
-                    productSearch.order === "createdAt"
-                      ? "primary"
-                      : "secondary"
-                  }
-                  className={"order"}
-                  onClick={() => searchOrderHandler("createdAt")}
-                >
-                  New
-                </Button>
-                <Button
-                  variant={"contained"}
-                  color={
-                    productSearch.order === "productPrice"
-                      ? "primary"
-                      : "secondary"
-                  }
-                  className={"order"}
-                  onClick={() => searchOrderHandler("productPrice")}
-                >
-                  Price
-                </Button>
-                <Button
-                  variant={"contained"}
-                  color={
-                    productSearch.order === "productViews"
-                      ? "primary"
-                      : "secondary"
-                  }
-                  className={"order"}
-                  onClick={() => searchOrderHandler("productViews")}
-                >
-                  Views
-                </Button>
-              </Box>
+              <Button
+                variant={"contained"}
+                color={
+                  productSearch.order === "createdAt" ? "primary" : "secondary"
+                }
+                className={"order"}
+                onClick={() => searchOrderHandler("createdAt")}
+              >
+                New
+              </Button>
+              <Button onClick={() => shopNavHandler("tablets")}>Tablets</Button>
+              <Button onClick={() => shopNavHandler("bottles")}>Bottles</Button>
+              <Button
+                variant={"contained"}
+                color={
+                  productSearch.order === "productPrice"
+                    ? "primary"
+                    : "secondary"
+                }
+                className={"order"}
+                onClick={() => searchOrderHandler("productPrice")}
+              >
+                Price
+              </Button>
+              <Button
+                variant={"contained"}
+                color={
+                  productSearch.order === "productViews"
+                    ? "primary"
+                    : "secondary"
+                }
+                className={"order"}
+                onClick={() => searchOrderHandler("productViews")}
+              >
+                Views
+              </Button>
             </Stack>
           </Stack>
 
