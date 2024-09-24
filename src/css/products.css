@@ -22,47 +22,38 @@
   align-items: center;
 }
 
-.products-page .products .avatar-big-box .section-title {
+.products-page .products .section-title {
+  margin-top: 10px;
+  margin-bottom: 20px;
   position: relative;
   width: 100%;
-  height: 43px;
+  height: 70px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   font-weight: 700;
   line-height: normal;
-  font-size: 34px;
-  justify-content: flex-end;
+  font-size: 30px;
+}
+
+.products-page .products .section-title .red input {
+  background-color: #e8e1e1;
+  width: 300px;
+  height: 40px;
+  border: none;
+  border-radius: 2px;
+  margin-right: 5px;
+  padding-left: 10px;
+}
+
+.products-page .products .section-title .search-button {
+  margin-top: 6px;
+  height: 38px;
 }
 
 .products-page .products .avatar-big-box .section-title .title {
   margin-right: 200px;
-}
-
-.products-page .products .avatar-big-box .section-title .red {
-  display: flex;
-  flex-direction: row;
-}
-
-.products-page .products .avatar-big-box .section-title .input {
-  border: none;
-  border-radius: 10px 0 0 10px;
-  display: flex;
-  flex-direction: row;
-  font-size: 15px;
-  height: 30px;
-  line-height: 26px;
-  position: relative;
-  width: 225px;
-  padding-left: 10px;
-}
-
-.products-page .products .avatar-big-box .search-button {
-  background-color: rgb(255, 162, 0);
-  color: #fff;
-  width: 106px;
-  height: 32px;
-  border-radius: 18.5px;
-  font-size: 13px;
 }
 
 .products-page .products .dishes-filter-box .order {
@@ -71,17 +62,19 @@
   margin-left: 20px;
 }
 
-.products-page .products .avatar-big-box .search-button .icon {
-  width: 15px;
-  height: 20px;
-}
 .products-page .products .dishes-filter-box {
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   padding-right: 50px;
+}
+
+.products-page .products .dishes-filter-box .btn {
+  font-weight: 500;
+  font-size: 17px;
 }
 
 .products-page .products .dishes-filter-section {

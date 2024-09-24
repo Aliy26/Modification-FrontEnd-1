@@ -19,6 +19,7 @@ import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
+import { T } from "../../../lib/types/common";
 
 /** Redux Slice & Selector */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -63,12 +64,6 @@ export default function Products(props: ProductsProps) {
     }
   }, [searchText]);
   //* HANDLERS* //
-
-  const searchCollectionHandler = (collection: ProductCollection) => {
-    productSearch.page = 1;
-    productSearch.productCollection = collection;
-    setProductSearch({ ...productSearch });
-  };
 
   const searchOrderHandler = (order: string) => {
     productSearch.page = 1;
@@ -126,116 +121,66 @@ export default function Products(props: ProductsProps) {
 
           <Stack className={"dishes-filter-section"}>
             <Stack className={"dishes-filter-box"}>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.order === "createdAt" ? "primary" : "secondary"
-                }
-                className={"order"}
-                onClick={() => searchOrderHandler("createdAt")}
-              >
-                New
-              </Button>
-              <Button onClick={() => shopNavHandler("tablets")}>Tablets</Button>
-              <Button onClick={() => shopNavHandler("bottles")}>Bottles</Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.order === "productPrice"
-                    ? "primary"
-                    : "secondary"
-                }
-                className={"order"}
-                onClick={() => searchOrderHandler("productPrice")}
-              >
-                Price
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.order === "productViews"
-                    ? "primary"
-                    : "secondary"
-                }
-                className={"order"}
-                onClick={() => searchOrderHandler("productViews")}
-              >
-                Views
-              </Button>
+              <Box>
+                <Button onClick={() => shopNavHandler("powders")}>
+                  Powders
+                </Button>
+                <Button onClick={() => shopNavHandler("tablets")}>
+                  Tablets
+                </Button>
+                <Button onClick={() => shopNavHandler("protein")}>
+                  Protein
+                </Button>
+                <Button onClick={() => shopNavHandler("bottles")}>
+                  Bottles
+                </Button>
+                <Button onClick={() => shopNavHandler("equipments")}>
+                  Equipment
+                </Button>
+              </Box>
+              <Box>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.order === "createdAt"
+                      ? "primary"
+                      : "secondary"
+                  }
+                  className={"order"}
+                  onClick={() => searchOrderHandler("createdAt")}
+                >
+                  New
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.order === "productPrice"
+                      ? "primary"
+                      : "secondary"
+                  }
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productPrice")}
+                >
+                  Price
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.order === "productViews"
+                      ? "primary"
+                      : "secondary"
+                  }
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productViews")}
+                >
+                  Views
+                </Button>
+              </Box>
             </Stack>
           </Stack>
 
           <Stack className={"list-category-section"}>
-            <Stack className={"product-category"}>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.POWDER
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() =>
-                  searchCollectionHandler(ProductCollection.POWDER)
-                }
-              >
-                Powder
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.TABLET
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() =>
-                  searchCollectionHandler(ProductCollection.TABLET)
-                }
-              >
-                Tablet
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.PROTEIN
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() =>
-                  searchCollectionHandler(ProductCollection.PROTEIN)
-                }
-              >
-                Protein
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.BOTTLE
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() =>
-                  searchCollectionHandler(ProductCollection.BOTTLE)
-                }
-              >
-                Bottle
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.productCollection === ProductCollection.OTHER
-                    ? "primary"
-                    : "secondary"
-                }
-                className="order"
-                onClick={() => searchCollectionHandler(ProductCollection.OTHER)}
-              >
-                Other
-              </Button>
-            </Stack>
+            <Stack className={"product-category"}></Stack>
 
             <Stack className={"product-wrapper"}>
               {products.length !== 0 ? (
