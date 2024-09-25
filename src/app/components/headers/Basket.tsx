@@ -9,7 +9,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
 import { Messages, serverApi } from "../../../lib/config";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import {
+  sweetErrorHandling,
+  sweetFailureProvider,
+} from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
 
@@ -58,6 +61,14 @@ export default function Basket(props: BasketProps) {
     handleClose();
     try {
       if (!authMember) throw new Error(Messages.error2);
+      if (!authMember.memberAddress) {
+        sweetFailureProvider(
+          "Please provide your address to proceed with the order!"
+        );
+        history.push("/member-page");
+        return false;
+      }
+
       const order = new OrderService();
       await order.createOrder(cartItems);
 

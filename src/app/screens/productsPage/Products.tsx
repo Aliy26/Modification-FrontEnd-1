@@ -81,6 +81,10 @@ export default function Products(props: ProductsProps) {
     setProductSearch({ ...productSearch });
   };
 
+  const productsPageHandler = () => {
+    history.push("/products");
+  };
+
   const shopNavHandler = (link: string) => {
     history.push(`/products/${link}`);
   };
@@ -115,46 +119,89 @@ export default function Products(props: ProductsProps) {
               </Button>
             </Box>
           </Stack>
-
           <Stack className={"avatar-big-box"}>
-            <img src="/icons/gatorade.svg" alt="brand-logo" />
+            <img
+              src="icons/gatorade.svg"
+              alt="brand-logo"
+              className="brand-logo"
+              onClick={productsPageHandler}
+            />
             <Stack className={"dishes-filter-box"}>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.order === "createdAt" ? "primary" : "secondary"
-                }
-                className={"order"}
-                onClick={() => searchOrderHandler("createdAt")}
-              >
-                New
-              </Button>
-              <Button onClick={() => shopNavHandler("tablets")}>Tablets</Button>
-              <Button onClick={() => shopNavHandler("bottles")}>Bottles</Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.order === "productPrice"
-                    ? "primary"
-                    : "secondary"
-                }
-                className={"order"}
-                onClick={() => searchOrderHandler("productPrice")}
-              >
-                Price
-              </Button>
-              <Button
-                variant={"contained"}
-                color={
-                  productSearch.order === "productViews"
-                    ? "primary"
-                    : "secondary"
-                }
-                className={"order"}
-                onClick={() => searchOrderHandler("productViews")}
-              >
-                Views
-              </Button>
+              <Box>
+                <Button
+                  color="secondary"
+                  className="btn"
+                  onClick={() => shopNavHandler("powders")}
+                >
+                  Powders
+                </Button>
+                <Button
+                  color="secondary"
+                  className="btn"
+                  onClick={() => shopNavHandler("tablets")}
+                >
+                  Tablets
+                </Button>
+                <Button
+                  color="secondary"
+                  className="btn"
+                  onClick={() => shopNavHandler("protein")}
+                >
+                  Protein
+                </Button>
+                <Button
+                  color="secondary"
+                  className="btn"
+                  onClick={() => shopNavHandler("bottles")}
+                >
+                  Bottles
+                </Button>
+                <Button
+                  color="secondary"
+                  className="btn"
+                  onClick={() => shopNavHandler("equipments")}
+                >
+                  Equipment
+                </Button>
+              </Box>
+              <Box>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.order === "createdAt"
+                      ? "primary"
+                      : "secondary"
+                  }
+                  className={"order"}
+                  onClick={() => searchOrderHandler("createdAt")}
+                >
+                  New
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.order === "productPrice"
+                      ? "primary"
+                      : "secondary"
+                  }
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productPrice")}
+                >
+                  Price
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={
+                    productSearch.order === "productViews"
+                      ? "primary"
+                      : "secondary"
+                  }
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productViews")}
+                >
+                  Views
+                </Button>
+              </Box>
             </Stack>
           </Stack>
 
@@ -179,42 +226,38 @@ export default function Products(props: ProductsProps) {
                         className={"product-img"}
                         sx={{ backgroundImage: `url(${imagePath})` }}
                       >
-                        <div className={"product-sale"}>{sizeVolume}</div>
                         <Stack className={"product-btns"}>
-                          <Button
-                            className={"shop-btn"}
-                            onClick={(e) => {
-                              onAdd({
-                                _id: product._id,
-                                quantity: 1,
-                                name: product.productName,
-                                price: product.productPrice,
-                                image: product.productImages[0],
-                              });
-                              e.stopPropagation();
-                            }}
-                          >
-                            <img
-                              src={"/icons/shopping-cart.svg"}
-                              alt="shopping-cart"
-                            />
-                          </Button>
-                          <Button className={"view-btn"}>
-                            <Badge
-                              badgeContent={product.productViews}
-                              color="secondary"
-                              className="badge"
+                          <div>
+                            <Button
+                              className={"shop-btn"}
+                              onClick={(e) => {
+                                onAdd({
+                                  _id: product._id,
+                                  quantity: 1,
+                                  name: product.productName,
+                                  price: product.productPrice,
+                                  image: product.productImages[0],
+                                });
+                                e.stopPropagation();
+                              }}
                             >
-                              <RemoveRedIcon
-                                sx={{
-                                  color:
-                                    product.productViews === 0
-                                      ? "gray"
-                                      : "white",
-                                }}
+                              <img
+                                src={"/icons/shopping-cart.svg"}
+                                alt="shopping-cart"
                               />
-                            </Badge>
-                          </Button>
+                            </Button>
+                          </div>
+                          <div>
+                            <Button className={"view-btn"}>
+                              <Badge
+                                badgeContent={product.productViews}
+                                color="secondary"
+                                className="badge"
+                              >
+                                <RemoveRedIcon />
+                              </Badge>
+                            </Button>
+                          </div>
                         </Stack>
                       </Stack>
                       <Box className={"product-desc"}>
@@ -222,8 +265,7 @@ export default function Products(props: ProductsProps) {
                           {product.productName}
                         </span>
                         <div className="product-price">
-                          <MonetizationOnIcon />
-                          {product.productPrice}
+                          ${product.productPrice}
                         </div>
                       </Box>
                     </Stack>

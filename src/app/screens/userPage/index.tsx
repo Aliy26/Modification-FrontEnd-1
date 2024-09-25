@@ -205,7 +205,17 @@ export default function UserPage(props: UserPageProps) {
                   ? authMember.memberDesc
                   : "No description"}
               </p>
-              <p className={"user-email"}>
+              <p
+                className={"user-email"}
+                onClick={() => {
+                  const confirm = window.confirm(
+                    "Do you want to change your email?"
+                  );
+                  if (confirm) {
+                    setChangeEmailOpen(true);
+                  } else return false;
+                }}
+              >
                 {authMember?.memberEmail ? authMember.memberEmail : "No Email"}
               </p>
             </Box>

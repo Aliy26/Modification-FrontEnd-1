@@ -17,6 +17,10 @@ import "../../../css/order.css";
 import { useHistory } from "react-router-dom";
 import { serverApi } from "../../../lib/config";
 import { MemberType } from "../../../lib/enums/member.enum";
+import {
+  sweetErrorHandling,
+  sweetFailureProvider,
+} from "../../../lib/sweetAlert";
 
 /** REDUX SLICE & SELECTOR */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -40,16 +44,22 @@ export default function OrdersPage() {
   useEffect(() => {
     const order = new OrderService();
 
-    order
-      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
-      .then((data) => setPausedOrders(data))
-      .catch((err) => console.log(err));
+    if (authMember?.memberAddress) {
+      order
+        .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
+        .then((data) => setPausedOrders(data))
+        .catch((err) => console.log(err));
 
-    order
-      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
-      .then((data) => setProcessOrders(data))
-      .catch((err) => console.log(err));
-
+      order
+        .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
+        .then((data) => setProcessOrders(data))
+        .catch((err) => console.log(err));
+    } else {
+      history.push("/member-page");
+      sweetFailureProvider(
+        "Please provide your address to proceed with the order!"
+      );
+    }
     order
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH })
       .then((data) => setFinishedOrders(data))

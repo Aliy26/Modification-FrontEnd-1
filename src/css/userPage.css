@@ -196,6 +196,10 @@
   color: #616164;
 }
 
+.user-page .order-info-box .user-email {
+  cursor: pointer;
+}
+
 .user-page .order-info-box .css-1e3kzd4-MuiButtonBase-root-MuiButton-root {
   margin-top: 15px;
   min-width: 90%;
