@@ -16,6 +16,7 @@ import {
 } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import {
+  showSaveConfirmation1,
   sweetErrorHandling,
   sweetTopSuccessAlert,
   sweetTopSuccessAlert1,
@@ -259,16 +260,19 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         memberPassword: memberPassword,
       };
 
-      const confirmation = window.confirm(
-        "Do you want to delete your account?"
+      handleDeleteClose();
+      const confirm = await showSaveConfirmation1(
+        `Dear ${memberNick} do you really want to delete your account? 😩`
       );
-      if (confirmation) {
+      if (confirm.isDenied) {
+        return false;
+      } else if (confirm.isDismissed) {
+        return false;
+      } else {
         await member.deleteAccount(deleteInput);
+        await sweetTopSuccessAlert("The account has been deleted!", 3000);
         handleDeleteClose();
         setAuthMember(null);
-        await sweetTopSuccessAlert("The account has been deleted!", 3000);
-      } else {
-        handleDeleteClose();
       }
     } catch (err) {
       console.log(err);

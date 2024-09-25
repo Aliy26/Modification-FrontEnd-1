@@ -44,22 +44,15 @@ export default function OrdersPage() {
   useEffect(() => {
     const order = new OrderService();
 
-    if (authMember?.memberAddress) {
-      order
-        .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
-        .then((data) => setPausedOrders(data))
-        .catch((err) => console.log(err));
+    order
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
+      .then((data) => setPausedOrders(data))
+      .catch((err) => console.log(err));
 
-      order
-        .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
-        .then((data) => setProcessOrders(data))
-        .catch((err) => console.log(err));
-    } else {
-      history.push("/member-page");
-      sweetFailureProvider(
-        "Please provide your address to proceed with the order!"
-      );
-    }
+    order
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
+      .then((data) => setProcessOrders(data))
+      .catch((err) => console.log(err));
     order
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH })
       .then((data) => setFinishedOrders(data))

@@ -25,6 +25,39 @@ export const sweetTopSuccessAlert = async (
   });
 };
 
+export const showSaveConfirmation = async () => {
+  const swalResult = await Swal.fire({
+    title: "Do you want to save the changes?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Yes",
+    denyButtonText: "No",
+    customClass: {
+      actions: "my-actions",
+      cancelButton: "order-1 right-gap",
+      confirmButton: "order-2",
+      denyButton: "order-3",
+    },
+  });
+  return swalResult;
+};
+
+export const showSaveConfirmation1 = async (text: string) => {
+  const swalResult = await Swal.fire({
+    title: text,
+    showDenyButton: true,
+    confirmButtonText: "Yes",
+    denyButtonText: "No",
+    customClass: {
+      actions: "my-actions",
+
+      confirmButton: "order-2",
+      denyButton: "order-3",
+    },
+  });
+  return swalResult;
+};
+
 export const sweetTopSuccessAlert1 = async (
   msg: string,
   duration: number = 2000
@@ -56,7 +89,7 @@ export const sweetTopSmallSuccessAlert = async (
   }).then();
 };
 
-export const sweetFailureProvider = (
+export const sweetFailureProvider = async (
   msg: string,
   show_button: boolean = false,
   forward_url: string = ""
@@ -71,41 +104,4 @@ export const sweetFailureProvider = (
       window.location.replace(forward_url);
     }
   });
-};
-
-export const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: "btn btn-success",
-    cancelButton: "btn btn-danger",
-  },
-  buttonsStyling: false,
-});
-
-// Function to trigger the confirmation modal
-export const showDeleteConfirmation = () => {
-  swalWithBootstrapButtons
-    .fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true,
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
-        swalWithBootstrapButtons.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithBootstrapButtons.fire({
-          title: "Cancelled",
-          text: "Your imaginary file is safe :)",
-          icon: "error",
-        });
-      }
-    });
 };

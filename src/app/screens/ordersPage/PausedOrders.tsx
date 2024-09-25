@@ -10,6 +10,7 @@ import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
 import { T } from "../../../lib/types/common";
 import {
+  showSaveConfirmation1,
   sweetErrorHandling,
   sweetTopSuccessAlert1,
 } from "../../../lib/sweetAlert";
@@ -43,11 +44,15 @@ export default function PausedOrders(props: PausedOrdersProps) {
         orderStatus: OrderStatus.DELETE,
       };
 
-      const confirmation = window.confirm("Do you want to delete the order?");
-      if (confirmation) {
+      const confirm = await showSaveConfirmation1(
+        "Do you want to delete the order?"
+      );
+      if (confirm.isConfirmed) {
         const order = new OrderService();
         await order.updateOrder(input);
         setOrderBuilder(new Date());
+      } else {
+        return false;
       }
     } catch (err) {
       console.log(err);
@@ -66,15 +71,17 @@ export default function PausedOrders(props: PausedOrdersProps) {
         orderStatus: OrderStatus.PROCESS,
       };
 
-      const confirmation = window.confirm(
-        "Do you want to proceed with payment?"
+      const confirm = await showSaveConfirmation1(
+        "Do you want proceed with the payment?"
       );
-      if (confirmation) {
+      if (confirm.isConfirmed) {
         const order = new OrderService();
         await order.updateOrder(input);
         await sweetTopSuccessAlert1("Order has been placed!", 1500);
         setValue("2");
         setOrderBuilder(new Date());
+      } else {
+        return false;
       }
     } catch (err) {
       console.log(err);

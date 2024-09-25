@@ -208,12 +208,7 @@ export default function UserPage(props: UserPageProps) {
               <p
                 className={"user-email"}
                 onClick={() => {
-                  const confirm = window.confirm(
-                    "Do you want to change your email?"
-                  );
-                  if (confirm) {
-                    setChangeEmailOpen(true);
-                  } else return false;
+                  setChangeEmailOpen(true);
                 }}
               >
                 {authMember?.memberEmail ? authMember.memberEmail : "No Email"}

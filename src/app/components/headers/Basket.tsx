@@ -61,10 +61,11 @@ export default function Basket(props: BasketProps) {
     handleClose();
     try {
       if (!authMember) throw new Error(Messages.error2);
-      if (!authMember.memberAddress) {
+      if (!authMember.memberAddress || authMember.memberAddress.length < 5) {
         sweetFailureProvider(
-          "Please provide your address to proceed with the order!"
+          "Please provide your address before making orders!"
         );
+
         history.push("/member-page");
         return false;
       }

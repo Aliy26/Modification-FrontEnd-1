@@ -31,12 +31,16 @@ import { Messages, serverApi } from "../../../lib/config";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import {
+  showSaveConfirmation,
+  showSaveConfirmation1,
+  sweetErrorHandling,
+  sweetFailureProvider,
+} from "../../../lib/sweetAlert";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { ProductCollection } from "../../../lib/enums/product.enum";
 
 const actionDispatch = (dispatch: Dispatch) => ({
   setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
@@ -79,21 +83,29 @@ export default function ChosenProduct(props: ChosenProductProps) {
 
   const proceedOrderHandler = async (input: CartItem[]) => {
     try {
-      const confirm = window.confirm(
-        `Do you want to purchase ${count} ${itemName}s?`
+      if (!authMember?.memberAddress || authMember.memberAddress.length < 5) {
+        await sweetFailureProvider(
+          "Please provide your address before making orders!"
+        );
+        history.push("/member-page");
+        return false;
+      }
+
+      const confirm = await showSaveConfirmation1(
+        `Do you want to purchase ${count} of ${itemName}`
       );
 
       if (!authMember) {
         history.push("/");
         throw new Error(Messages.error2);
       }
-      if (confirm) {
+      if (confirm.isConfirmed) {
         const order = new OrderService();
         const result = await order.createOrder(input);
         if (result) {
           setOrderBuilder(new Date());
           history.push("/orders");
-        } else {
+        } else if (confirm.isDismissed) {
           return false;
         }
       }

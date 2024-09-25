@@ -9,9 +9,12 @@ import MemberService from "../../services/MemberService";
 import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
+  showSaveConfirmation,
+  showSaveConfirmation1,
 } from "../../../lib/sweetAlert";
 import { Messages, serverApi } from "../../../lib/config";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 
 export function Settings() {
   const { authMember, setAuthMember } = useGlobals();
@@ -63,11 +66,27 @@ export function Settings() {
       ) {
         throw new Error(Messages.error3);
       }
-      const member = new MemberService();
-      const result = await member.updateMember(memberUpdateInput);
-      setAuthMember(result);
 
-      await sweetTopSmallSuccessAlert("Successfully modified", 700);
+      const member = new MemberService();
+
+      const swalResult = await showSaveConfirmation();
+
+      if (swalResult.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+        setMemberUpdateInput({
+          memberNick: authMember?.memberNick,
+          memberPhone: authMember?.memberPhone,
+          memberAddress: authMember?.memberAddress,
+          memberDesc: authMember?.memberDesc,
+          memberImage: authMember?.memberImage,
+        });
+        return false;
+      } else if (swalResult.isConfirmed) {
+        const result = await member.updateMember(memberUpdateInput);
+        Swal.fire("Saved!", "", "success");
+        // Proceed with setting auth member only when confirmed
+        setAuthMember(result);
+      }
     } catch (err) {
       console.log(err);
       sweetErrorHandling(err).then();
@@ -75,7 +94,9 @@ export function Settings() {
   };
 
   const handleImageDelete = async () => {
-    const confirm = window.confirm("Do you want to delete the image?");
+    const confirm = await showSaveConfirmation1(
+      "Do you want to delete your photo?"
+    );
     if (confirm) {
       const member = new MemberService();
       const result: Member = await member.deleteImage();
@@ -119,7 +140,7 @@ export function Settings() {
               <CloudDownloadIcon className="cloud" />
               <input type="file" hidden />
             </Button>
-            {typeof authMember?.memberImage === "string" ? (
+            {authMember?.memberImage && authMember.memberImage.length > 5 ? (
               <Button onClick={handleImageDelete}>
                 <DeleteIcon className="bin" />
               </Button>
