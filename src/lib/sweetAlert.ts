@@ -25,27 +25,14 @@ export const sweetTopSuccessAlert = async (
   });
 };
 
-export const showSaveConfirmation = async () => {
-  const swalResult = await Swal.fire({
-    title: "Do you want to save the changes?",
-    showDenyButton: true,
-    showCancelButton: true,
-    confirmButtonText: "Yes",
-    denyButtonText: "No",
-    customClass: {
-      actions: "my-actions",
-      cancelButton: "order-1 right-gap",
-      confirmButton: "order-2",
-      denyButton: "order-3",
-    },
-  });
-  return swalResult;
-};
-
-export const showSaveConfirmation1 = async (text: string) => {
+export const showSaveConfirmation1 = async (
+  text: string,
+  cancelBtn: boolean = false
+) => {
   const swalResult = await Swal.fire({
     title: text,
     showDenyButton: true,
+    showCancelButton: cancelBtn,
     confirmButtonText: "Yes",
     denyButtonText: "No",
     customClass: {

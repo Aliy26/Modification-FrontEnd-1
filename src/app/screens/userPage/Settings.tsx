@@ -9,7 +9,6 @@ import MemberService from "../../services/MemberService";
 import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
-  showSaveConfirmation,
   showSaveConfirmation1,
 } from "../../../lib/sweetAlert";
 import { Messages, serverApi } from "../../../lib/config";
@@ -69,7 +68,10 @@ export function Settings() {
 
       const member = new MemberService();
 
-      const swalResult = await showSaveConfirmation();
+      const swalResult = await showSaveConfirmation1(
+        "Do you want to save the changes?",
+        true
+      );
 
       if (swalResult.isDenied) {
         Swal.fire("Changes are not saved", "", "info");

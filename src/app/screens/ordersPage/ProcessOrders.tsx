@@ -12,7 +12,10 @@ import { Product } from "../../../lib/types/product";
 import { useGlobals } from "../../hooks/useGlobals";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderService";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import {
+  showSaveConfirmation1,
+  sweetErrorHandling,
+} from "../../../lib/sweetAlert";
 import { T } from "../../../lib/types/common";
 
 /** REDUX SLICE & SELECTOR */
@@ -40,12 +43,16 @@ export default function ProcessOrders(props: ProcessedOrdersProps) {
         orderStatus: OrderStatus.FINISH,
       };
 
-      const confirmation = window.confirm("Have you received your order?");
-      if (confirmation) {
+      const confirm = await showSaveConfirmation1(
+        "Have you received your order?"
+      );
+      if (confirm.isConfirmed) {
         const order = new OrderService();
         await order.updateOrder(input);
         setValue("3");
         setOrderBuilder(new Date());
+      } else {
+        return false;
       }
     } catch (err) {
       console.log(err);

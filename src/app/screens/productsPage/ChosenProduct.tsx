@@ -32,7 +32,6 @@ import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
 import {
-  showSaveConfirmation,
   showSaveConfirmation1,
   sweetErrorHandling,
   sweetFailureProvider,

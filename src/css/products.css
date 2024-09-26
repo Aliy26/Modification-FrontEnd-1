@@ -136,10 +136,14 @@
 
 .products-page .products .product-wrapper .product-img {
   width: 360px;
-  height: 90%;
-  background-size: cover;
+  height: 75%;
   background-position: center;
+  background-size: cover;
   border-radius: 5px;
+}
+
+.products-page .products .product-wrapper .product-img:hover {
+  background-color: rgb(228, 222, 222);
 }
 
 .products-page .products .product-wrapper .product-img .product-btns {
