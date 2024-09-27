@@ -9,7 +9,7 @@ import MemberService from "../../services/MemberService";
 import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
-  showSaveConfirmation1,
+  showSaveConfirmation,
 } from "../../../lib/sweetAlert";
 import { Messages, serverApi } from "../../../lib/config";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -68,7 +68,7 @@ export function Settings() {
 
       const member = new MemberService();
 
-      const swalResult = await showSaveConfirmation1(
+      const swalResult = await showSaveConfirmation(
         "Do you want to save the changes?",
         true
       );
@@ -96,7 +96,7 @@ export function Settings() {
   };
 
   const handleImageDelete = async () => {
-    const confirm = await showSaveConfirmation1(
+    const confirm = await showSaveConfirmation(
       "Do you want to delete your photo?"
     );
     if (confirm) {

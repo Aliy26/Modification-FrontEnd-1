@@ -16,10 +16,9 @@ import {
 } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import {
-  showSaveConfirmation1,
+  showSaveConfirmation,
   sweetErrorHandling,
   sweetTopSuccessAlert,
-  sweetTopSuccessAlert1,
 } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 
@@ -195,14 +194,14 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         memberEmail: memberEmail,
       };
       handleChangeEmailClose();
-      const confirm = await showSaveConfirmation1(
+      const confirm = await showSaveConfirmation(
         "Do you want to change you email?"
       );
       if (confirm.isConfirmed) {
         const result = await member.updateEmail(newEmailInput);
         setAuthMember(result);
         handleChangeEmailClose();
-        await sweetTopSuccessAlert1("The email has been changed!", 3000);
+        await sweetTopSuccessAlert("The email has been changed!", 3000);
       } else {
         handleChangeEmailClose();
         return false;
@@ -238,7 +237,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         const result = await member.updatePassowrd(newPasswordInput);
         handleChangePasswordClose();
         setAuthMember(result);
-        await sweetTopSuccessAlert1("The password has been changed!", 1500);
+        await sweetTopSuccessAlert("The password has been changed!", 1500);
       } else {
         handleChangePasswordClose();
       }
@@ -264,7 +263,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       };
 
       handleDeleteClose();
-      const confirm = await showSaveConfirmation1(
+      const confirm = await showSaveConfirmation(
         `Dear ${memberNick} do you really want to delete your account? 😩`
       );
       if (confirm.isDenied) {

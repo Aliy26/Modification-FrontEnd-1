@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Box, Button, Container, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import RemoveRedIcon from "@mui/icons-material/RemoveRedEye";
 import Badge from "@mui/material/Badge";
 import Pagination from "@mui/material/Pagination";
@@ -19,7 +18,7 @@ import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
-import { T } from "../../../lib/types/common";
+import { Hidden } from "@material-ui/core";
 
 /** Redux Slice & Selector */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -53,8 +52,6 @@ export default function Products(props: ProductsProps) {
       .getProducts(productSearch)
       .then((data) => setProducts(data))
       .catch((err) => console.log(err));
-
-    window.scrollTo(0, 0);
   }, [productSearch]);
 
   useEffect(() => {
@@ -63,7 +60,22 @@ export default function Products(props: ProductsProps) {
       setProductSearch({ ...productSearch });
     }
   }, [searchText]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   //* HANDLERS* //
+
+  const windowHandler = () => {
+    window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    if (products.length === 0) {
+      windowHandler();
+    }
+  }, products);
 
   const searchOrderHandler = (order: string) => {
     productSearch.page = 1;
@@ -228,26 +240,6 @@ export default function Products(props: ProductsProps) {
                       >
                         <Stack className={"product-btns"}>
                           <div>
-                            <Button
-                              className={"shop-btn"}
-                              onClick={(e) => {
-                                onAdd({
-                                  _id: product._id,
-                                  quantity: 1,
-                                  name: product.productName,
-                                  price: product.productPrice,
-                                  image: product.productImages[0],
-                                });
-                                e.stopPropagation();
-                              }}
-                            >
-                              <img
-                                src={"/icons/shopping-cart.svg"}
-                                alt="shopping-cart"
-                              />
-                            </Button>
-                          </div>
-                          <div>
                             <Button className={"view-btn"}>
                               <Badge
                                 badgeContent={product.productViews}
@@ -272,7 +264,7 @@ export default function Products(props: ProductsProps) {
                   );
                 })
               ) : (
-                <Box className={"no-data"}>No Products Available</Box>
+                <Box className={"no-data"}>No Products in This Page</Box>
               )}
             </Stack>
           </Stack>

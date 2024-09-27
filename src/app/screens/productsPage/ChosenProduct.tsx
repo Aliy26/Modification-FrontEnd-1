@@ -32,7 +32,7 @@ import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
 import {
-  showSaveConfirmation1,
+  showSaveConfirmation,
   sweetErrorHandling,
   sweetFailureProvider,
 } from "../../../lib/sweetAlert";
@@ -90,7 +90,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
         return false;
       }
 
-      const confirm = await showSaveConfirmation1(
+      const confirm = await showSaveConfirmation(
         `Do you want to purchase ${count} of ${itemName}`
       );
 
@@ -163,7 +163,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
       .then((data) => setRestaurant(data))
       .catch((err) => console.log(err));
 
-    window.scrollTo(440, 440);
+    window.scrollTo(480, 480);
   }, []);
 
   if (!chosenProduct) return null;

@@ -10,9 +10,10 @@ import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
 import { T } from "../../../lib/types/common";
 import {
-  showSaveConfirmation1,
+  showSaveConfirmation,
   sweetErrorHandling,
-  sweetTopSuccessAlert1,
+  sweetFailureProvider,
+  sweetTopSuccessAlert,
 } from "../../../lib/sweetAlert";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import { useGlobals } from "../../hooks/useGlobals";
@@ -44,7 +45,7 @@ export default function PausedOrders(props: PausedOrdersProps) {
         orderStatus: OrderStatus.DELETE,
       };
 
-      const confirm = await showSaveConfirmation1(
+      const confirm = await showSaveConfirmation(
         "Do you want to delete the order?"
       );
       if (confirm.isConfirmed) {
@@ -63,6 +64,10 @@ export default function PausedOrders(props: PausedOrdersProps) {
   const processOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Messages.error2);
+      if (!authMember.memberAddress || authMember.memberAddress.length < 5)
+        await sweetFailureProvider(
+          "Please provide your address before making orders!"
+        );
       // PAYMENT PROCESS
 
       const orderId = e.target.value;
@@ -71,13 +76,13 @@ export default function PausedOrders(props: PausedOrdersProps) {
         orderStatus: OrderStatus.PROCESS,
       };
 
-      const confirm = await showSaveConfirmation1(
+      const confirm = await showSaveConfirmation(
         "Do you want proceed with the payment?"
       );
       if (confirm.isConfirmed) {
         const order = new OrderService();
         await order.updateOrder(input);
-        await sweetTopSuccessAlert1("Order has been placed!", 1500);
+        await sweetTopSuccessAlert("Order has been placed!", 1500);
         setValue("2");
         setOrderBuilder(new Date());
       } else {

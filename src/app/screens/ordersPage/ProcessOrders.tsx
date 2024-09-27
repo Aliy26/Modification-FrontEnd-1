@@ -13,7 +13,7 @@ import { useGlobals } from "../../hooks/useGlobals";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderService";
 import {
-  showSaveConfirmation1,
+  showSaveConfirmation,
   sweetErrorHandling,
 } from "../../../lib/sweetAlert";
 import { T } from "../../../lib/types/common";
@@ -43,7 +43,7 @@ export default function ProcessOrders(props: ProcessedOrdersProps) {
         orderStatus: OrderStatus.FINISH,
       };
 
-      const confirm = await showSaveConfirmation1(
+      const confirm = await showSaveConfirmation(
         "Have you received your order?"
       );
       if (confirm.isConfirmed) {

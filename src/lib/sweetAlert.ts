@@ -17,43 +17,10 @@ export const sweetTopSuccessAlert = async (
   duration: number = 2000
 ) => {
   await Swal.fire({
-    position: "top-end",
-    icon: "success",
-    title: msg,
-    showConfirmButton: false,
-    timer: duration,
-  });
-};
-
-export const showSaveConfirmation1 = async (
-  text: string,
-  cancelBtn: boolean = false
-) => {
-  const swalResult = await Swal.fire({
-    title: text,
-    showDenyButton: true,
-    showCancelButton: cancelBtn,
-    confirmButtonText: "Yes",
-    denyButtonText: "No",
-    customClass: {
-      actions: "my-actions",
-
-      confirmButton: "order-2",
-      denyButton: "order-3",
-    },
-  });
-  return swalResult;
-};
-
-export const sweetTopSuccessAlert1 = async (
-  msg: string,
-  duration: number = 2000
-) => {
-  await Swal.fire({
     position: "center",
     icon: "success",
     title: msg,
-    showConfirmButton: false,
+    showConfirmButton: true,
     timer: duration,
   });
 };
@@ -74,6 +41,26 @@ export const sweetTopSmallSuccessAlert = async (
     icon: "success",
     title: msg,
   }).then();
+};
+
+export const showSaveConfirmation = async (
+  text: string,
+  cancelBtn: boolean = false
+) => {
+  const swalResult = await Swal.fire({
+    title: text,
+    showDenyButton: true,
+    showCancelButton: cancelBtn,
+    confirmButtonText: "Yes",
+    denyButtonText: "No",
+    customClass: {
+      actions: "my-actions",
+
+      confirmButton: "order-2",
+      denyButton: "order-3",
+    },
+  });
+  return swalResult;
 };
 
 export const sweetFailureProvider = async (

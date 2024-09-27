@@ -118,7 +118,7 @@ export default function Basket(props: BasketProps) {
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             mt: 1.5,
             "& .MuiAvatar-root": {
-              width: 32,
+              width: 52,
               height: 32,
               ml: -0.5,
               mr: 1,
@@ -162,23 +162,18 @@ export default function Basket(props: BasketProps) {
                 const imagePath = `${serverApi}/${item.image}`;
                 return (
                   <Box className={"basket-info-box"} key={item._id}>
-                    <div className={"cancel-btn"}>
-                      <CancelIcon
-                        color={"primary"}
-                        onClick={() => onDelete(item)}
-                      />
-                    </div>
                     <img
                       src={imagePath}
                       className={"product-img"}
                       alt="product-image"
                     />
                     <span className={"product-name"}>{item.name}</span>
-                    <p className={"product-price"}>
-                      ${item.price} x {item.quantity}
-                    </p>
-                    <Box sx={{ minWidth: 120 }}>
-                      <div className="col-2">
+
+                    <div className="col-2">
+                      <div className={"cancel-btn"}>
+                        <span className={"product-price"}>
+                          ${item.price} x {item.quantity}
+                        </span>
                         <button
                           onClick={() => onRemove(item)}
                           className="remove"
@@ -188,8 +183,12 @@ export default function Basket(props: BasketProps) {
                         <button onClick={() => onAdd(item)} className="add">
                           +
                         </button>
+                        <CancelIcon
+                          color={"primary"}
+                          onClick={() => onDelete(item)}
+                        />
                       </div>
-                    </Box>
+                    </div>
                   </Box>
                 );
               })}

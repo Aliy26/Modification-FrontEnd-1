@@ -188,16 +188,17 @@
   width: 90%;
   display: flex;
   justify-content: center;
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   color: #616164;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: bold;
 }
 
 .user-page .order-info-box .user-email {
   cursor: pointer;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: bold;
 }
 
 .user-page .order-info-box .css-1e3kzd4-MuiButtonBase-root-MuiButton-root {

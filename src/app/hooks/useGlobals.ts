@@ -1,6 +1,5 @@
 import { createContext, useContext } from "react";
 import { Member } from "../../lib/types/member";
-import { Messages } from "../../lib/config";
 
 interface GlobalInterface {
   authMember: Member | null;
