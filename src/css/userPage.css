@@ -316,6 +316,33 @@
   border-radius: 50%;
 }
 
+.setting-icon .setting {
+  color: #4caf50;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.setting-icon .setting:hover,
+.setting-icon .setting:focus {
+  color: #388e3c;
+  transform: scale(1.2);
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+.setting-icon .setting:active {
+  animation: rotate-wheel 0.5s ease;
+  transform: rotate(180deg);
+}
+
+@keyframes rotate-wheel {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .user-page .settings .media-change-box {
   position: relative;
   margin-left: 20px;
@@ -348,20 +375,30 @@
   width: 35px;
   height: 35px;
   cursor: pointer;
+  color: #68b300;
+  transition: all 0.3s ease;
 }
 
-.user-page .settings .cloud:hover {
-  background-color: greenyellow;
+.user-page .settings .cloud:hover,
+.user-page .settings .cloud:focus {
+  transform: scale(1.2);
+  color: #4caf50;
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2));
 }
 
 .user-page .settings .bin {
   height: 30px;
   width: 25px;
   cursor: pointer;
+  color: red;
+  transition: all 0.3s ease;
 }
 
-.user-page .settings .bin:hover {
-  background-color: greenyellow;
+.user-page .settings .bin:hover,
+.user-page .settings .bin:focus {
+  transform: rotate(-15deg) scale(1.2);
+  color: darkred;
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2));
 }
 
 .user-page .settings .up-del-box input {
@@ -380,4 +417,22 @@
   display: flex;
   justify-content: start;
   margin-top: 25px;
+}
+
+.user-page .settings .save-btn {
+  margin-top: 25px;
+  margin-top: 6px;
+  height: 38px;
+  background-color: #68b300;
+  color: #fff;
+  transition: background-color 0.7s ease;
+}
+
+.user-page .settings .save-btn:hover {
+  background-color: #526b86;
+}
+
+.user-page .settings .save-btn:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(34, 69, 106, 0.5);
 }

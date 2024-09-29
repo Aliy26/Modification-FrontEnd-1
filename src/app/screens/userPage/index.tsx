@@ -99,6 +99,7 @@ export default function UserPage(props: UserPageProps) {
                         aria-expanded={open ? "true" : undefined}
                         aria-haspopup="true"
                         onClick={handleToggle}
+                        className="set-icon"
                       >
                         <img
                           src="icons/setting.svg"

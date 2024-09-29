@@ -364,6 +364,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
             </div>
             <div className={"button-box"}>
               <Button
+                className="buy-now"
                 variant="contained"
                 onClick={() => {
                   proceedOrderHandler([

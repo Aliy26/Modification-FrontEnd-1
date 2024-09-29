@@ -76,25 +76,6 @@ export default function PopularProducts() {
                           </Typography>
                         </Stack>
                       </CardContent>
-                      <CardOverflow
-                        sx={{
-                          display: "flex",
-                          gap: 1.5,
-                          py: 1.5,
-                          px: "var(--Card-padding)",
-                          borderTop: "1px solid",
-                          height: "60px",
-                          overflow: "hidden",
-                          boxSizing: "border-box",
-                        }}
-                      >
-                        <Typography
-                          startDecorator={<DescriptionOutlinedIcon />}
-                          textColor={"neutral.300"}
-                        >
-                          {product.productDesc}
-                        </Typography>
-                      </CardOverflow>
                     </Card>
                   </CssVarsProvider>
                 );

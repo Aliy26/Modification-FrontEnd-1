@@ -57,6 +57,18 @@
 .products-page .products .section-title .search-button {
   margin-top: 6px;
   height: 38px;
+  background-color: #68b300;
+  color: #fff;
+  transition: background-color 0.7s ease;
+}
+
+.products-page .products .section-title .search-button:hover {
+  background-color: #526b86;
+}
+
+.products-page .products .section-title .search-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(34, 69, 106, 0.5);
 }
 
 .products-page .products .avatar-big-box .section-title .title {
@@ -64,7 +76,6 @@
 }
 
 .products-page .products .dishes-filter-box .order {
-  background-color: #526b86;
   color: white;
   border: none;
   width: 100px;
@@ -72,11 +83,12 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.7s ease;
+  background-color: #68b300;
   margin-right: 10px;
 }
 
 .products-page .products .dishes-filter-box .order:hover {
-  background-color: #0056b3;
+  background-color: #526b86;
 }
 
 .products-page .products .dishes-filter-box .order:focus {
