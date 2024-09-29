@@ -14,6 +14,7 @@ class ProductService {
       let url = `${this.path}/product/all?order=${input.order}&page=${input.page}&limit=${input.limit}`;
       if (input.productCollection)
         url += `&productCollection=${input.productCollection}`;
+      if (input.sort) url += `&sort=${input.sort}`;
       if (input.search) url += `&search=${input.search}`;
 
       const result = await axios.get(url);

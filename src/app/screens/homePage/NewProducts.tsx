@@ -15,15 +15,15 @@ import { useHistory } from "react-router-dom";
 
 /** REDUX SLICE & SELECTOR */
 
-const NewProductsRetriever = createSelector(
+const newProductsRetriever = createSelector(
   retrieveNewProducts,
-  (NewProducts) => ({
-    NewProducts,
+  (newProducts) => ({
+    newProducts,
   })
 );
 
 export default function NewProducts() {
-  const { NewProducts } = useSelector(NewProductsRetriever);
+  const { newProducts } = useSelector(newProductsRetriever);
   const history = useHistory();
   const chosenProductHandler = (id: string) => {
     history.push(`/products/${id}`, { fromHome: true });
@@ -35,13 +35,10 @@ export default function NewProducts() {
           <Box className="category-title">New Additions</Box>
           <Stack className="cards-frame">
             <CssVarsProvider>
-              {NewProducts.length !== 0 ? (
-                NewProducts.map((product) => {
+              {newProducts.length !== 0 ? (
+                newProducts.map((product) => {
                   const imagePath = `${serverApi}/${product.productImages[0]}`;
-                  const sizeVolume =
-                    product.productCollection === ProductCollection.BOTTLE
-                      ? product.productVolume + " L"
-                      : product.productSize + " size";
+
                   return (
                     <Card
                       key={product._id}
@@ -50,7 +47,6 @@ export default function NewProducts() {
                       onClick={() => chosenProductHandler(product._id)}
                     >
                       <CardOverflow>
-                        <div className="product-sale">{sizeVolume}</div>
                         <AspectRatio ratio="1">
                           <img src={imagePath} alt="user-iamge" />
                         </AspectRatio>

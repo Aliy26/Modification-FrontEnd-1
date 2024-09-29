@@ -74,9 +74,10 @@ export default function Tablets(props: ProductsProps) {
     };
   }, []);
 
-  const searchOrderHandler = (order: string) => {
+  const searchOrderHandler = (order: string, sort: string = "") => {
     productSearch.page = 1;
     productSearch.order = order;
+    productSearch.sort = sort;
     setProductSearch({ ...productSearch });
   };
 
@@ -178,16 +179,23 @@ export default function Tablets(props: ProductsProps) {
                 </Button>
                 <Button
                   variant={"contained"}
+                  color={productSearch.sort === "asc" ? "primary" : "secondary"}
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productPrice", "asc")}
+                >
+                  Highest Price
+                </Button>
+                <Button
+                  variant={"contained"}
                   color={
-                    productSearch.order === "productPrice"
-                      ? "primary"
-                      : "secondary"
+                    productSearch.sort === "desc" ? "primary" : "secondary"
                   }
                   className={"order"}
-                  onClick={() => searchOrderHandler("productPrice")}
+                  onClick={() => searchOrderHandler("productPrice", "desc")}
                 >
-                  Price
+                  Lowest Price
                 </Button>
+
                 <Button
                   variant={"contained"}
                   color={
@@ -211,10 +219,7 @@ export default function Tablets(props: ProductsProps) {
               {products.length !== 0 ? (
                 products.map((product: Product) => {
                   const imagePath = `${serverApi}/${product.productImages[0]}`;
-                  const sizeVolume =
-                    product.productCollection === ProductCollection.BOTTLE
-                      ? product.productVolume + " L"
-                      : product.productSize + " size";
+
                   return (
                     <Stack
                       key={product._id}
@@ -225,26 +230,7 @@ export default function Tablets(props: ProductsProps) {
                         className={"product-img"}
                         sx={{ backgroundImage: `url(${imagePath})` }}
                       >
-                        <div className={"product-sale"}>{sizeVolume}</div>
                         <Stack className={"product-btns"}>
-                          <Button
-                            className={"shop-btn"}
-                            onClick={(e) => {
-                              onAdd({
-                                _id: product._id,
-                                quantity: 1,
-                                name: product.productName,
-                                price: product.productPrice,
-                                image: product.productImages[0],
-                              });
-                              e.stopPropagation();
-                            }}
-                          >
-                            <img
-                              src={"/icons/shopping-cart.svg"}
-                              alt="shopping-cart"
-                            />
-                          </Button>
                           <Button className={"view-btn"}>
                             <Badge
                               badgeContent={product.productViews}

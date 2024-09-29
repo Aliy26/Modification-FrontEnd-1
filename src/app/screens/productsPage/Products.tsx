@@ -67,19 +67,10 @@ export default function Products(props: ProductsProps) {
 
   //* HANDLERS* //
 
-  const windowHandler = () => {
-    window.scrollTo(0, 0);
-  };
-
-  useEffect(() => {
-    if (products.length === 0) {
-      windowHandler();
-    }
-  }, products);
-
-  const searchOrderHandler = (order: string) => {
+  const searchOrderHandler = (order: string, sort: string = "") => {
     productSearch.page = 1;
     productSearch.order = order;
+    productSearch.sort = sort;
     setProductSearch({ ...productSearch });
   };
 
@@ -191,16 +182,23 @@ export default function Products(props: ProductsProps) {
                 </Button>
                 <Button
                   variant={"contained"}
+                  color={productSearch.sort === "asc" ? "primary" : "secondary"}
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productPrice", "asc")}
+                >
+                  Highest Price
+                </Button>
+                <Button
+                  variant={"contained"}
                   color={
-                    productSearch.order === "productPrice"
-                      ? "primary"
-                      : "secondary"
+                    productSearch.sort === "desc" ? "primary" : "secondary"
                   }
                   className={"order"}
-                  onClick={() => searchOrderHandler("productPrice")}
+                  onClick={() => searchOrderHandler("productPrice", "desc")}
                 >
-                  Price
+                  Lowest Price
                 </Button>
+
                 <Button
                   variant={"contained"}
                   color={
@@ -224,10 +222,6 @@ export default function Products(props: ProductsProps) {
               {products.length !== 0 ? (
                 products.map((product: Product) => {
                   const imagePath = `${serverApi}/${product.productImages[0]}`;
-                  const sizeVolume =
-                    product.productCollection === ProductCollection.BOTTLE
-                      ? product.productVolume + " L"
-                      : product.productSize + " size";
                   return (
                     <Stack
                       key={product._id}

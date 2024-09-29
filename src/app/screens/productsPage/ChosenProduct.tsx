@@ -75,6 +75,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const location = useLocation<any>();
   const [sticks, setSticks] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
+  const [saleCount, setSaleCount] = useState<number>(0);
 
   const handleChange = (event: SelectChangeEvent) => {
     setSticks(event.target.value);
@@ -82,7 +83,13 @@ export default function ChosenProduct(props: ChosenProductProps) {
 
   const proceedOrderHandler = async (input: CartItem[]) => {
     try {
-      if (!authMember?.memberAddress || authMember.memberAddress.length < 5) {
+      if (!authMember) {
+        await sweetFailureProvider("Please login first!");
+        return false;
+      } else if (
+        !authMember?.memberAddress ||
+        authMember.memberAddress.length < 5
+      ) {
         await sweetFailureProvider(
           "Please provide your address before making orders!"
         );
@@ -154,6 +161,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
         setChosenProduct(data);
         setItemName(data.productName);
         setPrice(data.productPrice);
+        setSaleCount(data.productPerSaleCount);
       })
       .catch((err) => console.log(err));
 
@@ -165,6 +173,13 @@ export default function ChosenProduct(props: ChosenProductProps) {
 
     window.scrollTo(480, 480);
   }, []);
+
+  console.log(price, ">>>>");
+  console.log(
+    chosenProduct?.productPrice
+      ? chosenProduct.productPrice * 3.3 >= price
+      : 1 * 1 >= price
+  );
 
   if (!chosenProduct) return null;
   return (
@@ -223,7 +238,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
                 <div className="form-container">
                   <FormControl className="form-control">
                     <InputLabel className="small-label">
-                      {chosenProduct.productPrice} sticks
+                      {chosenProduct.productPerSaleCount}
                     </InputLabel>
                     <Select
                       labelId="demo-select-small-label"
@@ -238,41 +253,39 @@ export default function ChosenProduct(props: ChosenProductProps) {
                           setPrice(chosenProduct.productPrice);
                         }}
                       >
-                        40 sticks
+                        {saleCount} {chosenProduct.productUnit}
                       </MenuItem>
                       <MenuItem
                         value={15}
                         onClick={() => {
-                          if (price >= chosenProduct.productPrice * 1.4)
+                          if (price >= chosenProduct.productPrice * 1.8)
                             return false;
-                          setPrice(Math.floor(price * 1.4));
+                          setPrice(Math.floor(price * 1.8));
                         }}
                       >
-                        60 sticks
+                        {saleCount * 2} {chosenProduct.productUnit}
                       </MenuItem>
                       <MenuItem
                         value={30}
                         onClick={() => {
-                          if (price >= chosenProduct.productPrice * 1.8)
+                          if (price > chosenProduct.productPrice * 3.3)
                             return false;
                           setPrice(
-                            Math.floor(chosenProduct.productPrice * 1.8)
+                            Math.floor(chosenProduct.productPrice * 3.3)
                           );
                         }}
                       >
-                        80 sticks
+                        {saleCount * 4} {chosenProduct.productUnit}
                       </MenuItem>
                       <MenuItem
                         value={40}
                         onClick={() => {
-                          if (price >= chosenProduct.productPrice * 2.5)
+                          if (price >= chosenProduct.productPrice * 4)
                             return false;
-                          setPrice(
-                            Math.floor(chosenProduct.productPrice * 2.5)
-                          );
+                          setPrice(Math.floor(chosenProduct.productPrice * 4));
                         }}
                       >
-                        120 sticks
+                        {saleCount * 6} {chosenProduct.productUnit}
                       </MenuItem>
                     </Select>
                   </FormControl>
@@ -281,16 +294,13 @@ export default function ChosenProduct(props: ChosenProductProps) {
                       src="/icons/new-cart.svg"
                       className="add-to-basket"
                       onClick={() => {
-                        console.log(">>>", price);
                         onAdd({
                           _id: chosenProduct._id,
                           quantity: 1,
                           name: chosenProduct.productName,
                           price: price,
                           image: chosenProduct.productImages[0],
-                          letGo: true,
                         });
-                        console.log("<<<<", price);
                       }}
                     />
                   </Box>
@@ -367,7 +377,12 @@ export default function ChosenProduct(props: ChosenProductProps) {
                   ]);
                 }}
               >
-                Buy Now
+                Buy Now{" "}
+                <img
+                  src="/img/greater.png"
+                  alt="greater-than"
+                  className="greater"
+                />
               </Button>
             </div>
           </Box>

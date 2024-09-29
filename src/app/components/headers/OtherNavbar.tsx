@@ -74,20 +74,22 @@ export default function OtherNavbar(props: OtherNavbarProps) {
           </NavLink>
         </Box>
         {authMember ? (
-          <Box className={"hover-line"}>
-            <NavLink to="/orders" activeClassName={"underline"}>
-              Orders
-            </NavLink>
-          </Box>
+          <>
+            <Box className={"hover-line"}>
+              <NavLink to="/member-page" activeClassName={"underline"}>
+                My Page
+              </NavLink>
+            </Box>
+            <Box className={"hover-line"}>
+              <NavLink to="/orders" activeClassName={"underline"}>
+                Orders
+              </NavLink>
+            </Box>
+          </>
         ) : null}
         <Box className={"hover-line"}>
           <NavLink to="/help" activeClassName="underline">
             Help
-          </NavLink>
-        </Box>
-        <Box className={"hover-line"}>
-          <NavLink to="/help" activeClassName="underline">
-            About Us
           </NavLink>
         </Box>
         <Stack className="links">

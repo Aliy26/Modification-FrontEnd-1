@@ -1,7 +1,7 @@
 import {
   ProductCollection,
-  ProductSize,
   ProductStatus,
+  ProductUnit,
 } from "../enums/product.enum";
 
 export interface Product {
@@ -11,8 +11,8 @@ export interface Product {
   productName: string;
   productPrice: number;
   productLeftCount: number;
-  productSize: ProductSize;
-  productVolume: number;
+  productUnit: ProductUnit;
+  productPerSaleCount: number;
   productDesc?: string;
   productImages: string[];
   productViews: number;
@@ -25,5 +25,6 @@ export interface ProductInquiry {
   limit: number;
   order: string;
   productCollection?: ProductCollection;
+  sort?: string;
   search?: string;
 }

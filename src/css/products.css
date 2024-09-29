@@ -63,15 +63,25 @@
   margin-right: 200px;
 }
 
-.products-page .products .avatar-big-box img {
-  width: 30px;
-  height: 30px;
+.products-page .products .dishes-filter-box .order {
+  background-color: #526b86;
+  color: white;
+  border: none;
+  width: 100px;
+  height: 55px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.7s ease;
+  margin-right: 10px;
 }
 
-.products-page .products .dishes-filter-box .order {
-  width: 70px;
-  height: 36.5px;
-  margin-left: 20px;
+.products-page .products .dishes-filter-box .order:hover {
+  background-color: #0056b3;
+}
+
+.products-page .products .dishes-filter-box .order:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(34, 69, 106, 0.5);
 }
 
 .products-page .products .dishes-filter-box {
@@ -544,6 +554,24 @@
   font-size: 17px;
   line-height: 22px;
   color: #000;
+  background-color: rgb(48, 255, 48);
+  transition: background-color 0.5s;
+}
+
+.products-page .chosen-product .button-box .greater {
+  display: none;
+  width: 18px;
+  height: 18px;
+  margin-left: 8px;
+  margin-bottom: 1px;
+}
+.products-page .chosen-product .button-box button:hover {
+  background-color: rgb(19, 75, 19);
+  color: #fff;
+}
+
+.products-page .chosen-product .button-box button:hover .greater {
+  display: block;
 }
 
 .products-page .chosen-product .title {

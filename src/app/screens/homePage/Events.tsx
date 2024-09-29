@@ -2,10 +2,22 @@ import { Box, Stack } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import { plans } from "../../../lib/data/plans";
+import { createSelector } from "@reduxjs/toolkit";
+import { retrieveNewProducts } from "./selector";
+import { useSelector } from "react-redux";
+import { serverApi } from "../../../lib/config";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
+const newProductsRetriever = createSelector(
+  retrieveNewProducts,
+  (newProducts) => ({
+    newProducts,
+  })
+);
+
 export default function Events() {
+  const { newProducts } = useSelector(newProductsRetriever);
   return (
     <div className={"events-frame"}>
       <Stack className={"events-main"}>
@@ -31,33 +43,36 @@ export default function Events() {
             disableOnInteraction: true,
           }}
         >
-          {plans.map((value, number) => {
+          {newProducts.map((value, number) => {
+            const imagePath = `${serverApi}/${value.productImages[0]}`;
             return (
               <SwiperSlide key={number} className={"events-info-frame"}>
                 <div className={"events-img"}>
-                  <img src={value.img} className={"events-img"} alt="plans" />
+                  <img src={imagePath} className={"events-img"} alt="plans" />
                 </div>
                 <Box className={"events-desc"}>
                   <Box className={"events-bott"}>
                     <Box className={"bott-left"}>
                       <div className={"event-title-speaker"}>
-                        <strong>{value.title}</strong>
+                        <strong>{value.productName}</strong>
                         <div className={"event-organizator"}>
                           <img src={"/icons/speaker.svg"} alt="plans" />
-                          <p className={"spec-text-author"}>{value.author}</p>
+                          <p className={"spec-text-author"}>
+                            {value.productName}
+                          </p>
                         </div>
                       </div>
 
-                      <p className={"text-desc"}> {value.desc} </p>
+                      <p className={"text-desc"}> {value.productDesc} </p>
 
                       <div className={"bott-info"}>
                         <div className={"bott-info-main"}>
                           <img src={"/icons/calendar.svg"} alt="calendar" />
-                          {value.date}
+                          {value.productStatus}
                         </div>
                         <div className={"bott-info-main"}>
                           <img src={"/icons/location.svg"} alt="button-info" />
-                          {value.location}
+                          {value.productDesc}
                         </div>
                       </div>
                     </Box>

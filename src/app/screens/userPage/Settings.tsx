@@ -99,12 +99,14 @@ export function Settings() {
     const confirm = await showSaveConfirmation(
       "Do you want to delete your photo?"
     );
-    if (confirm) {
+    if (confirm.isConfirmed) {
       const member = new MemberService();
       const result: Member = await member.deleteImage();
       await sweetTopSmallSuccessAlert("Successfully deleted", 1200);
       setMemberImage("/icons/default-user.svg");
       setAuthMember(result);
+    } else {
+      return false;
     }
   };
 
