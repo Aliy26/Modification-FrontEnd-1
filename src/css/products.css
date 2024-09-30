@@ -111,6 +111,16 @@
   font-size: 17px;
 }
 
+.products-page .products .dishes-filter-box .btn:hover {
+  color: #fff;
+  background-color: #56a149;
+}
+
+.products-page .products .dishes-filter-box .btn:focus {
+  outline: none;
+  transform: scale(1.05);
+}
+
 .products-page .products .dishes-filter-section {
   width: 100%;
   height: 140px;

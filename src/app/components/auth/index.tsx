@@ -229,17 +229,18 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
         memberPassword: memberPassword,
         newPassword: newPassword,
       };
-
-      const confirmation = window.confirm(
+      handleChangePasswordClose();
+      const confirm = await showSaveConfirmation(
         "Do you want to change your password?"
       );
-      if (confirmation) {
+      if (confirm.isConfirmed) {
         const result = await member.updatePassowrd(newPasswordInput);
         handleChangePasswordClose();
         setAuthMember(result);
         await sweetTopSuccessAlert("The password has been changed!", 1500);
       } else {
         handleChangePasswordClose();
+        return false;
       }
     } catch (err) {
       console.log(err);

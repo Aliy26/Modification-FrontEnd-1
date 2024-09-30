@@ -67,13 +67,6 @@ export default function Products(props: ProductsProps) {
 
   //* HANDLERS* //
 
-  const searchOrderHandler = (order: string, sort: string = "") => {
-    productSearch.page = 1;
-    productSearch.order = order;
-    productSearch.sort = sort;
-    setProductSearch({ ...productSearch });
-  };
-
   const searchProductHandler = () => {
     productSearch.search = searchText;
     setProductSearch({ ...productSearch });
@@ -122,7 +115,6 @@ export default function Products(props: ProductsProps) {
               </Button>
             </Box>
           </Stack>
-          <Events />
           <Stack className={"avatar-big-box"}>
             <img
               src="icons/gatorade.svg"
@@ -170,7 +162,7 @@ export default function Products(props: ProductsProps) {
               </Box>
             </Stack>
           </Stack>
-
+          <Events />
           <Stack className={"list-category-section"}>
             <Stack className={"product-category"}></Stack>
 
