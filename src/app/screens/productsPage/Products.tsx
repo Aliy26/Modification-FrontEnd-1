@@ -18,7 +18,7 @@ import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
-import { Hidden } from "@material-ui/core";
+import Events from "../homePage/Events";
 
 /** Redux Slice & Selector */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -122,6 +122,7 @@ export default function Products(props: ProductsProps) {
               </Button>
             </Box>
           </Stack>
+          <Events />
           <Stack className={"avatar-big-box"}>
             <img
               src="icons/gatorade.svg"
@@ -165,51 +166,6 @@ export default function Products(props: ProductsProps) {
                   onClick={() => shopNavHandler("equipments")}
                 >
                   Equipment
-                </Button>
-              </Box>
-              <Box>
-                <Button
-                  variant={"contained"}
-                  color={
-                    productSearch.order === "createdAt"
-                      ? "primary"
-                      : "secondary"
-                  }
-                  className={"order"}
-                  onClick={() => searchOrderHandler("createdAt")}
-                >
-                  New
-                </Button>
-                <Button
-                  variant={"contained"}
-                  color={productSearch.sort === "asc" ? "primary" : "secondary"}
-                  className={"order"}
-                  onClick={() => searchOrderHandler("productPrice", "asc")}
-                >
-                  Highest Price
-                </Button>
-                <Button
-                  variant={"contained"}
-                  color={
-                    productSearch.sort === "desc" ? "primary" : "secondary"
-                  }
-                  className={"order"}
-                  onClick={() => searchOrderHandler("productPrice", "desc")}
-                >
-                  Lowest Price
-                </Button>
-
-                <Button
-                  variant={"contained"}
-                  color={
-                    productSearch.order === "productViews"
-                      ? "primary"
-                      : "secondary"
-                  }
-                  className={"order"}
-                  onClick={() => searchOrderHandler("productViews")}
-                >
-                  Views
                 </Button>
               </Box>
             </Stack>

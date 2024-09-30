@@ -127,7 +127,6 @@ export default function OrdersPage() {
                   <p className={"user"}>{authMember?.memberType}</p>
                 </div>
 
-                <div className="border-line"></div>
                 <div className="location">
                   <img src={"/icons/location.svg"} alt="location-icon" />
                   <p>

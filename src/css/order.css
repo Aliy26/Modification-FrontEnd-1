@@ -188,48 +188,61 @@
   align-items: center;
 }
 
-/* User Order Info */
-
+/* Container for the right section of the order page */
 .order-page .order-container .order-right {
   display: flex;
-  margin-top: 90px;
+  margin-top: 80px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  height: 770px;
 }
 
 .order-page .order-container .member-box .order-user-img {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f8f8fe;
-  margin-bottom: 20px;
+  background: linear-gradient(135deg, #9cbae9 0%, #c2e9fb 100%);
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 16px;
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Main user image container */
 .order-page .order-container .order-user-img {
   position: relative;
-  width: 372px;
-  min-height: 308px;
+  width: 420px;
+  min-height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 16px;
-  background: #f8f8fe;
-  box-shadow: 14px 14px 5px 0px #bbbbbf, 0px 1px 11px 12px #d3d3e7 inset,
-    0px 4px 16px 0px rgba(242, 189, 87, 0.04) inset;
+  background: linear-gradient(
+    135deg,
+    #fdfcfb 0%,
+    #e2d1c3 100%
+  ); /* Elegant warm gradient */
+  border-radius: 24px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2),
+    -5px -5px 20px rgba(255, 255, 255, 0.6) inset;
+  padding: 30px;
 }
 
+/* User avatar styling inside the card */
 .order-page .order-container .order-user-img .order-user-avatar {
   cursor: pointer;
-  margin-top: 30px;
-  width: 117px;
-  height: 112px;
-  border-radius: 37px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin-top: 35px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
 }
 
-.order-page .order-container .order-user-img .order-user-icon-box {
-  width: 20px;
-  height: 20px;
-  border-radius: 37px;
+.order-page .order-container .order-user-img .order-user-avatar:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
 }
 
 .order-page .order-container .order-user-img .order-user-icon-box {
@@ -312,55 +325,69 @@
   line-height: 24px;
 }
 
+/* Input fields card under the main card */
 .order-page .order-container .input-fields {
-  padding-top: 30px;
-  width: 372px;
-  height: 282px;
+  padding-top: 35px;
+  width: 420px;
+  height: 320px;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
-  gap: 10px;
   align-items: center;
-  border-radius: 16px;
-  background: #f8f8fe;
-  box-shadow: 14px 14px 4px 0px #bcbcbf, 0px 0px 9px 14px #d3d3e7 inset,
-    0px 4px 16px 0px rgba(242, 189, 87, 0.04) inset;
+  gap: 15px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #346363 0%, #4d89d2 100%);
+  box-shadow: 12px 12px 8px rgba(0, 0, 0, 0.15),
+    -5px -5px 15px rgba(255, 255, 255, 0.7) inset;
 }
 
+/* Input fields within the card */
 .order-page .order-container .input-fields .top-input,
 .order-page .order-container .input-fields .bottom-input {
-  width: 332px;
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid #b4aaaa;
+  width: 360px;
+  height: 45px;
+  border-radius: 8px;
+  border: 1px solid #c4bcbc;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 8px rgba(106, 179, 57, 0.1);
+  padding-left: 12px;
 }
 
+/* Input container to keep inputs aligned */
 .order-page .order-container .input-fields .input-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px; /* Increased gap for spacing */
+  width: 100%; /* Ensure it spans the full card width */
 }
 
+/* Flexible input fields inside the input container */
 .order-page .order-container .input-fields .flex-input {
-  width: 162px;
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid #b4aaaa;
-}
-
-.order-page .order-container .input-fields input {
-  color: #777;
-  font-family: Commissioner;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 36px;
+  width: 170px; /* Match flex input width proportion */
+  height: 45px; /* Match height of other inputs */
+  border-radius: 8px;
+  border: 1px solid #c4bcbc;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding-left: 10px;
 }
 
+/* General input styles */
+.order-page .order-container .input-fields input {
+  color: #555; /* Darker text color for better contrast */
+  font-family: "Commissioner", sans-serif;
+  font-size: 16px; /* Slightly smaller to fit better */
+  font-weight: 500;
+  line-height: 36px;
+  padding-left: 12px; /* More comfortable padding */
+}
+
+/* Image section styling within the card */
 .order-page .order-container .input-fields .images {
-  margin-top: 50px;
+  margin-top: 45px; /* Match margins */
   display: flex;
   flex-direction: row;
-  gap: 27px;
+  justify-content: center; /* Center the images for better balance */
+  gap: 30px; /* Larger gap for visual balance */
 }

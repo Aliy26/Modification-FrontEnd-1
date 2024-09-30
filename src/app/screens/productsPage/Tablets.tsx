@@ -183,7 +183,7 @@ export default function Tablets(props: ProductsProps) {
                   className={"order"}
                   onClick={() => searchOrderHandler("productPrice", "asc")}
                 >
-                  Highest Price
+                  Price Up
                 </Button>
                 <Button
                   variant={"contained"}
@@ -193,7 +193,7 @@ export default function Tablets(props: ProductsProps) {
                   className={"order"}
                   onClick={() => searchOrderHandler("productPrice", "desc")}
                 >
-                  Lowest Price
+                  Price Down
                 </Button>
 
                 <Button

@@ -22,14 +22,14 @@ export default function Events() {
     <div className={"events-frame"}>
       <Stack className={"events-main"}>
         <Box className={"events-text"}>
-          <span className={"category-title"}>Events</span>
+          <span className={"category-title"}>Best Sellers</span>
         </Box>
 
         <Swiper
           className={"events-info swiper-wrapper"}
           slidesPerView={"auto"}
           centeredSlides={true}
-          spaceBetween={30}
+          spaceBetween={15}
           navigation={{
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
@@ -47,8 +47,18 @@ export default function Events() {
             const imagePath = `${serverApi}/${value.productImages[0]}`;
             return (
               <SwiperSlide key={number} className={"events-info-frame"}>
-                <div className={"events-img"}>
-                  <img src={imagePath} className={"events-img"} alt="plans" />
+                <div className={"events-img"} style={{ position: "relative" }}>
+                  <img
+                    src={imagePath}
+                    className={"events-img"}
+                    alt="plans"
+                    style={{
+                      borderRadius: "15px",
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
                 </div>
                 <Box className={"events-desc"}>
                   <Box className={"events-bott"}>
@@ -63,7 +73,7 @@ export default function Events() {
                         </div>
                       </div>
 
-                      <p className={"text-desc"}> {value.productDesc} </p>
+                      <p className={"text-desc"}>{value.productDesc}</p>
 
                       <div className={"bott-info"}>
                         <div className={"bott-info-main"}>

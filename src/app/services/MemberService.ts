@@ -127,6 +127,7 @@ class MemberService {
       const url = this.path + "/member/update/email";
       const result = await axios.post(url, input, { withCredentials: true });
       localStorage.setItem("memberData", JSON.stringify(result.data));
+      console.log(result.data);
       return result.data;
     } catch (err) {
       console.log("Error, updateEmail");

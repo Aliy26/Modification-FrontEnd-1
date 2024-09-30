@@ -606,3 +606,171 @@
   background-color: rgb(118, 220, 118);
   color: white;
 }
+
+/** EVENTS **/
+.events-frame {
+  width: 100%;
+  height: 745px;
+  background: #f0f0f5;
+  display: flex;
+  padding: 20px;
+}
+
+.category-title {
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 46px;
+  color: #343434;
+  padding-top: 10px;
+}
+
+.events-main {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.events-main .events-text {
+  width: auto;
+  height: 70px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.events-main .prev-next-frame {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 220px;
+  margin: 30px 0;
+  height: 25px;
+}
+
+.dot-frame-pagination {
+  width: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.events-main .events-info {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.events-info .events-info-frame {
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.events-frame .events-img {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 15px;
+  background-size: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.events-frame .events-img:hover {
+  transform: scale(1.05);
+}
+
+.events-frame .events-desc {
+  position: absolute;
+  padding: 10px;
+  display: flex;
+  width: 85%;
+  bottom: 1px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0px 15px 20px rgba(86, 70, 70, 0.1);
+  border-radius: 1px;
+}
+
+.events-frame .events-desc .events-bott {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.events-frame .events-desc .events-bott .bott-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.events-frame .bott-left .event-title-speaker {
+  display: flex;
+  justify-content: space-between;
+}
+
+.events-frame .event-title-speaker .event-organizator {
+  display: flex;
+  align-items: center;
+}
+
+.events-frame .event-title-speaker .event-organizator img {
+  width: 22px;
+  margin-right: 8px;
+}
+
+.events-frame .bott-left .text-desc {
+  margin-top: 8px;
+  font-family: "GT Walsheim Pro", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #555;
+}
+
+.events-frame .bott-left .bott-info {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 8px;
+}
+
+.events-frame .bott-info .bott-info-main {
+  display: flex;
+  align-items: center;
+  font-family: "GT Walsheim Pro", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #6d6d6d;
+}
+
+.events-frame .bott-info .bott-info-main img {
+  margin-right: 6px;
+  height: 23px;
+  width: 23px;
+}
+
+.events-frame .swiper-wrapper {
+  display: flex;
+  gap: 15px;
+}
+
+.events-frame .swiper-pagination-bullet {
+  margin-right: 6px;
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.events-frame .swiper-pagination-bullet-active {
+  background: #343434;
+}
