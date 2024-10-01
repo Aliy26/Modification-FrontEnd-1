@@ -127,6 +127,7 @@ function App() {
         deleteOpen={deleteOpen}
         changePasswordOpen={changePasswordOpen}
         changeEmailOpen={changeEmailOpen}
+        setChangeEmailOpen={setChangeEmailOpen}
         handleLoginClose={handleLoginClose}
         handleSignupClose={handleSignupClose}
         handleDeleteClose={handleDeleteClose}

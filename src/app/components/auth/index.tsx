@@ -51,6 +51,7 @@ interface AuthenticationModalProps {
   deleteOpen: boolean;
   changePasswordOpen: boolean;
   changeEmailOpen: boolean;
+  setChangeEmailOpen: (isOpen: boolean) => void;
   handleSignupClose: () => void;
   handleLoginClose: () => void;
   handleDeleteClose: () => void;
@@ -70,6 +71,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     handleDeleteClose,
     handleChangeEmailClose,
     handleChangePasswordClose,
+    setChangeEmailOpen,
   } = props;
   const classes = useStyles();
   const member = new MemberService();
@@ -195,13 +197,16 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       };
       handleChangeEmailClose();
       const confirm = await showSaveConfirmation(
-        "Do you want to change you email?"
+        "Do you want to change you email?",
+        true
       );
       if (confirm.isConfirmed) {
         const result = await member.updateEmail(newEmailInput);
         setAuthMember(result);
         handleChangeEmailClose();
         await sweetTopSuccessAlert("The email has been changed!", 3000);
+      } else if (confirm.isDismissed) {
+        setChangeEmailOpen(true);
       } else {
         handleChangeEmailClose();
         return false;
