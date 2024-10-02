@@ -19,6 +19,13 @@ export default function Footer() {
     window.scrollTo(0, 0);
   };
 
+  const locationHandler = () => {
+    window.open(
+      "https://www.google.com/maps/?entry=ttu&g_ep=EgoyMDI0MDkzMC4wIKXMDSoASAFQAw%3D%3D",
+      "_blank"
+    );
+  };
+
   return (
     <Footers>
       <Container>
@@ -68,7 +75,12 @@ export default function Footer() {
                 >
                   <Box flexDirection={"row"} className={"find-us"}>
                     <span>L.</span>
-                    <div>Downtown, Seoul</div>
+                    <div
+                      onClick={locationHandler}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Downtown, Seoul
+                    </div>
                   </Box>
                   <Box className={"find-us"}>
                     <span>P.</span>
