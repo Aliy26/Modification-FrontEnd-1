@@ -13,6 +13,7 @@ import {
   showSaveConfirmation,
   sweetErrorHandling,
   sweetFailureProvider,
+  sweetTopSmallSuccessAlert,
   sweetTopSuccessAlert,
 } from "../../../lib/sweetAlert";
 import { OrderStatus } from "../../../lib/enums/order.enum";
@@ -52,6 +53,7 @@ export default function PausedOrders(props: PausedOrdersProps) {
         const order = new OrderService();
         await order.updateOrder(input);
         setOrderBuilder(new Date());
+        await sweetTopSmallSuccessAlert("Order is deleted!", 3000);
       } else {
         return false;
       }

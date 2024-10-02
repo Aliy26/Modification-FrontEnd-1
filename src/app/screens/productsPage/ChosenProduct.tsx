@@ -36,10 +36,7 @@ import {
   sweetErrorHandling,
   sweetFailureProvider,
 } from "../../../lib/sweetAlert";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { SelectChangeEvent } from "@mui/material/Select";
 
 const actionDispatch = (dispatch: Dispatch) => ({
   setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
@@ -98,7 +95,9 @@ export default function ChosenProduct(props: ChosenProductProps) {
       }
 
       const confirm = await showSaveConfirmation(
-        `Do you want to purchase ${count} of ${itemName}`
+        `Do you want to purchase ${
+          count > saleCount ? count : saleCount
+        } of ${itemName}`
       );
 
       if (!authMember) {
@@ -161,6 +160,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
         setChosenProduct(data);
         setItemName(data.productName);
         setPrice(data.productPrice);
+        setCount(data.productPerSaleCount);
         setSaleCount(data.productPerSaleCount);
       })
       .catch((err) => console.log(err));
@@ -173,13 +173,6 @@ export default function ChosenProduct(props: ChosenProductProps) {
 
     window.scrollTo(480, 480);
   }, []);
-
-  console.log(price, ">>>>");
-  console.log(
-    chosenProduct?.productPrice
-      ? chosenProduct.productPrice * 3.3 >= price
-      : 1 * 1 >= price
-  );
 
   if (!chosenProduct) return null;
   return (
@@ -231,93 +224,35 @@ export default function ChosenProduct(props: ChosenProductProps) {
                 ? chosenProduct.productDesc
                 : "No Description"}
             </p>
-            {chosenProduct.productCollection == "POWDER" ||
-            chosenProduct.productCollection == "TABLET" ? (
-              <>
-                <span>Quantity</span>
-                <div className="form-container">
-                  <FormControl className="form-control">
-                    <InputLabel className="small-label">
-                      {chosenProduct.productPerSaleCount}
-                    </InputLabel>
-                    <Select
-                      labelId="demo-select-small-label"
-                      id="demo-select-small"
-                      value={sticks}
-                      label="sticks"
-                      onChange={handleChange}
-                    >
-                      <MenuItem
-                        value={10}
-                        onClick={() => {
-                          setPrice(chosenProduct.productPrice);
-                        }}
-                      >
-                        {saleCount} {chosenProduct.productUnit}
-                      </MenuItem>
-                      <MenuItem
-                        value={15}
-                        onClick={() => {
-                          if (price >= chosenProduct.productPrice * 1.8)
-                            return false;
-                          setPrice(Math.floor(price * 1.8));
-                        }}
-                      >
-                        {saleCount * 2} {chosenProduct.productUnit}
-                      </MenuItem>
-                      <MenuItem
-                        value={30}
-                        onClick={() => {
-                          if (price > chosenProduct.productPrice * 3.3)
-                            return false;
-                          setPrice(
-                            Math.floor(chosenProduct.productPrice * 3.3)
-                          );
-                        }}
-                      >
-                        {saleCount * 4} {chosenProduct.productUnit}
-                      </MenuItem>
-                      <MenuItem
-                        value={40}
-                        onClick={() => {
-                          if (price >= chosenProduct.productPrice * 4)
-                            return false;
-                          setPrice(Math.floor(chosenProduct.productPrice * 4));
-                        }}
-                      >
-                        {saleCount * 6} {chosenProduct.productUnit}
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                  <Box className="cart">
-                    <img
-                      src="/icons/new-cart.svg"
-                      className="add-to-basket"
-                      onClick={() => {
-                        onAdd({
-                          _id: chosenProduct._id,
-                          quantity: 1,
-                          name: chosenProduct.productName,
-                          price: price,
-                          image: chosenProduct.productImages[0],
-                        });
-                      }}
-                    />
-                  </Box>
-                </div>
-              </>
-            ) : (
-              <Box className="increment-or-basket">
-                <Box className="plus-minus">
-                  <img
-                    src="/icons/minus.svg"
-                    alt="minus"
-                    className="minus"
-                    onClick={() => {
-                      if (count === 1) return false;
-                      setCount(count - 1);
+
+            <Box className="increment-or-basket">
+              <Box className="plus-minus">
+                <img
+                  src="/icons/minus.svg"
+                  alt="minus"
+                  className="minus"
+                  onClick={() => {
+                    if (count === chosenProduct.productPerSaleCount)
+                      return false;
+                    setCount(count - 1);
+                  }}
+                />
+
+                {chosenProduct.productCollection == "POWDER" ||
+                chosenProduct.productCollection == "TABLET" ? (
+                  <TextField
+                    className="basic-input"
+                    label="Outlined"
+                    variant="outlined"
+                    value={count}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === "" || /^[0-9\b]+$/.test(value)) {
+                        setCount(Number(value)); // Update with the user input
+                      }
                     }}
                   />
+                ) : (
                   <TextField
                     className="basic-input"
                     label="Outlined"
@@ -330,33 +265,34 @@ export default function ChosenProduct(props: ChosenProductProps) {
                       }
                     }}
                   />
-                  <img
-                    src="/icons/increment.svg"
-                    alt="increment"
-                    className="increment"
-                    onClick={() => {
-                      setCount(count + 1);
-                    }}
-                  />
-                </Box>
-                <Box className="cart">
-                  <img
-                    src="/icons/new-cart.svg"
-                    className="add-to-basket"
-                    onClick={() => {
-                      onAdd({
-                        _id: chosenProduct._id,
-                        quantity: count,
-                        name: chosenProduct.productName,
-                        price: price * count,
-                        image: chosenProduct.productImages[0],
-                      });
-                      setCount(1);
-                    }}
-                  />
-                </Box>
+                )}
+
+                <img
+                  src="/icons/increment.svg"
+                  alt="increment"
+                  className="increment"
+                  onClick={() => {
+                    setCount(count + 1);
+                  }}
+                />
               </Box>
-            )}
+              <Box className="cart">
+                <img
+                  src="/icons/new-cart.svg"
+                  className="add-to-basket"
+                  onClick={() => {
+                    onAdd({
+                      _id: chosenProduct._id,
+                      quantity: count > saleCount ? count : saleCount,
+                      name: chosenProduct.productName,
+                      price: price * saleCount,
+                      image: chosenProduct.productImages[0],
+                    });
+                    setCount(chosenProduct.productPerSaleCount);
+                  }}
+                />
+              </Box>
+            </Box>
 
             <Divider height="1" width="100%" bg="#000000" />
             <div className={"product-price"}>
@@ -370,7 +306,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
                   proceedOrderHandler([
                     {
                       _id: chosenProduct._id,
-                      quantity: count,
+                      quantity: count > saleCount ? count : saleCount,
                       name: chosenProduct.productName,
                       price: price,
                       image: chosenProduct.productImages[0],
