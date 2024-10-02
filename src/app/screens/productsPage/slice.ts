@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ProductsPageState } from "../../../lib/types/screen";
-import { deflate } from "zlib";
 
 const initialState: ProductsPageState = {
   restaurant: null,
   chosenProduct: null,
   products: [],
+  limitedProducts: [],
 };
 
 const ProductsPageSlice = createSlice({
@@ -21,11 +21,18 @@ const ProductsPageSlice = createSlice({
     setProducts: (state, action) => {
       state.products = action.payload;
     },
+    setLimitedProducts: (state, action) => {
+      state.limitedProducts = action.payload;
+    },
   },
 });
 
-export const { setRestaurant, setChosenProduct, setProducts } =
-  ProductsPageSlice.actions;
+export const {
+  setRestaurant,
+  setChosenProduct,
+  setProducts,
+  setLimitedProducts,
+} = ProductsPageSlice.actions;
 
 const ProductsPageReducer = ProductsPageSlice.reducer;
 export default ProductsPageReducer;

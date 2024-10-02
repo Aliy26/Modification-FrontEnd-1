@@ -17,8 +17,7 @@ import ProductService from "../../services/ProductService";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
-import { CartItem } from "../../../lib/types/search";
-import Events from "../homePage/Events";
+import ProductSwiper from "./ProductsSwiper";
 
 /** Redux Slice & Selector */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -28,12 +27,7 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-interface ProductsProps {
-  onAdd: (item: CartItem) => void;
-}
-
-export default function Products(props: ProductsProps) {
-  const { onAdd } = props;
+export default function Products() {
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
@@ -162,7 +156,7 @@ export default function Products(props: ProductsProps) {
               </Box>
             </Stack>
           </Stack>
-          <Events />
+          <ProductSwiper />
           <Stack className={"list-category-section"}>
             <Stack className={"product-category"}></Stack>
 

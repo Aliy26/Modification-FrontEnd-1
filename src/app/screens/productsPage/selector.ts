@@ -18,3 +18,8 @@ export const retrieveProducts = createSelector(
   selectProductsPage,
   (ProductsPage) => ProductsPage.products
 );
+
+export const retrieveLimitedProducts = createSelector(
+  selectProductsPage,
+  (ProductsPage) => ProductsPage.limitedProducts
+);

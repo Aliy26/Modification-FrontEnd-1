@@ -1,35 +1,67 @@
 import { Box, Stack } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
-import { plans } from "../../../lib/data/plans";
-import { createSelector } from "@reduxjs/toolkit";
-import { retrieveNewProducts } from "./selector";
-import { useSelector } from "react-redux";
+import { createSelector, Dispatch } from "@reduxjs/toolkit";
+import { retrieveNewProducts } from "../homePage/selector";
+import { useDispatch, useSelector } from "react-redux";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
+import { setLimitedProducts } from "./slice";
+import { Product, ProductInquiry } from "../../../lib/types/product";
+import { retrieveLimitedProducts } from "./selector";
+import { useEffect, useState } from "react";
+import ProductService from "../../services/ProductService";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
-const newProductsRetriever = createSelector(
-  retrieveNewProducts,
-  (newProducts) => ({
-    newProducts,
+const actionDispatch = (dispatch: Dispatch) => ({
+  setLimitedProducts: (data: Product[]) => dispatch(setLimitedProducts(data)),
+});
+const limitedProductsRetriever = createSelector(
+  retrieveLimitedProducts,
+  (limitedProducts) => ({
+    limitedProducts,
   })
 );
 
-export default function Events() {
+export default function ProductSwiper() {
+  const { limitedProducts } = useSelector(limitedProductsRetriever);
   const histroy = useHistory();
+  const { setLimitedProducts } = actionDispatch(useDispatch());
+  const [productSearch, setProductSearch] = useState<ProductInquiry>({
+    page: 1,
+    limit: 8,
+    order: "productLeftCount",
+    sort: "asc",
+    search: "",
+  });
+
+  useEffect(() => {
+    const product = new ProductService();
+    product
+      .getProducts(productSearch)
+      .then((data) => setLimitedProducts(data))
+      .catch((err) => console.log(err));
+  }, [productSearch]);
 
   const chosenProductHandler = (id: string) => {
     histroy.push(`/products/${id}`);
   };
 
-  const { newProducts } = useSelector(newProductsRetriever);
+  const filteredProducts = limitedProducts.filter(
+    (product) => product.productLeftCount <= 30
+  );
+  console.log(filteredProducts, "<<<<<<<<<>?");
+
+  if (filteredProducts.length === 0) {
+    return null;
+  }
+
   return (
     <div className={"events-frame"}>
       <Stack className={"events-main"}>
         <Box className={"events-text"}>
-          <span className={"category-title"}>Best Sellers</span>
+          <span className={"category-title"}>Limited Additions</span>
         </Box>
 
         <Swiper
@@ -50,7 +82,7 @@ export default function Events() {
             disableOnInteraction: true,
           }}
         >
-          {newProducts.map((value, number) => {
+          {filteredProducts.map((value, number) => {
             const imagePath = `${serverApi}/${value.productImages[0]}`;
             return (
               <SwiperSlide key={number} className={"events-info-frame"}>
@@ -74,23 +106,23 @@ export default function Events() {
                   <Box className={"events-bott"}>
                     <Box className={"bott-left"}>
                       <div className={"event-title-speaker"}>
-                        <strong className="strong-left">
-                          {value.productName}
-                        </strong>
-                        <div className={"event-organizator"}>
-                          <strong>{value.productLeftCount} items sold</strong>
-                        </div>
+                        <strong>{value.productName}</strong>
                       </div>
 
                       <p className={"text-desc"}>{value.productDesc}</p>
 
-                      <div className={"bott-info-main"}>
-                        <div>
+                      <div className={"bott-info"}>
+                        <div className={"bott-info-main"}>
                           <img src={"/icons/calendar.svg"} alt="calendar" />
-                          <p>{value.productStatus}</p>
-                          <img src={"/icons/location.svg"} alt="button-info" />
+                          Order Now!
                         </div>
-                        {value.productDesc}
+                        <div className={"bott-info-main"}>
+                          <img
+                            src={"/icons/clock-solid.svg"}
+                            alt="button-info"
+                          />
+                          only {value.productLeftCount} left!
+                        </div>
                       </div>
                     </Box>
                   </Box>

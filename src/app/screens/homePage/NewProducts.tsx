@@ -54,21 +54,14 @@ export default function NewProducts() {
 
                       <CardOverflow variant="soft" className="product-detail">
                         <Stack className="info">
-                          <Stack flexDirection={"row"}>
+                          <Stack flexDirection={"row"} className="bottom-part">
                             <Typography className={"title"}>
                               {product.productName}
                             </Typography>
-
-                            <Typography className={"price"}>
-                              ${product.productPrice}
-                            </Typography>
                           </Stack>
                           <Stack>
-                            <Typography className={"views"}>
-                              {product.productViews}
-                              <VisibilityIcon
-                                sx={{ fontSize: 20, marginLeft: "5px" }}
-                              />
+                            <Typography className={"price"}>
+                              ${product.productPrice}
                             </Typography>
                           </Stack>
                         </Stack>
