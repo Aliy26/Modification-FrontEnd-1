@@ -22,19 +22,19 @@ export default function ProductsPage(props: ProductsPageProps) {
     <div className="products-page">
       <Switch>
         <Route path={`${products.path}/powders`}>
-          <Powders onAdd={onAdd} />
+          <Powders />
         </Route>
         <Route path={`${products.path}/tablets`}>
-          <Tablets onAdd={onAdd} />
+          <Tablets />
         </Route>
         <Route path={`${products.path}/protein`}>
-          <Protein onAdd={onAdd} />
+          <Protein />
         </Route>
         <Route path={`${products.path}/bottles`}>
-          <Bottles onAdd={onAdd} />
+          <Bottles />
         </Route>
         <Route path={`${products.path}/equipments`}>
-          <Equipments onAdd={onAdd} />
+          <Equipments />
         </Route>
         <Route path={`${products.path}/:productId`}>
           <ChosenProduct onAdd={onAdd} />

@@ -70,13 +70,8 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const [itemName, setItemName] = useState<string>("");
   const history = useHistory<any>();
   const location = useLocation<any>();
-  const [sticks, setSticks] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [saleCount, setSaleCount] = useState<number>(0);
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setSticks(event.target.value);
-  };
 
   const proceedOrderHandler = async (input: CartItem[]) => {
     try {

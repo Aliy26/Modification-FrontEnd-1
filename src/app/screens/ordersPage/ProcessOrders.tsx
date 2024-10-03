@@ -95,7 +95,9 @@ export default function ProcessOrders(props: ProcessedOrdersProps) {
                   );
                 })}
               </Box>
-
+              <p className="order-time">
+                Order made on: {moment().format("20YY-MM-DD HH:mm")}
+              </p>
               <Box className={"total-price-box"}>
                 <Box className={"box-total"}>
                   <p>Product Price</p>
@@ -105,7 +107,9 @@ export default function ProcessOrders(props: ProcessedOrdersProps) {
                     style={{ marginLeft: "20px" }}
                     alt="icons-plus"
                   />
-                  <p>Delivery cost</p>
+                </Box>
+                <Box className={"box-total"}>
+                  <p>Delivery</p>
                   <p>${order.orderDelivery}</p>
                   <img
                     src={"/icons/pause.svg"}
@@ -113,10 +117,10 @@ export default function ProcessOrders(props: ProcessedOrdersProps) {
                     alt="icons-pause"
                   />
                   <p>Total</p>
+                </Box>
+                <Box className={"box-total"}>
                   <p>${order.orderTotal}</p>
-                  <p className={"data-compl"}>
-                    {moment().format("YY-MM-DD HH:mm")}
-                  </p>
+                  <p className={"data-compl"}></p>
                 </Box>
                 <Button
                   value={order._id}
@@ -124,7 +128,7 @@ export default function ProcessOrders(props: ProcessedOrdersProps) {
                   className={"verify-button"}
                   onClick={finishOrderHandler}
                 >
-                  Verify to Fulfil
+                  Confirm
                 </Button>
               </Box>
             </Box>

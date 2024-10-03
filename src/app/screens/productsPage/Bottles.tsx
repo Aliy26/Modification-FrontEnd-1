@@ -18,7 +18,6 @@ import ProductService from "../../services/ProductService";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
-import { CartItem } from "../../../lib/types/search";
 
 /** Redux Slice & Selector */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -28,17 +27,12 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-interface ProductsProps {
-  onAdd: (item: CartItem) => void;
-}
-
-export default function Bottles(props: ProductsProps) {
-  const { onAdd } = props;
+export default function Bottles() {
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
-    limit: 8,
+    limit: 100,
     order: "createdAt",
     productCollection: ProductCollection.BOTTLE,
     search: "",

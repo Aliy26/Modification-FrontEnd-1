@@ -30,162 +30,154 @@
 
 .order-page .order-main-box {
   margin-top: 20px;
-  width: 821px;
-  min-height: 200px;
+  width: 820px;
+  min-height: 220px;
   border-radius: 16px;
-  background: #fef8fc;
-  box-shadow: -12px 12px 4px 0px #bababf, 0px 4px 10px 9px #d3d3e7 inset,
-    0px 4px 16px 0px rgba(242, 189, 87, 0.04) inset;
+  background: #a3d1f1;
+  box-shadow: -8px 8px 12px rgba(186, 186, 191, 0.6),
+    inset 0px 6px 12px rgba(211, 211, 231, 0.5),
+    inset 0px 8px 18px rgba(242, 189, 87, 0.1);
   margin-bottom: 32px;
+  transition: transform 0.3s ease;
+}
+.order-page .order-main-box:hover {
+  transform: scale(1.02);
 }
 
 .order-page .order-main-box .order-box-scroll {
   margin-top: 20px;
-  height: 150px;
-  width: 821px;
+  height: 160px;
+  width: 100%;
   overflow: auto;
 }
 
 .order-main-box .order-box-scroll::-webkit-scrollbar {
-  width: 15px;
+  width: 10px;
 }
 .order-main-box .order-box-scroll::-webkit-scrollbar-thumb {
-  background: #3a87cb;
+  background: #327dc7;
   border-radius: 10px;
 }
 
 .order-page .order-main-box .orders-name-price {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-}
-
-.order-page .order-main-box .orders-name-price p {
-  margin: 0;
-  padding: 0;
+  padding: 0 40px;
+  margin-top: 20px;
 }
 
 .order-page .order-main-box .orders-name-price .dish-info {
-  margin-top: 21px;
-  margin-left: 40px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  gap: 20px;
 }
 
 .order-page .order-main-box .orders-name-price .dish-info .order-dish-img {
   width: 50px;
-  height: 47px;
-  border-radius: 29px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  margin-right: 20px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+  background-color: #13587d;
 }
 
 .order-page .order-main-box .orders-name-price .dish-info .title-dish {
-  color: #000;
-  font-family: Commissioner;
+  font-family: "Commissioner", sans-serif;
   font-size: 22px;
-  font-style: normal;
   font-weight: 500;
-  line-height: 36px;
+  color: #000;
 }
 
 .order-page .order-main-box .orders-name-price .price-box {
-  margin-top: 45px;
-  margin-right: 100px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   gap: 30px;
 }
 
 .order-page .orders-name-price .price-box p {
-  color: rgba(38, 38, 38, 0.88);
-  font-family: Poppins;
+  font-family: "Poppins", sans-serif;
   font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  color: rgba(38, 38, 38, 0.88);
 }
 
 .order-page .order-main-box .total-price-box {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 20px 40px;
 }
 
 .order-page .order-main-box .total-price-box .box-total {
-  margin-top: 40px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  margin-left: 40px;
-  margin-bottom: 17px;
+  gap: 7px;
+}
+
+.order-page .order-main-box .order-time {
+  display: flex;
+  color: #297b37;
+  align-items: center;
+  font-weight: bold;
+  margin-left: 35px;
 }
 
 .order-page .order-main-box .total-price-box .box-total p {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
   color: rgba(38, 38, 38, 0.88);
-  font-family: Poppins;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
 }
 
-.order-page .order-main-box .total-price-box Button {
-  margin-top: 28px;
-  width: 93.105px;
+.order-page .order-main-box .total-price-box button {
+  width: 95px;
   height: 36px;
-  border-radius: 10px;
-  margin-right: 35px;
-  margin-bottom: 13px;
+  border-radius: 8px;
+  font-family: "Commissioner", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .order-page .order-main-box .total-price-box .pay-button {
   background: #70b45b;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   color: #fff;
-  font-family: Commissioner;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+}
+.order-page .order-main-box .total-price-box .pay-button:hover {
+  background: #27601e;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 .order-page .order-main-box .total-price-box .cancel-button {
+  background: transparent;
   color: #343434;
-  font-family: Commissioner;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+  box-shadow: none;
+  border: 1px solid #ddd;
+}
+.order-page .order-main-box .total-price-box .cancel-button:hover {
+  background: #f4f4f4;
 }
 
 .order-page .order-main-box .total-price-box .verify-button {
-  margin-top: 50px;
-  margin-right: 13px;
-  width: 170px;
+  width: 135px;
+  height: 48px;
   background: #327dc7;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   color: #fff;
-  font-size: 14px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+}
+.order-page .order-main-box .total-price-box .verify-button:hover {
+  background: #5de45f;
 }
 
-.order-page .order-main-box .total-price-box .data-compl {
+.order-page .order-main-box .data-compl {
   display: flex;
+  align-items: center;
 }
 
 .order-page .order-main-box .finished {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 
 /* Container for the right section of the order page */
