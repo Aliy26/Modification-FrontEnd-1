@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Statistics from "./Statistics";
+
 import PopularProducts from "./PopularProducts";
 import NewProducts from "./NewProducts";
 import Adverstisement from "./Advertisement";
@@ -10,7 +10,7 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { setNewProducts, setPopularProducts, setTopUsers } from "./slice";
 import { Product } from "../../../lib/types/product";
 import ProductService from "../../services/ProductService";
-import { ProductCollection } from "../../../lib/enums/product.enum";
+
 import MemberService from "../../services/MemberService";
 import "../../../css/home.css";
 import { Member } from "../../../lib/types/member";

@@ -9,6 +9,7 @@ import Protein from "./Protein";
 import Equipments from "./Equipments";
 import { CartItem } from "../../../lib/types/search";
 import "../../../css/products.css";
+import Statistics from "./Statistics";
 
 interface ProductsPageProps {
   onAdd: (item: CartItem) => void;
@@ -43,6 +44,7 @@ export default function ProductsPage(props: ProductsPageProps) {
           <Products />
         </Route>
       </Switch>
+      <Statistics />
     </div>
   );
 }

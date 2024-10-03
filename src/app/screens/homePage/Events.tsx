@@ -78,7 +78,9 @@ export default function Events() {
                           {value.productName}
                         </strong>
                         <div className={"event-organizator"}>
-                          <strong>{value.productLeftCount} items sold</strong>
+                          <strong>
+                            {value.productPerSaleCount} items sold
+                          </strong>
                         </div>
                       </div>
 
@@ -90,7 +92,7 @@ export default function Events() {
                           <p>{value.productStatus}</p>
                           <img src={"/icons/location.svg"} alt="button-info" />
                         </div>
-                        {value.productDesc}
+                        <p className="price">${value.productPrice}</p>
                       </div>
                     </Box>
                   </Box>
