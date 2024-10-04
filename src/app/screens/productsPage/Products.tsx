@@ -109,6 +109,7 @@ export default function Products() {
               </Button>
             </Box>
           </Stack>
+          <Box className={"top-title"}>Products</Box>
           <Stack className={"avatar-big-box"}>
             <img
               src="icons/gatorade.svg"
@@ -156,7 +157,6 @@ export default function Products() {
               </Box>
             </Stack>
           </Stack>
-          <ProductSwiper />
           <Stack className={"list-category-section"}>
             <Stack className={"product-category"}></Stack>
 
@@ -227,21 +227,7 @@ export default function Products() {
           </Stack>
         </Stack>
       </Container>
-      <div className="brands-logo">
-        <Container className="family-brands"></Container>
-      </div>
-      <div className="address">
-        <Container>
-          <Stack className="address-area">
-            <Box className={"title"}>Our Address</Box>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10318.676760234534!2d127.05146155758018!3d37.550703270493614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca3a4c23b83eb%3A0xa27a76b786341663!2sD%20Museum!5e0!3m2!1sen!2skr!4v1720935785350!5m2!1sen!2skr"
-              width="100%"
-              height="570px"
-            ></iframe>
-          </Stack>
-        </Container>
-      </div>
+      <ProductSwiper />
     </div>
   );
 }

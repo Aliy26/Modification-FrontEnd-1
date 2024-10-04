@@ -871,3 +871,57 @@
 .products-page .static-frame .info .static-box:hover .static-txt {
   color: #1a8f9a;
 }
+.gatorade-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gatorade-video:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+
+.ads-gatorade-frame {
+  max-width: 100%;
+  height: 600px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #28599d;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.top-title {
+  font-size: 2.5rem; /* Large font size for emphasis */
+  font-weight: 700; /* Bold font */
+  color: #333; /* Dark color for good contrast */
+  text-align: center; /* Center-align the title */
+  text-transform: uppercase; /* Make the title all uppercase for a strong presence */
+  letter-spacing: 2px; /* Add spacing between letters */
+  margin: 20px 0; /* Add vertical margin */
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.top-title::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background-color: #136353; /* Accent color for the underline */
+  transition: width 0.9s ease, left 0.3s ease; /* Smooth animation */
+}
+
+.top-title:hover::before {
+  width: 100%;
+  left: 0;
+}

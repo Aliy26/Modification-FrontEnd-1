@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { useGlobals } from "../../hooks/useGlobals";
+import { useLocation } from "react-router-dom";
 
 const Footers = styled.div`
   width: 100%;
@@ -11,9 +13,16 @@ const Footers = styled.div`
   background: #c5c8c9;
   background-size: cover;
 `;
+
 export default function Footer() {
-  const authMember = null;
+  const { authMember } = useGlobals();
+  const { pathname } = useLocation();
   const history = useHistory();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   const handleHomePageNav = () => {
     history.push("/products");
     window.scrollTo(0, 0);

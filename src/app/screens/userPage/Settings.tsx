@@ -3,7 +3,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Button from "@mui/material/Button";
 import { useGlobals } from "../../hooks/useGlobals";
 import { Member, MemberUpdateInput } from "../../../lib/types/member";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { T } from "../../../lib/types/common";
 import MemberService from "../../services/MemberService";
 import {
@@ -33,30 +33,44 @@ export function Settings() {
     }
   );
 
-  //** HANDLERS **/
+  // Helper to check if there are any changes
+  const isDataChanged = () => {
+    return (
+      memberUpdateInput.memberNick !== authMember?.memberNick ||
+      memberUpdateInput.memberPhone !== authMember?.memberPhone ||
+      memberUpdateInput.memberAddress !== authMember?.memberAddress ||
+      memberUpdateInput.memberDesc !== authMember?.memberDesc ||
+      memberUpdateInput.memberImage !== authMember?.memberImage
+    );
+  };
 
+  //** HANDLERS **/
   const memberNickHandler = (e: T) => {
-    memberUpdateInput.memberNick = e.target.value;
-    setMemberUpdateInput({ ...memberUpdateInput });
+    setMemberUpdateInput((prev) => ({ ...prev, memberNick: e.target.value }));
   };
 
   const memberPhoneHandler = (e: T) => {
-    memberUpdateInput.memberPhone = e.target.value;
-    setMemberUpdateInput({ ...memberUpdateInput });
+    setMemberUpdateInput((prev) => ({ ...prev, memberPhone: e.target.value }));
   };
 
   const memberAddressHandler = (e: T) => {
-    memberUpdateInput.memberAddress = e.target.value;
-    setMemberUpdateInput({ ...memberUpdateInput });
+    setMemberUpdateInput((prev) => ({
+      ...prev,
+      memberAddress: e.target.value,
+    }));
   };
 
   const memberDescHandler = (e: T) => {
-    memberUpdateInput.memberDesc = e.target.value;
-    setMemberUpdateInput({ ...memberUpdateInput });
+    setMemberUpdateInput((prev) => ({ ...prev, memberDesc: e.target.value }));
   };
 
   const handleSubmitButton = async (e: T) => {
     try {
+      if (!isDataChanged()) {
+        Swal.fire("No changes detected", "", "info");
+        return;
+      }
+
       if (
         memberUpdateInput.memberNick === "" ||
         memberUpdateInput.memberPhone === "" ||
@@ -86,11 +100,17 @@ export function Settings() {
       } else if (swalResult.isConfirmed) {
         const result = await member.updateMember(memberUpdateInput);
         Swal.fire("Saved!", "", "success");
-        // Proceed with setting auth member only when confirmed
         setAuthMember(result);
       }
     } catch (err) {
       console.log(err);
+      setMemberUpdateInput({
+        memberNick: authMember?.memberNick,
+        memberPhone: authMember?.memberPhone,
+        memberAddress: authMember?.memberAddress,
+        memberDesc: authMember?.memberDesc,
+        memberImage: authMember?.memberImage,
+      });
       sweetErrorHandling(err).then();
     }
   };
