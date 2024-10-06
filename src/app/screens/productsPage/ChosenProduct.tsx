@@ -7,6 +7,10 @@ import {
   Alert,
   TextField,
 } from "@mui/material";
+import Card from "@mui/joy/Card";
+import { CssVarsProvider, Typography } from "@mui/joy";
+import CardOverflow from "@mui/joy/CardOverflow";
+import AspectRatio from "@mui/joy/AspectRatio";
 import { Swiper, SwiperSlide } from "swiper/react";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Divider from "../../components/divider";
@@ -22,7 +26,7 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { setChosenProduct, setRestaurant } from "./slice";
 import { createSelector } from "reselect";
 import { retrieveChosenProduct, retrieveRestaurant } from "./selector";
-import { Product } from "../../../lib/types/product";
+import { Product, ProductInquiry } from "../../../lib/types/product";
 import { Member } from "../../../lib/types/member";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import ProductService from "../../services/ProductService";
@@ -36,7 +40,6 @@ import {
   sweetErrorHandling,
   sweetFailureProvider,
 } from "../../../lib/sweetAlert";
-import { SelectChangeEvent } from "@mui/material/Select";
 
 const actionDispatch = (dispatch: Dispatch) => ({
   setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
@@ -64,14 +67,21 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const { authMember, setOrderBuilder } = useGlobals();
   const { productId } = useParams<{ productId: string }>();
   const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
-  const { chosenProduct } = useSelector(chosenProductRetriever);
   const { restaurant } = useSelector(restaurantRetriever);
   const [count, setCount] = useState<number>(1);
   const [itemName, setItemName] = useState<string>("");
   const history = useHistory<any>();
   const location = useLocation<any>();
-  const [price, setPrice] = useState<number>(0);
   const [saleCount, setSaleCount] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0);
+  const { chosenProduct } = useSelector(chosenProductRetriever);
+  const [recProduct, setRecProduct] = useState<Product[]>([]);
+  const [productSearch, setProductSearch] = useState<ProductInquiry>({
+    page: 1,
+    limit: 8,
+    order: "createdAt",
+    productCollection: chosenProduct?.productCollection,
+  });
 
   const proceedOrderHandler = async (input: CartItem[]) => {
     try {
@@ -114,6 +124,8 @@ export default function ChosenProduct(props: ChosenProductProps) {
       sweetErrorHandling(err).then();
     }
   };
+
+  console.log("call", chosenProduct?.productCollection);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -168,6 +180,23 @@ export default function ChosenProduct(props: ChosenProductProps) {
 
     window.scrollTo(480, 480);
   }, []);
+
+  useEffect(() => {
+    if (chosenProduct) {
+      setProductSearch((prev) => ({
+        ...prev,
+        productCollection: chosenProduct.productCollection,
+      }));
+    }
+  }, [chosenProduct]);
+
+  useEffect(() => {
+    const product = new ProductService();
+    product
+      .getProducts(productSearch)
+      .then((data) => setRecProduct(data))
+      .catch((err) => console.log(err));
+  }, [productSearch]);
 
   if (!chosenProduct) return null;
   return (
@@ -319,8 +348,43 @@ export default function ChosenProduct(props: ChosenProductProps) {
             </div>
           </Box>
         </Stack>
+        <Stack></Stack>
       </Container>
-
+      <div className="rec-products-frame">
+        <Container>
+          <Stack className="main">
+            <Box className="category-title">
+              <Stack className={"cards-frame"}>
+                <CssVarsProvider>
+                  {recProduct.length !== 0 ? (
+                    recProduct.map((item: Product) => {
+                      const imagePath = `${serverApi}/${item.productImages[0]}`;
+                      return (
+                        <Card
+                          key={item._id}
+                          variant="outlined"
+                          className={"card"}
+                        >
+                          <CardOverflow>
+                            <AspectRatio ratio={"1"}>
+                              <img src={imagePath} alt="rec-product" />
+                            </AspectRatio>
+                            <Typography className="product-name">
+                              {item.productName}
+                            </Typography>
+                          </CardOverflow>
+                        </Card>
+                      );
+                    })
+                  ) : (
+                    <Box className="no-data">No active users!</Box>
+                  )}
+                </CssVarsProvider>
+              </Stack>
+            </Box>
+          </Stack>
+        </Container>
+      </div>
       <Snackbar
         className="checkk"
         autoHideDuration={2500}

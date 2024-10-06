@@ -46,22 +46,23 @@ export function Settings() {
 
   //** HANDLERS **/
   const memberNickHandler = (e: T) => {
-    setMemberUpdateInput((prev) => ({ ...prev, memberNick: e.target.value }));
+    memberUpdateInput.memberNick = e.target.value;
+    setMemberUpdateInput({ ...memberUpdateInput });
   };
 
   const memberPhoneHandler = (e: T) => {
-    setMemberUpdateInput((prev) => ({ ...prev, memberPhone: e.target.value }));
+    memberUpdateInput.memberPhone = e.target.value;
+    setMemberUpdateInput({ ...memberUpdateInput });
   };
 
   const memberAddressHandler = (e: T) => {
-    setMemberUpdateInput((prev) => ({
-      ...prev,
-      memberAddress: e.target.value,
-    }));
+    memberUpdateInput.memberAddress = e.target.value;
+    setMemberUpdateInput({ ...memberUpdateInput });
   };
 
   const memberDescHandler = (e: T) => {
-    setMemberUpdateInput((prev) => ({ ...prev, memberDesc: e.target.value }));
+    memberUpdateInput.memberDesc = e.target.value;
+    setMemberUpdateInput({ ...memberUpdateInput });
   };
 
   const handleSubmitButton = async (e: T) => {
