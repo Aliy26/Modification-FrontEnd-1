@@ -169,7 +169,7 @@ export default function Bottles() {
                   className={"order"}
                   onClick={() => searchOrderHandler("productPrice", "asc")}
                 >
-                  Price Up
+                  Price down
                 </Button>
                 <Button
                   variant={"contained"}
@@ -179,7 +179,7 @@ export default function Bottles() {
                   className={"order"}
                   onClick={() => searchOrderHandler("productPrice", "desc")}
                 >
-                  Price Down
+                  Price up
                 </Button>
 
                 <Button

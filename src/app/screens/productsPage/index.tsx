@@ -45,8 +45,6 @@ export default function ProductsPage(props: ProductsPageProps) {
           <Products />
         </Route>
       </Switch>
-      <ProductAdverstisement />
-      <Statistics />
     </div>
   );
 }

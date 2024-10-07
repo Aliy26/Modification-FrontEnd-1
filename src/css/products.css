@@ -949,21 +949,22 @@
 }
 
 .chosen-product .rec-products-frame .category-title {
+  min-height: 500px;
   font-family: "Dancing Script";
   font-style: normal;
   font-weight: 700;
   font-size: 36px;
   line-height: 43px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
 }
 
 .chosen-product .card {
   display: flex;
-  flex-wrap: wrap;
   text-align: center;
-  height: 250px;
+  height: 275px;
   width: 220px;
   cursor: pointer;
   border: none;
@@ -980,16 +981,17 @@
   border: 3px solid rgb(227, 223, 114);
 }
 
-.chosen-product .cards-frame .product-name {
+.chosen-product .main .product-name {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 7px;
   font-size: 16px;
   font-weight: 600;
   color: #555;
 }
 
-.chosen-product .cards-frame .no-data {
+.chosen-product .main .no-data {
   width: 100%;
   height: 300px;
   display: flex;

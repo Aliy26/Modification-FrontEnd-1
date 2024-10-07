@@ -78,7 +78,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const [recProduct, setRecProduct] = useState<Product[]>([]);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
-    limit: 8,
+    limit: 10,
     order: "createdAt",
     productCollection: chosenProduct?.productCollection,
   });
@@ -184,7 +184,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
   }, []);
 
   useEffect(() => {
-    if (productId) {
+    if (productId && productId !== chosenProduct?._id) {
       const fetchChosenProduct = async () => {
         const product = new ProductService();
         try {
@@ -204,7 +204,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
           console.error("Failed to fetch product", error);
         }
       };
-
+      console.log(productId, chosenProduct?._id);
       fetchChosenProduct();
     }
   }, [productId]);
@@ -369,7 +369,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
         </Stack>
         <Stack></Stack>
       </Container>
-      <Box className="rec-products-title">Check out these too!</Box>
+      <Box className="rec-products-title">Similar Products:</Box>
       <div className="rec-products-frame">
         <Container>
           <Stack className="main">

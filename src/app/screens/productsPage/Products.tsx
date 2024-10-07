@@ -18,6 +18,8 @@ import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
 import ProductSwiper from "./ProductsSwiper";
+import ProductAdverstisement from "./Advertisement";
+import Statistics from "./Statistics";
 
 /** Redux Slice & Selector */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -32,9 +34,9 @@ export default function Products() {
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
-    limit: 8,
+    limit: 100,
     order: "createdAt",
-    productCollection: ProductCollection.POWDER,
+
     search: "",
   });
   const [searchText, setSearchText] = useState<string>("");
@@ -109,7 +111,7 @@ export default function Products() {
               </Button>
             </Box>
           </Stack>
-          <Box className={"top-title"}>Products</Box>
+          <Box className={"top-title"}>The Gatorade Shop</Box>
           <Stack className={"avatar-big-box"}>
             <img
               src="icons/gatorade.svg"
@@ -228,6 +230,8 @@ export default function Products() {
         </Stack>
       </Container>
       <ProductSwiper />
+      <ProductAdverstisement />
+      <Statistics />
     </div>
   );
 }

@@ -165,14 +165,6 @@ export default function Protein() {
                 </Button>
                 <Button
                   variant={"contained"}
-                  color={productSearch.sort === "asc" ? "primary" : "secondary"}
-                  className={"order"}
-                  onClick={() => searchOrderHandler("productPrice", "asc")}
-                >
-                  Price Up
-                </Button>
-                <Button
-                  variant={"contained"}
                   color={
                     productSearch.sort === "desc" ? "primary" : "secondary"
                   }
@@ -180,6 +172,14 @@ export default function Protein() {
                   onClick={() => searchOrderHandler("productPrice", "desc")}
                 >
                   Price Down
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={productSearch.sort === "asc" ? "primary" : "secondary"}
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productPrice", "asc")}
+                >
+                  Price Up
                 </Button>
 
                 <Button
