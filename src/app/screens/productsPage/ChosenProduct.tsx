@@ -183,28 +183,23 @@ export default function ChosenProduct(props: ChosenProductProps) {
     window.scrollTo(480, 480);
   }, []);
 
-  // useEffect(() => {
-  //   if (chosenProduct) {
-  //     setProductSearch((prev) => ({
-  //       ...prev,
-  //       productCollection: chosenProduct.productCollection,
-  //     }));
-  //   }
-  // }, [chosenProduct]);
-
   useEffect(() => {
     if (productId) {
       const fetchChosenProduct = async () => {
         const product = new ProductService();
         try {
-          const result = await product.getProduct(productId);
+          const data = await product.getProduct(productId);
 
-          setChosenProduct(result);
+          setChosenProduct(data);
           setProductSearch((prev) => ({
             ...prev,
-            productCollection: result.productCollection,
+            productCollection: data.productCollection,
           }));
-          setPrice(result.productPrice);
+          setChosenProduct(data);
+          setItemName(data.productName);
+          setPrice(data.productPrice);
+          setCount(data.productPerSaleCount);
+          setSaleCount(data.productPerSaleCount);
         } catch (error) {
           console.error("Failed to fetch product", error);
         }

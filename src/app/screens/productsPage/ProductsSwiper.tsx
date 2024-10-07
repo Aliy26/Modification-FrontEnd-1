@@ -2,7 +2,6 @@ import { Box, Stack } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import { createSelector, Dispatch } from "@reduxjs/toolkit";
-import { retrieveNewProducts } from "../homePage/selector";
 import { useDispatch, useSelector } from "react-redux";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
@@ -51,7 +50,6 @@ export default function ProductSwiper() {
   const filteredProducts = limitedProducts.filter(
     (product) => product.productLeftCount <= 30
   );
-  console.log(filteredProducts, "<<<<<<<<<>?");
 
   if (filteredProducts.length === 0) {
     return null;

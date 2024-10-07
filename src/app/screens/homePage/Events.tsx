@@ -1,30 +1,42 @@
 import { Box, Stack } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
-import { plans } from "../../../lib/data/plans";
-import { createSelector } from "@reduxjs/toolkit";
-import { retrieveNewProducts } from "./selector";
-import { useSelector } from "react-redux";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Product, ProductInquiry } from "../../../lib/types/product";
+import ProductService from "../../services/ProductService";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
-const newProductsRetriever = createSelector(
-  retrieveNewProducts,
-  (newProducts) => ({
-    newProducts,
-  })
-);
-
 export default function Events() {
   const histroy = useHistory();
+  const [limitedProducts, setLimitedProducts] = useState<Product[]>([]);
+
+  const [productSearch, setProductSearch] = useState<ProductInquiry>({
+    page: 1,
+    limit: 8,
+    order: "productSoldCount",
+    sort: "desc",
+    search: "",
+  });
+
+  useEffect(() => {
+    const product = new ProductService();
+    product
+      .getProducts(productSearch)
+      .then((data) => setLimitedProducts(data))
+      .catch((err) => console.log(err));
+  }, [productSearch]);
 
   const chosenProductHandler = (id: string) => {
     histroy.push(`/products/${id}`);
   };
 
-  const { newProducts } = useSelector(newProductsRetriever);
+  const products = limitedProducts.filter((item: Product) => {
+    return item.productSoldCount > 0;
+  });
+
   return (
     <div className={"events-frame"}>
       <Stack className={"events-main"}>
@@ -50,7 +62,7 @@ export default function Events() {
             disableOnInteraction: true,
           }}
         >
-          {newProducts.map((value, number) => {
+          {products.map((value, number) => {
             const imagePath = `${serverApi}/${value.productImages[0]}`;
             return (
               <SwiperSlide key={number} className={"events-info-frame"}>
@@ -78,9 +90,7 @@ export default function Events() {
                           {value.productName}
                         </strong>
                         <div className={"event-organizator"}>
-                          <strong>
-                            {value.productPerSaleCount} items sold
-                          </strong>
+                          <strong>{value.productSoldCount} items sold</strong>
                         </div>
                       </div>
 

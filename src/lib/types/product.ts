@@ -11,6 +11,7 @@ export interface Product {
   productName: string;
   productPrice: number;
   productLeftCount: number;
+  productSoldCount: number;
   productUnit: ProductUnit;
   productPerSaleCount: number;
   productDesc?: string;
