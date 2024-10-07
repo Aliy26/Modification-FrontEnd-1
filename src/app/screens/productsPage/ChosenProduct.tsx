@@ -125,7 +125,9 @@ export default function ChosenProduct(props: ChosenProductProps) {
     }
   };
 
-  console.log("call", chosenProduct?.productCollection);
+  const chosenProductHandler = (id: string) => {
+    history.push(`/products/${id}`);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -181,14 +183,36 @@ export default function ChosenProduct(props: ChosenProductProps) {
     window.scrollTo(480, 480);
   }, []);
 
+  // useEffect(() => {
+  //   if (chosenProduct) {
+  //     setProductSearch((prev) => ({
+  //       ...prev,
+  //       productCollection: chosenProduct.productCollection,
+  //     }));
+  //   }
+  // }, [chosenProduct]);
+
   useEffect(() => {
-    if (chosenProduct) {
-      setProductSearch((prev) => ({
-        ...prev,
-        productCollection: chosenProduct.productCollection,
-      }));
+    if (productId) {
+      const fetchChosenProduct = async () => {
+        const product = new ProductService();
+        try {
+          const result = await product.getProduct(productId);
+
+          setChosenProduct(result);
+          setProductSearch((prev) => ({
+            ...prev,
+            productCollection: result.productCollection,
+          }));
+          setPrice(result.productPrice);
+        } catch (error) {
+          console.error("Failed to fetch product", error);
+        }
+      };
+
+      fetchChosenProduct();
     }
-  }, [chosenProduct]);
+  }, [productId]);
 
   useEffect(() => {
     const product = new ProductService();
@@ -350,37 +374,39 @@ export default function ChosenProduct(props: ChosenProductProps) {
         </Stack>
         <Stack></Stack>
       </Container>
+      <Box className="rec-products-title">Check out these too!</Box>
       <div className="rec-products-frame">
         <Container>
           <Stack className="main">
             <Box className="category-title">
-              <Stack className={"cards-frame"}>
-                <CssVarsProvider>
-                  {recProduct.length !== 0 ? (
-                    recProduct.map((item: Product) => {
-                      const imagePath = `${serverApi}/${item.productImages[0]}`;
-                      return (
-                        <Card
-                          key={item._id}
-                          variant="outlined"
-                          className={"card"}
-                        >
-                          <CardOverflow>
-                            <AspectRatio ratio={"1"}>
-                              <img src={imagePath} alt="rec-product" />
-                            </AspectRatio>
-                            <Typography className="product-name">
-                              {item.productName}
-                            </Typography>
-                          </CardOverflow>
-                        </Card>
-                      );
-                    })
-                  ) : (
-                    <Box className="no-data">No active users!</Box>
-                  )}
-                </CssVarsProvider>
-              </Stack>
+              <CssVarsProvider>
+                {recProduct.length !== 0 ? (
+                  recProduct.map((item: Product) => {
+                    const imagePath = `${serverApi}/${item.productImages[0]}`;
+                    return (
+                      <Card
+                        key={item._id}
+                        variant="outlined"
+                        className={"card"}
+                        onClick={() => {
+                          chosenProductHandler(item._id);
+                        }}
+                      >
+                        <CardOverflow>
+                          <AspectRatio ratio={"1"}>
+                            <img src={imagePath} alt="rec-product" />
+                          </AspectRatio>
+                          <Typography className="product-name">
+                            {item.productName}
+                          </Typography>
+                        </CardOverflow>
+                      </Card>
+                    );
+                  })
+                ) : (
+                  <Box className="no-data">No active users!</Box>
+                )}
+              </CssVarsProvider>
             </Box>
           </Stack>
         </Container>
