@@ -71,11 +71,10 @@ export default function HomePage() {
 
   return (
     <div className="homepage">
-      {/* <Statistics /> */}
-      <PopularProducts />
       <NewProducts />
-      <ActiveUsers />
       <Events />
+      <PopularProducts />
+      <ActiveUsers />
       <Adverstisement />
     </div>
   );

@@ -164,21 +164,21 @@ export default function Tablets() {
                 </Button>
                 <Button
                   variant={"contained"}
-                  color={productSearch.sort === "asc" ? "primary" : "secondary"}
-                  className={"order"}
-                  onClick={() => searchOrderHandler("productPrice", "asc")}
-                >
-                  Price down
-                </Button>
-                <Button
-                  variant={"contained"}
                   color={
                     productSearch.sort === "desc" ? "primary" : "secondary"
                   }
                   className={"order"}
                   onClick={() => searchOrderHandler("productPrice", "desc")}
                 >
-                  Price up
+                  Highest Price
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={productSearch.sort === "asc" ? "primary" : "secondary"}
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productPrice", "asc")}
+                >
+                  Lowest Price
                 </Button>
 
                 <Button

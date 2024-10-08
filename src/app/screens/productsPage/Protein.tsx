@@ -171,7 +171,7 @@ export default function Protein() {
                   className={"order"}
                   onClick={() => searchOrderHandler("productPrice", "desc")}
                 >
-                  Price Down
+                  Highest Price
                 </Button>
                 <Button
                   variant={"contained"}
@@ -179,7 +179,7 @@ export default function Protein() {
                   className={"order"}
                   onClick={() => searchOrderHandler("productPrice", "asc")}
                 >
-                  Price Up
+                  Lowest Price
                 </Button>
 
                 <Button

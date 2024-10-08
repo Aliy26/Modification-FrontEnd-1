@@ -35,7 +35,7 @@ export default function Products() {
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
     limit: 100,
-    order: "createdAt",
+    order: "updatedAt",
 
     search: "",
   });
@@ -56,10 +56,6 @@ export default function Products() {
       setProductSearch({ ...productSearch });
     }
   }, [searchText]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   //* HANDLERS* //
 

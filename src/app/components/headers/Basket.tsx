@@ -62,7 +62,7 @@ export default function Basket(props: BasketProps) {
     try {
       if (!authMember) throw new Error(Messages.error2);
       if (!authMember.memberAddress || authMember.memberAddress.length < 5) {
-        sweetFailureProvider(
+        await sweetFailureProvider(
           "Please provide your address before making orders!"
         );
 

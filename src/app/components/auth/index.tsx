@@ -148,6 +148,10 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
 
       setAuthMember(result);
       handleSignupClose();
+      setMemberNick("");
+      setMemberPhone("");
+      setMemberPassword("");
+      setMemberEmail("");
     } catch (err) {
       console.log(err);
       handleSignupClose();

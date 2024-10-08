@@ -165,21 +165,21 @@ export default function Powders() {
                 </Button>
                 <Button
                   variant={"contained"}
-                  color={productSearch.sort === "asc" ? "primary" : "secondary"}
-                  className={"order"}
-                  onClick={() => searchOrderHandler("productPrice", "asc")}
-                >
-                  Price Down
-                </Button>
-                <Button
-                  variant={"contained"}
                   color={
                     productSearch.sort === "desc" ? "primary" : "secondary"
                   }
                   className={"order"}
                   onClick={() => searchOrderHandler("productPrice", "desc")}
                 >
-                  Price Up
+                  Highest Price
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={productSearch.sort === "asc" ? "primary" : "secondary"}
+                  className={"order"}
+                  onClick={() => searchOrderHandler("productPrice", "asc")}
+                >
+                  Lowest Price
                 </Button>
 
                 <Button
