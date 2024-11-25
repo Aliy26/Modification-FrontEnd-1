@@ -76,6 +76,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const [price, setPrice] = useState<number>(0);
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const [recProduct, setRecProduct] = useState<Product[]>([]);
+  const [leftCount, setLeftCount] = useState<number>(0);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
     limit: 10,
@@ -96,6 +97,11 @@ export default function ChosenProduct(props: ChosenProductProps) {
           "Please provide your address before making orders!"
         );
         history.push("/member-page");
+        return false;
+      } else if (leftCount < count || leftCount < saleCount) {
+        await sweetFailureProvider(
+          `Can't buy more than there is of the product! ${leftCount} left`
+        );
         return false;
       }
 
@@ -171,6 +177,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
         setPrice(data.productPrice);
         setCount(data.productPerSaleCount);
         setSaleCount(data.productPerSaleCount);
+        setLeftCount(data.productLeftCount);
       })
       .catch((err) => console.log(err));
 
@@ -216,6 +223,8 @@ export default function ChosenProduct(props: ChosenProductProps) {
       .then((data) => setRecProduct(data))
       .catch((err) => console.log(err));
   }, [productSearch]);
+
+  console.log(count, "<<<<", saleCount, ">>>>>");
 
   if (!chosenProduct) return null;
   return (
