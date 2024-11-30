@@ -68,11 +68,11 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const { productId } = useParams<{ productId: string }>();
   const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
   const { restaurant } = useSelector(restaurantRetriever);
-  const [count, setCount] = useState<number>(1);
   const [itemName, setItemName] = useState<string>("");
   const history = useHistory<any>();
   const location = useLocation<any>();
   const [saleCount, setSaleCount] = useState<number>(0);
+  const [count, setCount] = useState<number>(saleCount);
   const [price, setPrice] = useState<number>(0);
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const [recProduct, setRecProduct] = useState<Product[]>([]);
@@ -224,8 +224,6 @@ export default function ChosenProduct(props: ChosenProductProps) {
       .catch((err) => console.log(err));
   }, [productSearch]);
 
-  console.log(count, "<<<<", saleCount, ">>>>>");
-
   if (!chosenProduct) return null;
   return (
     <div className={"chosen-product"}>
@@ -286,7 +284,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
                   onClick={() => {
                     if (count === chosenProduct.productPerSaleCount)
                       return false;
-                    setCount(count - 1);
+                    setCount(count - saleCount);
                   }}
                 />
 
@@ -324,7 +322,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
                   alt="increment"
                   className="increment"
                   onClick={() => {
-                    setCount(count + 1);
+                    setCount(count + saleCount);
                   }}
                 />
               </Box>
@@ -340,7 +338,6 @@ export default function ChosenProduct(props: ChosenProductProps) {
                       price: price * saleCount,
                       image: chosenProduct.productImages[0],
                     });
-                    setCount(chosenProduct.productPerSaleCount);
                   }}
                 />
               </Box>

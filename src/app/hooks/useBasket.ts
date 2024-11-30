@@ -3,10 +3,12 @@ import { serverApi } from "../../lib/config";
 import { useState } from "react";
 import { CartItem } from "../../lib/types/search";
 import {
+  sweetFailureProvider,
   sweetTopSmallSuccessAlert,
   sweetTopSuccessAlert,
 } from "../../lib/sweetAlert";
 import { Product } from "../../lib/types/product";
+import ProductService from "../services/ProductService";
 
 const useBasket = () => {
   const cartJson: string | null = localStorage.getItem("cartData");
@@ -18,11 +20,11 @@ const useBasket = () => {
     try {
       const updatedItems = await Promise.all(
         cartItems.map(async (item: CartItem) => {
-          const response = await axios.get(`${path}/product/${item._id}`);
-          const latestProduct: Product = response.data;
+          const product = new ProductService();
+          const result: Product = await product.getProduct(item._id);
 
-          if (latestProduct.productPrice !== item.price) {
-            return { ...item, price: latestProduct.productPrice };
+          if (result.productPrice !== item.price) {
+            return { ...item, price: result.productPrice };
           }
           return item;
         })
@@ -35,23 +37,37 @@ const useBasket = () => {
   };
 
   const onAdd = async (input: CartItem) => {
+    const product = new ProductService();
+    const result: Product = await product.getProduct(input._id);
+    console.log("result:", result);
     const exist: any = cartItems.find(
       (item: CartItem) => item._id === input._id
     );
     if (exist) {
-      const cartUpdate = cartItems.map((item: CartItem) =>
-        item._id === input._id
-          ? { ...exist, quantity: exist.quantity + 1 }
-          : item
-      );
-      setCartItems(cartUpdate);
-      localStorage.setItem("cartData", JSON.stringify(cartUpdate));
-      await sweetTopSmallSuccessAlert("Product added!", 500);
+      if (exist.quantity < result.productLeftCount) {
+        const cartUpdate = cartItems.map((item: CartItem) =>
+          item._id === input._id
+            ? {
+                ...exist,
+                quantity: exist.quantity + result.productPerSaleCount,
+              }
+            : item
+        );
+        setCartItems(cartUpdate);
+        localStorage.setItem("cartData", JSON.stringify(cartUpdate));
+        await sweetTopSmallSuccessAlert("Product added!", 500);
+      } else {
+        sweetFailureProvider("Can't add more that there is in stock!");
+      }
     } else {
-      const cartUpdate = [...cartItems, { ...input }];
-      setCartItems(cartUpdate);
-      localStorage.setItem("cartData", JSON.stringify(cartUpdate));
-      await sweetTopSuccessAlert("Product added!", 2000);
+      if (result.productLeftCount > input.quantity) {
+        const cartUpdate = [...cartItems, { ...input }];
+        setCartItems(cartUpdate);
+        localStorage.setItem("cartData", JSON.stringify(cartUpdate));
+        await sweetTopSuccessAlert("Product added!", 2000);
+      } else {
+        sweetFailureProvider("Can't add more that there is in stock!");
+      }
     }
   };
 
