@@ -100,7 +100,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
         return false;
       } else if (leftCount < count || leftCount < saleCount) {
         await sweetFailureProvider(
-          `Can't buy more than there is of the product! ${leftCount} left`
+          `Can't buy more than there is of the product! only ${leftCount} left`
         );
         return false;
       }
@@ -337,6 +337,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
                       name: chosenProduct.productName,
                       price: price * saleCount,
                       image: chosenProduct.productImages[0],
+                      leftCount: chosenProduct.productLeftCount,
                     });
                   }}
                 />

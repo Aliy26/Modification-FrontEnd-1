@@ -419,6 +419,67 @@
   padding: 6.5px 14px;
 }
 
+.basket-frame .out-of-stock {
+  position: relative;
+  margin-top: 6px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  opacity: 0.6; /* Makes it semi-transparent */
+  background-color: #f8f8f8; /* Light background to indicate unavailability */
+}
+
+.basket-frame .out-of-stock .cancel-btn {
+  display: flex;
+  align-items: center;
+  /* pointer-events: none; Disables interaction */
+}
+
+.basket-frame .out-of-stock .remove {
+  display: none;
+}
+
+.basket-frame .out-of-stock .add {
+  display: none;
+}
+
+.out-of-stock .product-img {
+  width: 70px;
+  height: 70px;
+  margin-right: 3px;
+  border-radius: 50%;
+  filter: grayscale(100%); /* Makes the image appear grayed out */
+}
+
+.out-of-stock .product-name {
+  display: flex;
+  align-items: center;
+  width: 220px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  color: #777777; /* Gray text to indicate unavailability */
+  /* text-decoration: line-through; Strikes through the text */
+}
+
+.out-of-stock .product-price {
+  width: 110px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: #ae0000;
+  opacity: 0.8; /* Slightly muted price */
+}
+
+.out-of-stock
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 6.5px 14px;
+  pointer-events: none; /* Disables dropdown interaction */
+}
+
 .basket-info-box .css-ece9u5 {
   min-width: 72px;
 }

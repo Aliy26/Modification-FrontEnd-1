@@ -15,6 +15,7 @@ import {
 } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
+import ProductService from "../../services/ProductService";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -46,11 +47,17 @@ export default function Basket(props: BasketProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  const product = new ProductService();
+
   /** HANDLERS **/
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(e.currentTarget);
 
     await updateCartPrices();
+  };
+
+  const chosenProductHandler = async (e: any) => {
+    product.getProduct(e);
   };
 
   const handleClose = () => {
@@ -161,13 +168,22 @@ export default function Basket(props: BasketProps) {
               {cartItems.map((item: CartItem) => {
                 const imagePath = `${serverApi}/${item.image}`;
                 return (
-                  <Box className={"basket-info-box"} key={item._id}>
+                  <Box
+                    className={
+                      item.leftCount && item.leftCount > 0
+                        ? "basket-info-box"
+                        : "out-of-stock"
+                    }
+                    key={item._id}
+                  >
                     <img
                       src={imagePath}
                       className={"product-img"}
                       alt="product-image"
                     />
-                    <span className={"product-name"}>{item.name}</span>
+                    <span className={"product-name"}>
+                      {item.name} {item.leftCount === 0 ? "Out of stock" : ""}
+                    </span>
 
                     <div className="col-2">
                       <div className={"cancel-btn"}>

@@ -23,8 +23,15 @@ const useBasket = () => {
           const product = new ProductService();
           const result: Product = await product.getProduct(item._id);
 
-          if (result.productPrice !== item.price) {
-            return { ...item, price: result.productPrice };
+          if (
+            result.productPrice !== item.price ||
+            result.productLeftCount <= 0
+          ) {
+            return {
+              ...item,
+              price: result.productPrice,
+              leftCount: result.productLeftCount <= 0 ? 0 : item.leftCount,
+            };
           }
           return item;
         })
@@ -60,13 +67,17 @@ const useBasket = () => {
         sweetFailureProvider("Can't add more that there is in stock!");
       }
     } else {
-      if (result.productLeftCount > input.quantity) {
+      if (result.productLeftCount >= input.quantity) {
         const cartUpdate = [...cartItems, { ...input }];
         setCartItems(cartUpdate);
         localStorage.setItem("cartData", JSON.stringify(cartUpdate));
         await sweetTopSuccessAlert("Product added!", 2000);
+      } else if (result.productLeftCount === 0) {
+        sweetFailureProvider(`The item ${result.productName} is out of stock!`);
       } else {
-        sweetFailureProvider("Can't add more that there is in stock!");
+        sweetFailureProvider(
+          `Can't add more than there is of the product only ${result.productLeftCount} left`
+        );
       }
     }
   };

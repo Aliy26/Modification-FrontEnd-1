@@ -77,7 +77,6 @@ export default function PausedOrders(props: PausedOrdersProps) {
         orderId: orderId,
         orderStatus: OrderStatus.PROCESS,
       };
-
       const confirm = await showSaveConfirmation(
         "Do you want proceed with the payment?"
       );
