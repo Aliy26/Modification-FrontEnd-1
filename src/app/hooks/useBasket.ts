@@ -30,7 +30,13 @@ const useBasket = () => {
             return {
               ...item,
               price: result.productPrice,
-              leftCount: result.productLeftCount <= 0 ? 0 : item.leftCount,
+              leftCount:
+                result.productLeftCount <= 0 ? 0 : result.productLeftCount,
+            };
+          } else if (result.productLeftCount > 0) {
+            return {
+              ...item,
+              leftCount: result.productLeftCount,
             };
           }
           return item;
@@ -114,7 +120,19 @@ const useBasket = () => {
   };
 
   const onDeleteAll = async () => {
-    setCartItems([]);
+    const product = new ProductService();
+    const results: Product[] = await Promise.all(
+      cartItems.map(async (ele: CartItem) => {
+        return await product.getProduct(ele._id);
+      })
+    );
+
+    const filtredItems = cartItems.filter((ele: CartItem) =>
+      results
+        .map((product: Product) => !product.productLeftCount && product._id)
+        .includes(ele._id)
+    );
+    setCartItems(filtredItems);
     localStorage.removeItem("cartData");
     await sweetTopSmallSuccessAlert("All items dropped!", 1000);
   };

@@ -16,6 +16,7 @@ import {
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
 import ProductService from "../../services/ProductService";
+import { Product } from "../../../lib/types/product";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -47,17 +48,16 @@ export default function Basket(props: BasketProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  const ids = cartItems.map((ele: CartItem) => ele._id);
+  console.log(ids, "idsssss");
   const product = new ProductService();
 
   /** HANDLERS **/
+
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(e.currentTarget);
 
     await updateCartPrices();
-  };
-
-  const chosenProductHandler = async (e: any) => {
-    product.getProduct(e);
   };
 
   const handleClose = () => {
@@ -77,13 +77,29 @@ export default function Basket(props: BasketProps) {
         return false;
       }
 
-      const order = new OrderService();
-      await order.createOrder(cartItems);
+      const productsHandler = async () => {
+        const product = new ProductService();
+        const results: Product[] = await Promise.all(
+          ids.map(async (id: string) => {
+            return await product.getProduct(id);
+          })
+        );
 
-      onDeleteAll();
+        console.log(results); // This will now be an array of Product objects
+        const filteredItems = cartItems.filter((ele: CartItem) =>
+          results
+            .map((product: Product) => product.productLeftCount && product._id)
+            .includes(ele._id)
+        );
 
-      setOrderBuilder(new Date());
-      history.push("/orders");
+        const order = new OrderService();
+        await order.createOrder(filteredItems);
+        onDeleteAll();
+        setOrderBuilder(new Date());
+        history.push("/orders");
+      };
+
+      await productsHandler();
     } catch (err) {
       console.log("Error, orders", err);
       sweetErrorHandling(err).then();
