@@ -38,10 +38,13 @@ export default function Basket(props: BasketProps) {
   } = props;
   const { authMember, setOrderBuilder } = useGlobals();
   const history = useHistory();
+
   const itemsPrice = cartItems.reduce(
-    (a: number, c: CartItem) => a + c.quantity * c.price,
+    (a: number, c: CartItem) =>
+      c.leftCount !== 0 ? a + c.quantity * c.price : a,
     0
   );
+
   const shippingCost: number = itemsPrice < 100 ? 5 : 0;
   const totalPrice = (itemsPrice + shippingCost).toFixed(1);
 
@@ -49,7 +52,7 @@ export default function Basket(props: BasketProps) {
   const open = Boolean(anchorEl);
 
   const ids = cartItems.map((ele: CartItem) => ele._id);
-  console.log(ids, "idsssss");
+
   const product = new ProductService();
 
   /** HANDLERS **/
