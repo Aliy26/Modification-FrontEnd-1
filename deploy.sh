@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # PRODUCTION
-nvm use 18.12.0
 git reset --hard
 git checkout master
 git pull origin master
